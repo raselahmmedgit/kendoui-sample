@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "Kendo UI Window";
+}
+<h2>
+    Category List: Kendo UI Window Mode</h2>
+<div id="commonMessage">
+</div>
+<p>
+    @Html.ActionLink("Add Category", "Add", "Category", new { @id = "add", @class = "lnkAddCategory button", @title="Add" })
+    @*<a id="addCategory" href="/Category/Add" class="lnkAddCategory button" title="Add">Add Category</a>*@
+</p>
+<div id="catGrid">
+    @(Html.Kendo().Grid<RnD.KendoUISample.Models.Category>()
+        .Name("categoryGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(c => c.CategoryId).Groupable(false);
+            columns.Bound(c => c.Name).Title("Category Name").Sortable(true).Groupable(false).Filterable(false);
+            columns.Bound(c => c.KendoWindow).Sortable(true).Groupable(false).Filterable(false).ClientTemplate("<a name='lnkDetailsCategory' class='lnkDetailsCategory button' id='lnkDetailsCategory_#= CategoryId #'  href='/Category/Details/#= CategoryId #' title='Details'>Details</a>&nbsp;&nbsp;<a name='lnkEditCategory' class='lnkEditCategory button' id='lnkEditCategory_#= CategoryId #'  href='/Category/Edit/#= CategoryId #' title='Edit'>Edit</a>&nbsp;&nbsp;<a name='lnkDeleteCategory' class='lnkDeleteCategory button' id='lnkDeleteCategory_#= CategoryId #' href='/Category/Delete/#= CategoryId #' title='Delete'>Delete</a>").HeaderTemplate("Actions").Width("300px"); ;
+        }).Groupable().Pageable(pager => pager.Input(true).Numeric(true).Info(true).PreviousNext(true).Refresh(true).PageSizes(true)).Sortable().Scrollable().Filterable(filter => filter.Enabled(false)).DataSource(dataSource => dataSource.Ajax().Read(read => read.Action("Categorys_Read", "Category")))
+)
+</div>
+@*<script src="@Url.Content("~/Scripts/App/category-jq.js")" type="text/javascript"></script>*@
+<script type="text/javascript">
+
+    function CreateWindow(windowTitle, linkUrlVal) {
+        $(document.body).append('<div id="appDynamicWindow"></div>');
+        $('#appDynamicWindow').kendoWindow({
+            width: "500px",
+            actions: ["Minimize", "Maximize", "Close"],
+            title: windowTitle,
+            modal: true,
+            resizable: false,
+            content: linkUrlVal,
+            close: function () {
+                setTimeout(function () {
+                    $('#appDynamicWindow').kendoWindow('destroy');
+                }, 200);
+            }
+        }).data('kendoWindow').center();
+    }
+
+    $(document).ready(function () {
+
+        //$("#add").live('click', function () { alert("Hello"); });
+
+        $(".lnkAddCategory").live('click', function () {
+
+            var linkObj = $(this);
+            var linkUrlVal = linkObj.attr('href');
+            var linkTitleVal = linkObj.attr('title');
+
+            var windowTitle = linkTitleVal;
+
+            // Create Window By Function
+            CreateWindow(windowTitle, linkUrlVal);
+
+            return false;
+
+        });
+
+        //lnkDetailsCategory For Display Category Details
+        $(".lnkDetailsCategory").live('click', function () {
+
+            var linkObj = $(this);
+            var linkUrlVal = linkObj.attr('href');
+            var linkTitleVal = linkObj.attr('title');
+
+            var windowTitle = linkTitleVal;
+
+            // Create Window By Function
+            CreateWindow(windowTitle, linkUrlVal);
+
+            return false;
+
+        });
+
+        //lnkEditCategory For Edit Category
+        $(".lnkEditCategory").live('click', function () {
+
+            var linkObj = $(this);
+            var linkUrlVal = linkObj.attr('href');
+            var linkTitleVal = linkObj.attr('title');
+
+            var windowTitle = linkTitleVal;
+
+            // Create Window By Function
+            CreateWindow(windowTitle, linkUrlVal);
+
+            return false;
+
+        });
+
+        //lnkDeleteCategory For Delete Category
+        $(".lnkDeleteCategory").live('click', function () {
+
+            var linkObj = $(this);
+            var linkUrlVal = linkObj.attr('href');
+
+            var linkTitleVal = linkObj.attr('title');
+
+            var windowTitle = linkTitleVal;
+
+            // Create Window By Function
+            CreateWindow(windowTitle, linkUrlVal);
+
+            return false;
+
+        });
+
+
+    });
+    
+</script>

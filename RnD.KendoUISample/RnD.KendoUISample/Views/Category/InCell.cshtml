@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Creatable";
+}
+<h2>
+    Category List: CRUD Mode In Cell</h2>
+<div id="catGrid">
+    @(Html.Kendo().Grid<RnD.KendoUISample.Models.Category>()
+    .Name("Grid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.CategoryId).Groupable(false);
+        columns.Bound(c => c.Name);
+        columns.Command(command => command.Destroy()).Width(110);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Create();
+        toolbar.Save();
+    })
+    .Editable(editable => editable.Mode(GridEditMode.InCell))
+    .Pageable(pager => pager.Input(true).Numeric(true).Info(true).PreviousNext(true).Refresh(true).PageSizes(true))
+    .Sortable()
+    .Scrollable()
+    .Filterable(filter => filter.Enabled(false))
+    .DataSource(dataSource => dataSource
+                                .Ajax().Batch(true).ServerOperation(false).Events(events => events.Error("error_handler")).Model(model => model.Id(c => c.CategoryId)).Create(create => create.Action("Categorys_Create", "Category")).Read(read => read.Action("Categorys_Read", "Category")).Update(update => update.Action("Categorys_Update", "Category")).Destroy(destroy => destroy.Action("Categorys_Destroy", "Category"))
+    )
+)
+</div>
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>
