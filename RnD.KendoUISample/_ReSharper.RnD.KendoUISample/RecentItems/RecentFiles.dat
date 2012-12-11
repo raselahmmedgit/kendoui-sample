@@ -9,7 +9,6 @@
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/f:Web.config" caret="1091" fromTop="9" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/f:Web.config" caret="1987" fromTop="9" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/f:Global.asax.cs" caret="760" fromTop="16" />
-    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Category/f:Index.cshtml" caret="562" fromTop="10" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Category/f:Dialog.cshtml" caret="625" fromTop="0" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Category/f:PopUp.cshtml" caret="648" fromTop="17" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Content/f:Site.css" caret="5751" fromTop="26" />
@@ -23,9 +22,10 @@
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Scripts/d:Kendo/f:kendo.grid.min.js" caret="12375" fromTop="7" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Scripts/d:Kendo/f:kendo.all.min.js" caret="192987" fromTop="7" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Content/d:Kendo/f:kendo.common.min.css" caret="20148" fromTop="7" />
-    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Category/f:Window.cshtml" caret="3662" fromTop="6" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Controllers/f:CategoryController.cs" caret="0" fromTop="0" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Category/f:_Add.cshtml" caret="298" fromTop="7" />
+    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Category/f:Index.cshtml" caret="0" fromTop="0" />
+    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Category/f:Window.cshtml" caret="0" fromTop="0" />
   </RecentFiles>
   <RecentEdits>
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Category/f:PopUp.cshtml" caret="772" fromTop="20" />
