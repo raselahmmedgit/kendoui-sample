@@ -67,6 +67,19 @@ namespace RnD.KendoUISample.Controllers
             return View();
         }
 
+        //SelectMultiRow
+        public ViewResult SelectItems()
+        {
+            //return View(GetCategorys());
+            return View();
+        }
+
+        //Get
+        public ActionResult SelectList()
+        {
+            return PartialView("_SelectList");
+        }
+
         public ActionResult Categorys_Read([DataSourceRequest] DataSourceRequest request)
         {
             return Json(GetCategorys().ToDataSourceResult(request));

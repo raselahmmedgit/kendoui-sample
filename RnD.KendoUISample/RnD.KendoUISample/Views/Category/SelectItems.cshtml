@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "Select Multi Row From Kendo Grid";
+}
+<h2>
+    Category List: Add by Selected Row From Kendo Grid</h2>
+<p>
+    <a href="/Category/SelectList" id="lnkSelectCategory" class="button">Select Category</a>
+</p>
+<div id="selectMultiRowPage">
+    <div id="catGrid">
+        @(Html.Kendo().Grid<RnD.KendoUISample.Models.Category>().Name("catGrid").Columns(columns =>
+                                                                                          {
+                                                                                              columns.Bound(c => c.CategoryId);
+                                                                                              columns.Bound(c => c.Name);
+                                                                                              columns.Bound(c => c.ActionLink).HeaderTemplate("Remove").Width("100px");
+                                                                                          }).Groupable(group => group.Enabled(false)).Pageable(pager => pager.Enabled(false)).Sortable(sort => sort.Enabled(false)).Scrollable().Filterable(filter => filter.Enabled(false))
+              )
+    </div>
+    <div id="selectCategoryDailog" title="Select Category">
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        //For select Category
+        $("#selectCategoryDailog").dialog({
+            autoOpen: false,
+            width: 700,
+            resizable: false,
+            modal: true,
+            buttons: {
+                "Ok": function () {
+
+                    //Get Selected Category Item by Select Category Grid
+                    var catSelectListGrid = $('#catSelectListGrid').data('kendoGrid');
+
+                    //Get Selected Category Item by Select Category Grid
+                    var catGrid = $('#catGrid').data('kendoGrid');
+
+                    var categoryList = [];
+
+                    $(".chkCategoryId").each(function () {
+                        if ($(this).is(":checked")) {
+
+                            var chkCategoryIdValue = $(this).attr("value");
+                            var dataItem = catSelectListGrid.dataSource.get(chkCategoryIdValue);
+                            var categoryId = dataItem.CategoryId;
+                            var categoryName = dataItem.Name;
+                            var actionLink = "<p class='button'>Remove</p>";
+
+                            var category = {};
+                            category = { CategoryId: categoryId, Name: categoryName, ActionLink: actionLink };
+
+                            // Push Data to categoryList Array
+                            categoryList.push(category);
+
+                            // Add Category Object to catGrid
+                            //catGrid.dataSource.add({ CategoryId: categoryId, Name: categoryName });
+                            catGrid.dataSource.add(category);
+
+                        }
+                    });
+
+                    //catGrid.dataSource.data(categoryList);
+
+                    $(this).dialog("close");
+                },
+                "Cancel": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $('#lnkSelectCategory').live('click', function () {
+            var linkObj = $(this);
+            var dialogDiv = $('#selectCategoryDailog');
+            var viewUrl = linkObj.attr('href');
+            $.get(viewUrl, function (data) {
+                dialogDiv.html(data);
+                dialogDiv.dialog('open');
+            });
+            return false;
+
+        });
+    });
+</script>

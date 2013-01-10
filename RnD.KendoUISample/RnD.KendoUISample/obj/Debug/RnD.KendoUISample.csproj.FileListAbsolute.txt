@@ -18,12 +18,10 @@ G:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\uk-UA\Kendo.Mvc.reso
 G:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\zh-CN\Kendo.Mvc.resources.dll
 G:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.dll
 G:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.pdb
-E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\RnD.KendoUISample.dll
-E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\RnD.KendoUISample.pdb
+E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\Kendo.Mvc.xml
 E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\EntityFramework.dll
 E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\Kendo.Mvc.dll
 E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\EntityFramework.xml
-E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\Kendo.Mvc.xml
 E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\bg-BG\Kendo.Mvc.resources.dll
 E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\da-DK\Kendo.Mvc.resources.dll
 E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\de-DE\Kendo.Mvc.resources.dll
@@ -36,6 +34,7 @@ E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\pt-PT\Kendo.Mvc.reso
 E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\ru-RU\Kendo.Mvc.resources.dll
 E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\uk-UA\Kendo.Mvc.resources.dll
 E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\zh-CN\Kendo.Mvc.resources.dll
-E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.csprojResolveAssemblyReference.cache
 E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.dll
 E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.pdb
+E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\RnD.KendoUISample.dll
+E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\RnD.KendoUISample.pdb

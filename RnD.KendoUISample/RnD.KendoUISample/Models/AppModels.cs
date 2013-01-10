@@ -9,7 +9,10 @@ namespace RnD.KendoUISample.Models
     public class BaseModel
     {
         [NotMapped]
-        public virtual bool KendoWindow { get; set; }
+        public virtual string KendoWindow { get; set; }
+
+        [NotMapped]
+        public virtual string ActionLink { get; set; }
     }
 
     public class Category : BaseModel
