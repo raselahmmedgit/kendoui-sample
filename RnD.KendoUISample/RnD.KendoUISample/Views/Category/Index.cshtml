@@ -1,13 +1,96 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Category";
 }
-<h2>
-    Category List: Basic Mode</h2>
-<div id="catGrid">
-    @(Html.Kendo().Grid<RnD.KendoUISample.Models.Category>().Name("Grid").Columns(columns =>
-{
-    columns.Bound(c => c.CategoryId).Groupable(false);
-    columns.Bound(c => c.Name);
-}).Groupable().Pageable(pager => pager.Input(true).Numeric(true).Info(true).PreviousNext(true).Refresh(true).PageSizes(true)).Sortable().Scrollable().Filterable(filter => filter.Enabled(false)).DataSource(dataSource => dataSource.Ajax().Read(read => read.Action("Categorys_Read", "Category")))
-)
+<div id="indexPage" style="width: 100%; display: inline-block;">
+    <div style="float: left; width: 50%; display: inline-block;">
+        <div>
+            <h2>
+                Kendo UI Grid Sample</h2>
+            <p>
+                <a href="/Category/Basic" class="button">Kendo UI Basic Grid</a>
+            </p>
+        </div>
+        <div>
+            <h2>
+                Kendo UI Grid CRUD InCell Sample</h2>
+            <p>
+                <a href="/Category/InCell" class="button">Kendo UI Grid CRUD InCell</a>
+            </p>
+        </div>
+        <div>
+            <h2>
+                Kendo UI Grid CRUD PopUp Sample</h2>
+            <p>
+                <a href="/Category/PopUp" class="button">Kendo UI Grid CRUD PopUp</a>
+            </p>
+        </div>
+        <div>
+            <h2>
+                Kendo UI Grid CRUD Custom PopUp Sample</h2>
+            <p>
+                <a href="/Category/Dialog" class="button">Kendo UI Grid CRUD Custom PopUp</a>
+            </p>
+        </div>
+        <div>
+            <h2>
+                Kendo UI Grid CRUD Kendo UI Window Sample</h2>
+            <p>
+                <a href="/Category/Window" class="button">Kendo UI Grid CRUD Kendo UI Window</a>
+            </p>
+        </div>
+        <div>
+            <h2>
+                Kendo UI Grid CRUD Kendo UI Window By OneLink Sample</h2>
+            <p>
+                <a href="/Category/WindowLink" class="button">Kendo UI Grid CRUD Kendo UI Window By
+                    OneLink</a>
+            </p>
+        </div>
+        <div>
+            <h2>
+                Kendo UI Grid CRUD Kendo UI Window By Global Sample</h2>
+            <p>
+                <a href="/Category/WindowGlobal" class="button">Kendo UI Grid CRUD Kendo UI Window By
+                    Global</a>
+            </p>
+        </div>
+    </div>
+    <div style="float: right; width: 50%; display: inline-block;">
+        <div>
+            <h2>
+                Kendo UI Grid Select Multi Row From PopUp Kendo UI Grid Sample</h2>
+            <p>
+                <a href="/Category/SelectItems" class="button">Select Multi Row From PopUp Kendo UI
+                    Grid</a>
+            </p>
+        </div>
+        <div>
+            <h2>
+                Kendo UI Grid Custom Toolbar Sample</h2>
+            <p>
+                <a href="/Category/Toolbar" class="button">Custom Toolbar</a>
+            </p>
+        </div>
+        <div>
+            <h2>
+                Sample</h2>
+            <p>
+                <a href="#" class="button">Click</a>
+            </p>
+        </div>
+        <div>
+            <h2>
+                Sample</h2>
+            <p>
+                <a href="#" class="button">Click</a>
+            </p>
+        </div>
+        <div>
+            <h2>
+                Sample</h2>
+            <p>
+                <a href="#" class="button">Click</a>
+            </p>
+        </div>
+    </div>
 </div>

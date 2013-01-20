@@ -23,17 +23,18 @@
 
 #jqDialog_options button
 {
-    margin-right: 5px;
-    background: #000 !important;
-    border: 0px;
-    font-size: 1.5em;
-    color: #fff;
-    width: auto;
-    cursor: pointer;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -khtml-border-radius: 3px;
-    border-radius: 3px;
+    position: relative !important;
+    margin: 0px !important;
+    padding: 0px 8px !important;
+    background: none repeat scroll 0 0 #CCCCCC !important;
+    border: 1px solid #AAAAAA !important;
+    color: #222222 !important;
+    font-size: 12px !important;
+    letter-spacing: 1px !important;
+    border-radius: 2px !important;
+    -webkit-border-radius: 2px !important;
+    -moz-border-radius: 2px !important;
+    text-decoration: none !important;
 }
 
 #jqDialog_input
@@ -131,4 +132,18 @@
     color: #D8000C;
     background: #FFBABA url('/Content/Images/App/icon-cross.png') no-repeat;
     background-position: 20px 10px, top;
+}
+
+.mess
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+.mess p
+{
+    margin: 0px 0px 0px 0px;
+    padding: 0px;
+    display: list-item;
+    line-height: 1.2em;
 }

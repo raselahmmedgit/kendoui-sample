@@ -11,6 +11,10 @@ namespace RnD.KendoUISample.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
 
+        //For Logger
+        public DbSet<Logger> Loggers { get; set; }
+        public DbSet<LoggerType> LoggerTypes { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

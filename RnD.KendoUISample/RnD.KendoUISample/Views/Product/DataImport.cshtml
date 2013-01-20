@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Data Import";
+}
+<h2>
+    Product List: Data Import Mode</h2>
+<div id="proGridZone">
+    @(Html.Kendo().Grid<RnD.KendoUISample.Models.Product>().Name("productGrid").Columns(columns =>
+{
+    columns.Bound(c => c.ProductId).Groupable(false);
+    columns.Bound(c => c.Name);
+    columns.Bound(c => c.Price);
+    columns.Bound(c => c.CategoryId);
+}).ToolBar(toolbar =>
+{
+    toolbar.Custom().Text("Import From CSV").Url("javascript:;").HtmlAttributes(new { id = "productImportFromCSV" });
+    toolbar.Custom().Text("Import From Excel").Url("javascript:;").HtmlAttributes(new { id = "productImportFromExcel" });
+}).Groupable(group => group.Enabled(true)).Pageable(pager => pager.Input(true).Numeric(true).Info(true).PreviousNext(true).Refresh(true).PageSizes(true)).Sortable(sort => sort.Enabled(true)).Scrollable().Resizable(resize => resize.Columns(true)).Reorderable(reorder => reorder.Columns(true)).Filterable(filter => filter.Enabled(true)).DataSource(dataSource => dataSource.Ajax().Read(read => read.Action("ProductsRead", "Product")))
+)
+</div>
+<div id="productImportFromCSVDialog" title="Import From CSV">
+</div>
+<div id="productImportFromExcelDialog" title="Import From Excel">
+</div>
+<script type="text/javascript">
+    $(function () {
+
+        //For product Import From CSV
+        $("#productImportFromCSVDialog").dialog({
+            autoOpen: false,
+            width: 600,
+            resizable: false,
+            modal: true,
+            buttons: {
+                "Add": function () {
+                    //make sure there is nothing on the message before we continue 
+                    $("#importFromCsvMess").html('');
+                    $("#importFromCsvForm").submit();
+                },
+                "Cancel": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $('#productImportFromCSV').live('click', function () {
+
+            var dialogDiv = $('#productImportFromCSVDialog');
+            var viewUrl = "/Product/ImportFromCSV";
+            $.get(viewUrl, function (data) {
+                dialogDiv.html(data);
+                //validation
+                var $form = $("#importFromCsvForm");
+                // Unbind existing validation
+                $form.unbind();
+                $form.data("validator", null);
+                // Check document for changes
+                $.validator.unobtrusive.parse(document);
+                // Re add validation with changes
+                $form.validate($form.data("unobtrusiveValidation").options);
+                //open dialog
+                dialogDiv.dialog('open');
+            });
+            return false;
+
+        });
+
+        //For product Import From Excel
+        $("#productImportFromExcelDialog").dialog({
+            autoOpen: false,
+            width: 600,
+            resizable: false,
+            modal: true,
+            buttons: {
+                "Add": function () {
+                    //make sure there is nothing on the message before we continue 
+                    $("#importFromExcelMess").html('');
+                    $("#importFromExcelForm").submit();
+                },
+                "Cancel": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $('#productImportFromExcel').live('click', function () {
+
+            var dialogDiv = $('#productImportFromExcelDialog');
+            var viewUrl = "/Product/ImportFromXls";
+            $.get(viewUrl, function (data) {
+                dialogDiv.html(data);
+                //validation
+                var $form = $("#importFromExcelForm");
+                // Unbind existing validation
+                $form.unbind();
+                $form.data("validator", null);
+                // Check document for changes
+                $.validator.unobtrusive.parse(document);
+                // Re add validation with changes
+                $form.validate($form.data("unobtrusiveValidation").options);
+                //open dialog
+                dialogDiv.dialog('open');
+            });
+            return false;
+
+        });
+
+    });
+
+    function ImportFromCsvSuccess() {
+        if ($("#importFromCsvMess").html() == "True") {
+
+            //now we can close the dialog
+            $('#productImportFromCSVDialog').dialog('close');
+            //twitter type notification
+            $('#commonMessage').html("Product data uploaded successfully.");
+            $('#commonMessage').delay(400).slideDown(400).delay(3000).slideUp(400);
+
+        }
+        else {
+            //show message in popup
+            $("#importFromCsvMess").show();
+        }
+    }
+
+    function ImportFromExcelSuccess() {
+        if ($("#importFromExcelMess").html() == "True") {
+
+            //now we can close the dialog
+            $('#productImportFromExcelDialog').dialog('close');
+            //twitter type notification
+            $('#commonMessage').html("Product data uploaded successfully.");
+            $('#commonMessage').delay(400).slideDown(400).delay(3000).slideUp(400);
+
+        }
+        else {
+            //show message in popup
+            $("#importFromExcelMess").show();
+        }
+    }
+
+</script>

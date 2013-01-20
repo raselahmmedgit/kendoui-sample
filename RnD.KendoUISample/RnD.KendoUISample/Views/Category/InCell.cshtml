@@ -23,7 +23,7 @@
     .Scrollable()
     .Filterable(filter => filter.Enabled(false))
     .DataSource(dataSource => dataSource
-                                .Ajax().Batch(true).ServerOperation(false).Events(events => events.Error("error_handler")).Model(model => model.Id(c => c.CategoryId)).Create(create => create.Action("Categorys_Create", "Category")).Read(read => read.Action("Categorys_Read", "Category")).Update(update => update.Action("Categorys_Update", "Category")).Destroy(destroy => destroy.Action("Categorys_Destroy", "Category"))
+                                        .Ajax().Batch(true).ServerOperation(false).Events(events => events.Error("error_handler")).Model(model => model.Id(c => c.CategoryId)).Create(create => create.Action("CategoryCreate", "Category")).Read(read => read.Action("CategorysRead", "Category")).Update(update => update.Action("CategoryUpdate", "Category")).Destroy(destroy => destroy.Action("CategoryDestroy", "Category"))
     )
 )
 </div>

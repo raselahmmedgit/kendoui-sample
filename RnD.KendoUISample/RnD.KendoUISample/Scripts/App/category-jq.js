@@ -10,7 +10,8 @@ function AddCategorySuccess() {
         //twitter type notification
         $('#commonMessage').html("Category Added.");
         $('#commonMessage').delay(400).slideDown(400).delay(3000).slideUp(400);
-
+        //Refresh Kendo Grid
+        KendoGridRefresh();
     }
     else {
         //show message in popup
@@ -27,7 +28,8 @@ function EditCategorySuccess() {
         //twitter type notification
         $('#commonMessage').html("Category Updated.");
         $('#commonMessage').delay(400).slideDown(400).delay(3000).slideUp(400);
-
+        //Refresh Kendo Grid
+        KendoGridRefresh();
     }
     else {
         //show message in popup
@@ -44,7 +46,8 @@ function DeleteCategorySuccess() {
         //twitter type notification
         $('#commonMessage').html("Task deleted");
         $('#commonMessage').delay(400).slideDown(400).delay(3000).slideUp(400);
-
+        //Refresh Kendo Grid
+        KendoGridRefresh();
     }
     else {
         //show message in popup
@@ -70,7 +73,8 @@ function AjaxSuccess(updateTargetId, dailogId, commonMessageId, commonMessage) {
         //twitter type notification
         $(_commonMessageId).html(_commonMessage);
         $(_commonMessageId).delay(400).slideDown(400).delay(3000).slideUp(400);
-
+        //Refresh Kendo Grid
+        KendoGridRefresh();
     }
     else {
         //show message in popup
@@ -80,10 +84,17 @@ function AjaxSuccess(updateTargetId, dailogId, commonMessageId, commonMessage) {
 //end Add, Edit, Delete - Success Common Funtion
 //-----------------------------------------------------
 
+//-----------------------------------------------------
+//start Refresh Kendo Grid Funtion
+function KendoGridRefresh() {
+    //Get Category Grid
+    var catGrid = $('#categoryGrid').data('kendoGrid');
+    catGrid.dataSource.read();
+}
+//end Refresh Kendo Grid Funtion
+//-----------------------------------------------------
 
 $(document).ready(function () {
-
-    var linkObj;
 
     //-------------------------------------------------------
     //start Add, Edit, Delete - Dialog, Click Event
@@ -109,7 +120,7 @@ $(document).ready(function () {
     $('.lnkAddCategory').live('click', function () {
 
         //change the title of the dialog
-        linkObj = $(this);
+        var linkObj = $(this);
         var dialogDiv = $('#addCategoryDialog');
         var viewUrl = linkObj.attr('href');
 
@@ -157,7 +168,7 @@ $(document).ready(function () {
     $('#categoryGrid tbody tr td a.lnkEditCategory').live('click', function () {
 
         //change the title of the dialog
-        linkObj = $(this);
+        var linkObj = $(this);
         var dialogDiv = $('#editCategoryDialog');
         var viewUrl = linkObj.attr('href');
         $.get(viewUrl, function (data) {
@@ -199,7 +210,7 @@ $(document).ready(function () {
     $('#categoryGrid tbody tr td a.lnkDeleteCategory').live('click', function () {
 
         //change the title of the dialog
-        linkObj = $(this);
+        var linkObj = $(this);
         var dialogDiv = $('#deleteCategoryDialog');
         var viewUrl = linkObj.attr('href');
         $.get(viewUrl, function (data) {
@@ -235,7 +246,7 @@ $(document).ready(function () {
 
     $('#categoryGrid tbody tr td a.lnkDetailCategory').live('click', function () {
 
-        linkObj = $(this);
+        var linkObj = $(this);
         var dialogDiv = $('#detailsCategoryDailog');
         var viewUrl = linkObj.attr('href');
         $.get(viewUrl, function (data) {

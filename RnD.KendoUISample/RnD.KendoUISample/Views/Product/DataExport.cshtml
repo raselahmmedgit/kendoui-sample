@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Data Export";
+}
+<h2>
+    Product List: Data Export Mode</h2>
+<div id="proGridZone">
+    @(Html.Kendo().Grid<RnD.KendoUISample.Models.Product>().Name("productGrid").Columns(columns =>
+{
+    columns.Bound(c => c.ProductId).Groupable(false);
+    columns.Bound(c => c.Name);
+    columns.Bound(c => c.Price);
+    columns.Bound(c => c.CategoryId);
+}).ToolBar(toolbar =>
+{
+    toolbar.Custom().Text("Export To CSV").Url(Url.Action("ExportToCsv", "Product")).HtmlAttributes(new { id = "exportToCSV" });
+    toolbar.Custom().Text("Export To Excel").Url(Url.Action("ExportToXls", "Product")).HtmlAttributes(new { id = "exportToExcel" });
+}).Groupable(group => group.Enabled(true)).Pageable(pager => pager.Input(true).Numeric(true).Info(true).PreviousNext(true).Refresh(true).PageSizes(true)).Sortable(sort => sort.Enabled(true)).Scrollable().Resizable(resize => resize.Columns(true)).Reorderable(reorder => reorder.Columns(true)).Filterable(filter => filter.Enabled(true)).DataSource(dataSource => dataSource.Ajax().Read(read => read.Action("ProductsRead", "Product")))
+)
+</div>

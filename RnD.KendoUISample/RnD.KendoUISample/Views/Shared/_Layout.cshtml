@@ -27,17 +27,14 @@
             </div>
             <nav>
                 <ul id="menu">
-                    <li>@Html.ActionLink("Basic", "Index", "Category")</li>
-                    <li>@Html.ActionLink("CRUD InCell", "InCell", "Category")</li>
-                    <li>@Html.ActionLink("CRUD PopUp", "PopUp", "Category")</li>
-                    <li>@Html.ActionLink("CRUD Window", "Window", "Category")</li>
-                    <li>@Html.ActionLink("CRUD Window Link", "WindowLink", "Category")</li>
-                    <li>@Html.ActionLink("CRUD Window Global", "WindowGlobal", "Category")</li>
-                    <li>@Html.ActionLink("CRUD Dialog", "Dialog", "Category")</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Category", "Index", "Category")</li>
+                    <li>@Html.ActionLink("Product", "Index", "Product")</li>
                 </ul>
             </nav>
         </header>
         <section id="main">
+            <div id="commonMessage" class="common-message"></div>
             @RenderBody()
         </section>
         <footer>

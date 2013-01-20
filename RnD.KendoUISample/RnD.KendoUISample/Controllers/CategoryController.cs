@@ -16,10 +16,14 @@ namespace RnD.KendoUISample.Controllers
     {
         private AppDbContext _db = new AppDbContext();
 
-        //
-        // GET: /Category/
-
         public ViewResult Index()
+        {
+            //return View(GetCategorys());
+            return View();
+        }
+
+        //Basic
+        public ViewResult Basic()
         {
             //return View(GetCategorys());
             return View();
@@ -68,7 +72,15 @@ namespace RnD.KendoUISample.Controllers
         }
 
         //SelectMultiRow
+        [HttpGet]
         public ViewResult SelectItems()
+        {
+            //return View(GetCategorys());
+            return View();
+        }
+
+        //Toolbar
+        public ViewResult Toolbar()
         {
             //return View(GetCategorys());
             return View();
@@ -80,10 +92,41 @@ namespace RnD.KendoUISample.Controllers
             return PartialView("_SelectList");
         }
 
-        public ActionResult Categorys_Read([DataSourceRequest] DataSourceRequest request)
+        public ActionResult CategorysRead([DataSourceRequest] DataSourceRequest request)
         {
             return Json(GetCategorys().ToDataSourceResult(request));
         }
+
+        #region Add Multipule Category List
+
+        [HttpPost]
+        public ActionResult AddList(IList<Category> categoryList)
+        {
+            try
+            {
+                foreach (var category in categoryList)
+                {
+                    //_db.Categories.Add(category);
+                    //_db.SaveChanges();
+
+                    //return RedirectToAction("Index");
+                    //return Content(Boolean.TrueString);
+                    return Json(Boolean.TrueString);
+                }
+
+                //return View(category);
+                //return PartialView("_Add", category);
+                //return Content("Please review your form.");
+                return Json("Please review your form.");
+            }
+            catch (Exception ex)
+            {
+                //return Content("Error Occured!");
+                return Json("Error Occured!");
+            }
+        }
+
+        #endregion
 
         private IEnumerable<Category> GetCategorys()
         {
@@ -95,7 +138,7 @@ namespace RnD.KendoUISample.Controllers
         #region CRUD Action For InCell By List
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Categorys_Create([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Category> categorys)
+        public ActionResult CategoryCreate([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Category> categorys)
         {
             var results = new List<Category>();
 
@@ -113,7 +156,7 @@ namespace RnD.KendoUISample.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Categorys_Update([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Category> categorys)
+        public ActionResult CategoryUpdate([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Category> categorys)
         {
             if (categorys != null && ModelState.IsValid)
             {
@@ -134,7 +177,7 @@ namespace RnD.KendoUISample.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Categorys_Destroy([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Category> categorys)
+        public ActionResult CategoryDestroy([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<Category> categorys)
         {
             if (categorys != null && categorys.Any())
             {
@@ -211,6 +254,15 @@ namespace RnD.KendoUISample.Controllers
         //
         // GET: /Category/Create
 
+        public ActionResult Create()
+        {
+            //return View();
+            return PartialView("_Create");
+        }
+
+        //
+        // GET: /Category/Add
+
         public ActionResult Add()
         {
             //return View();
@@ -218,7 +270,7 @@ namespace RnD.KendoUISample.Controllers
         }
 
         //
-        // POST: /Category/Create
+        // POST: /Category/Add
 
         [HttpPost]
         public ActionResult Add(Category category)

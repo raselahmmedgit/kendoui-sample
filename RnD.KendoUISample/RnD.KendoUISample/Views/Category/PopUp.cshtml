@@ -18,7 +18,7 @@
     .Sortable()
     .Scrollable()
     .Filterable(filter => filter.Enabled(false))
-            .DataSource(dataSource => dataSource.Ajax().Model(model => model.Id(c => c.CategoryId)).Create(create => create.Action("Create", "Category")).Read(read => read.Action("Categorys_Read", "Category")).Update(update => update.Action("Update", "Category")).Destroy(destroy => destroy.Action("Destroy", "Category"))
+            .DataSource(dataSource => dataSource.Ajax().Model(model => model.Id(c => c.CategoryId)).Create(create => create.Action("Create", "Category")).Read(read => read.Action("CategorysRead", "Category")).Update(update => update.Action("Update", "Category")).Destroy(destroy => destroy.Action("Destroy", "Category"))
     )
 )
 </div>
