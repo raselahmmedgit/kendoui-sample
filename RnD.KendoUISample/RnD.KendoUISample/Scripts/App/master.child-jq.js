@@ -2,7 +2,7 @@
 ////Get Product Details Grid
 //var productDetailsGrid = $('#productDetailsGrid').data('kendoGrid');
 
-// this function is used to remove item to list grid
+// this function is used to remove details item to list grid
 function ProductRemoveRow(id) {
 
     //Get Product Grid
@@ -13,8 +13,20 @@ function ProductRemoveRow(id) {
     productDetailsGrid.dataSource.remove(dataItem);
 }
 
-// this function is used to add item to list grid
-function Add(model) {
+// this function is used to add master data
+function AddMaster(model) {
+
+    //Get Model Data
+    var masterModel = model;
+}
+
+// this function is used to reset details item to list grid
+function ResetMaster() {
+    $("#CategoryId").val("0");
+}
+
+// this function is used to add details item to list grid
+function AddDetails(model) {
 
     //Get Product Details Grid
     var productDetailsGrid = $('#productDetailsGrid').data('kendoGrid');
@@ -23,14 +35,32 @@ function Add(model) {
     productDetailsGrid.dataSource.add(model);
 }
 
-// this function is used to reset item to list grid
-function Reset() {
+// this function is used to reset details item to list grid
+function ResetDetails() {
+    
     $('#Name').val('');
     $('#Price').val('');
+
+    //Get Product Grid
+    var productDetailsGrid = $('#productDetailsGrid').data('kendoGrid');
+
+    //Get All Data from Category Grid
+    var allData = productDetailsGrid.dataSource.data();
+    var totalNumber = allData.length;
+
+    for (var i = 1; i <= totalNumber; i++) {
+
+        //Get Product Details Grid by model id
+        var currentDataItem = productDetailsGrid.dataSource.get(i);
+
+        //Remove Product Item from Product Details Grid
+        productDetailsGrid.dataSource.remove(currentDataItem);
+
+    }
 }
 
-// this function is used to save this form
-function FormSave(postUrl, model, modelList) {
+// this function is used to save master details
+function MasterDetailsFormSave(postUrl, model, modelList) {
 
     var paramValue = JSON.stringify({ model: model, modelList: modelList });
 
@@ -53,43 +83,29 @@ function FormSave(postUrl, model, modelList) {
     });
 }
 
-// this function is used to print this form
-function FormPrint() {
+// this function is used to print master details
+function MasterDetailsFormPrint() {
 
 }
 
-// this function is used to reset this form
-function FormReset() {
+// this function is used to reset master details
+function MasterDetailsFormReset() {
 
-    $("#CategoryId").val("0");
-    Reset();
-
-    //Get Product Grid
-    var productDetailsGrid = $('#productDetailsGrid').data('kendoGrid');
-
-    //Get All Data from Category Grid
-    var allData = productDetailsGrid.dataSource.data();
-    var totalNumber = allData.length;
-
-    for (var i = 1; i <= totalNumber; i++) {
-
-        //Get Product Details Grid by model id
-        var currentDataItem = productDetailsGrid.dataSource.get(i);
-
-        //Remove Product Item from Product Details Grid
-        productDetailsGrid.dataSource.remove(currentDataItem);
-
-    }
-
+    // Reset master data
+    ResetMaster();
+    // Reset details data
+    ResetDetails();
+    
 }
 
 // this function is used to cancel this form
-function FormCancel() {
+function MasterDetailsFormCancel() {
 
 }
 
-// this function is used to cancel this form
-function GetGridLastAddedItemId() {
+// this function is used to get details grid last added item
+function GetDetailsGridLastAddedItemId() {
+    
     //Get Product Details Grid
     var productDetailsGrid = $('#productDetailsGrid').data('kendoGrid');
 
@@ -102,7 +118,7 @@ function GetGridLastAddedItemId() {
     return tempId;
 }
 
-function GridRefresh(parameters) {
+function DetailsGridRefresh(parameters) {
     // this function is used to cancel this form
 }
 
@@ -111,7 +127,7 @@ $(function () {
     //add Product
     $('#proAdd').click(function () {
 
-        var tempId = GetGridLastAddedItemId();
+        var tempId = GetDetailsGridLastAddedItemId();
         var name = $('#Name').val();
         var price = $('#Price').val();
         var categoryId = $("#CategoryId option:selected").val();
@@ -137,7 +153,7 @@ $(function () {
             success: function (data) {
                 if (data == "True") {
                     //Add new product to grid
-                    Add(productViewModel);
+                    AddDetails(productViewModel);
                 } else {
                     //JQDialogAlert mass, status
                     JQDialogAlert(data.msg, data.status);
@@ -158,7 +174,7 @@ $(function () {
     //reset Product
     $('#proReset').click(function () {
 
-        Reset();
+        ResetDetails();
         return false;
 
     });
@@ -182,7 +198,7 @@ $(function () {
         //Get Product Grid
         var productDetailsGrid = $('#productDetailsGrid').data('kendoGrid');
 
-        //Get All Data from Category Grid
+        //Get All Data from Product Grid
         var allData = productDetailsGrid.dataSource.data();
         var totalNumber = allData.length;
 
@@ -214,7 +230,7 @@ $(function () {
     //Form Print
     $('#proFormPrint').click(function () {
 
-        FormPrint();
+        MasterDetailsFormPrint();
         return false;
 
     });
@@ -222,7 +238,7 @@ $(function () {
     //Form Reset
     $('#proFormReset').click(function () {
 
-        FormReset();
+        MasterDetailsFormReset();
         return false;
 
     });
@@ -230,7 +246,7 @@ $(function () {
     //Form Cancel
     $('#proFormCancel').click(function () {
 
-        FormCancel();
+        MasterDetailsFormCancel();
         return false;
 
     });

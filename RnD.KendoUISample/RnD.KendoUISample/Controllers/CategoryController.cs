@@ -5,10 +5,12 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using RnD.KendoUISample.Helpers;
 using RnD.KendoUISample.Models;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using System.Data.Linq;
+using RnD.KendoUISample.ViewModels;
 
 namespace RnD.KendoUISample.Controllers
 {
@@ -91,6 +93,60 @@ namespace RnD.KendoUISample.Controllers
         {
             return PartialView("_SelectList");
         }
+
+        //Get
+        public ActionResult SelectListByModel(int id)
+        {
+            var category = _db.Categories.SingleOrDefault(x => x.CategoryId == id);
+            var products = _db.Products.Where(x => x.CategoryId == id);
+
+            var categoryViewModel = new CategoryViewModel { CategoryId = category.CategoryId, Name = category.Name, Products = products };
+
+            return PartialView("_SelectListByModel", categoryViewModel);
+        }
+
+        [HttpPost]
+        public JsonResult MasterDetailsSave(Category model, List<Product> modelList)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                    if (model != null)
+                    {
+                        if (modelList.Any())
+                        {
+                            //Save MasterDetails Data
+
+                            //Save MasterDetails Data
+
+                            return Json(new { msg = "Master details saved successfully.", status = MessageType.success.ToString() }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            //Details Data Null Message
+                            return Json(new { msg = "Details data could not found.", status = MessageType.success.ToString() }, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                    else
+                    {
+                        //Master Data Null Message
+                        return Json(new { msg = "Master data could not found.", status = MessageType.success.ToString() }, JsonRequestBehavior.AllowGet);
+                    }
+
+                }
+
+                //ModelState Validation
+                return Json(new { msg = ExceptionHelper.ModelStateErrorFormat(ModelState), status = MessageType.info.ToString() }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { msg = ExceptionHelper.ExceptionMessageFormat(ex, log: false), status = MessageType.error.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
 
         public ActionResult CategorysRead([DataSourceRequest] DataSourceRequest request)
         {

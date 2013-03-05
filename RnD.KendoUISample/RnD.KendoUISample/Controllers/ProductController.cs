@@ -56,6 +56,35 @@ namespace RnD.KendoUISample.Controllers
             return View(productViewModel);
         }
 
+        //MasterDetails
+        [HttpGet]
+        public ActionResult EditMasterDetails(int id)
+        {
+            var category = _db.Categories.SingleOrDefault(x => x.CategoryId == id);
+
+            var categories = SelectListItemExtension.PopulateDropdownList(_db.Categories.ToList<Category>(), "CategoryId", "Name").ToList();
+
+            if (category != null)
+            {
+                var products = _db.Products.Where(x => x.CategoryId == category.CategoryId).ToList();
+
+                var productViewModel = new ProductViewModel()
+                                           {
+                                               CategoryId = category.CategoryId,
+                                               CategoryName = category.Name,
+                                               ddlCategories = categories,
+                                               Products = products
+                                           };
+
+                return View(productViewModel);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Product");
+            }
+        }
+
+
         //[HttpPost]
         //public ActionResult MasterDetails(int id)
         //{
@@ -80,6 +109,7 @@ namespace RnD.KendoUISample.Controllers
             writer.Write("ProductId,");
             writer.Write("ProductName,");
             writer.Write("ProductPrice,");
+            writer.Write("CategoryId,");
             writer.Write("CategoryName");
             writer.WriteLine();
             foreach (Product product in products)
@@ -94,8 +124,11 @@ namespace RnD.KendoUISample.Controllers
                 writer.Write(product.Price);
                 writer.Write("\"");
                 writer.Write(",");
+                writer.Write(product.Category != null ? 0 : product.CategoryId);
+                writer.Write(",");
                 writer.Write("\"");
-                if (product.Category != null) writer.Write(product.Category != null ? " " : product.Category.Name);
+                if (product.Category != null) writer.Write(product.Category != null ? string.Empty : product.Category.Name);
+                writer.Write("\"");
                 writer.WriteLine();
             }
             writer.Flush();
@@ -126,8 +159,8 @@ namespace RnD.KendoUISample.Controllers
 
             //Set the column names in the header row
             headerRow.CreateCell(0).SetCellValue("ProductId");
-            headerRow.CreateCell(1).SetCellValue("ProductName");
-            headerRow.CreateCell(2).SetCellValue("ProductPrice");
+            headerRow.CreateCell(1).SetCellValue("Name");
+            headerRow.CreateCell(2).SetCellValue("Price");
             headerRow.CreateCell(3).SetCellValue("CategoryName");
 
             //(Optional) freeze the header row so it is not scrolled
@@ -233,7 +266,7 @@ namespace RnD.KendoUISample.Controllers
                     HSSFWorkbook hssfWorkbook;
                     string filefullpath = Path.GetFullPath(model.ImportFile.FileName);
                     StreamReader streamReader = new StreamReader(model.ImportFile.InputStream);
-                    
+
                     using (FileStream fileStream = new FileStream(filefullpath, FileMode.Open, FileAccess.Read))
                     {
                         //hssfWorkbook = new HSSFWorkbook(fileStream);
@@ -411,8 +444,8 @@ namespace RnD.KendoUISample.Controllers
             var model = new ProductViewModel()
             {
                 ProductId = product.ProductId,
-                ProductName = product.Name,
-                ProductPrice = product.Price,
+                Name = product.Name,
+                Price = product.Price,
                 CategoryId = product.CategoryId,
                 ddlCategories = categories
             };
@@ -480,8 +513,8 @@ namespace RnD.KendoUISample.Controllers
             var model = new ProductViewModel()
             {
                 ProductId = product.ProductId,
-                ProductName = product.Name,
-                ProductPrice = product.Price,
+                Name = product.Name,
+                Price = product.Price,
                 CategoryId = product.CategoryId
             };
 

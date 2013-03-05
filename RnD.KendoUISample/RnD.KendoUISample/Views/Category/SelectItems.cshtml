@@ -7,6 +7,10 @@
     <p>
         <a href="/Category/SelectList" id="lnkSelectCategory" class="button">Select Categories</a>
     </p>
+    <p>
+        <a href="/Category/SelectListByModel/1" id="lnkSelectByModelCategory" class="button">
+            Select Categories By Model</a>
+    </p>
     <div id="catGrid">
         @(Html.Kendo().Grid<RnD.KendoUISample.Models.Category>().Name("catGrid").Columns(columns =>
                                                                                              {
@@ -21,8 +25,11 @@
     </p>
     <div id="selectCategoryDailog" title="Select Categories">
     </div>
+    <div id="selectByModelCategoryDailog" title="Select Categories By Model">
+    </div>
 </div>
 <script type="text/javascript">
+
     $(function () {
         //For select Category
         $("#selectCategoryDailog").dialog({
@@ -91,6 +98,94 @@
 
         });
 
+        //For select ByModel Category
+        $("#selectByModelCategoryDailog").dialog({
+            autoOpen: false,
+            width: 750,
+            resizable: false,
+            modal: true,
+            buttons: {
+                "Ok": function () {
+
+                    //Master Model
+                    var categoryId = $("#CategoryId").val();
+                    var categoryName = $("#Name").val();
+
+                    var category = {};
+                    category.CategoryId = categoryId;
+                    category.Name = categoryName;
+
+                    //Details Model List
+                    var productList = [];
+
+                    //Get Product Grid
+                    var productDetailsByModelGrid = $('#productDetailsByModelGrid').data('kendoGrid').dataSource;
+
+                    //Get All Data from Product Grid
+                    var allData = productDetailsByModelGrid.data();
+                    var totalNumber = allData.length;
+
+                    for (var i = 0; i < totalNumber; i++) {
+
+                        var currentDataItem = allData[i];
+
+                        var productId = currentDataItem.ProductId;
+                        var productName = currentDataItem.Name;
+                        var productPrice = currentDataItem.Price;
+                        var productCategoryId = currentDataItem.CategoryId;
+
+                        var product = {};
+                        product.ProductId = productId;
+                        product.Name = productName;
+                        product.Price = productPrice;
+                        product.CategoryId = productCategoryId;
+
+                        // Push Data to productList Array
+                        productList.push(product);
+                    }
+
+                    var postUrl = '/Category/MasterDetailsSave';
+
+                    var paramValue = JSON.stringify({ model: category, modelList: productList });
+
+                    $.ajax({
+                        url: postUrl,
+                        type: 'POST',
+                        dataType: 'json',
+                        data: paramValue,
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            //JQDialogAlert mass, status
+                            JQDialogAlert(data.msg, data.status);
+                        },
+                        error: function (objAjaxRequest, strError) {
+                            var respText = objAjaxRequest.responseText;
+                            //JQDialogAlert mass, status
+                            JQDialogAlert(respText, 'info');
+                        }
+
+                    });
+
+                    $(this).dialog("close");
+                },
+                "Cancel": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $('#lnkSelectByModelCategory').live('click', function () {
+            var linkObj = $(this);
+            var dialogDiv = $('#selectByModelCategoryDailog');
+            var viewUrl = linkObj.attr('href');
+            $.get(viewUrl, function (data) {
+                dialogDiv.html(data);
+                dialogDiv.dialog('open');
+            });
+            return false;
+
+        });
+
         $('#lnkCategoryItems').live('click', function () {
 
             var categoryList = [];
@@ -150,5 +245,5 @@
         //Remove Category Item from Category Grid
         catGrid.dataSource.remove(dataItem);
     }
-    
+
 </script>

@@ -16,15 +16,16 @@ namespace RnD.KendoUISample.ViewModels
         [DisplayName("Product Name")]
         [Required(ErrorMessage = "Product Name is required.")]
         [MaxLength(200)]
-        public string ProductName { get; set; }
+        public string Name { get; set; }
         [DisplayName("Product Price")]
         [Required(ErrorMessage = "Product Price is required.")]
-        public decimal ProductPrice { get; set; }
+        public decimal Price { get; set; }
         [Required(ErrorMessage = "Select one category.")]
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
 
         public IEnumerable<SelectListItem> ddlCategories { get; set; }
+        public IEnumerable<Product> Products { get; set; }
     }
 
     public class ProductCsvModel
@@ -32,6 +33,7 @@ namespace RnD.KendoUISample.ViewModels
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public decimal ProductPrice { get; set; }
+        public int CategoryId { get; set; }
         public string CategoryName { get; set; }
     }
 
@@ -48,5 +50,14 @@ namespace RnD.KendoUISample.ViewModels
         [DisplayName("Upload File")]
         [Required(ErrorMessage = "File is required.")]
         public HttpPostedFileBase ImportFile { get; set; }
+    }
+
+    public class CategoryViewModel
+    {
+        public int CategoryId { get; set; }
+        public string Name { get; set; }
+
+        public IEnumerable<SelectListItem> ddlCategories { get; set; }
+        public virtual IEnumerable<Product> Products { get; set; }
     }
 }
