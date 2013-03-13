@@ -19,7 +19,9 @@ namespace RnD.KendoUISample.ViewModels
         public string Name { get; set; }
         [DisplayName("Product Price")]
         [Required(ErrorMessage = "Product Price is required.")]
-        public decimal Price { get; set; }
+        public float Price { get; set; }
+        public float Quantity { get; set; }
+        public float Total { get; set; }
         [Required(ErrorMessage = "Select one category.")]
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
@@ -59,5 +61,6 @@ namespace RnD.KendoUISample.ViewModels
 
         public IEnumerable<SelectListItem> ddlCategories { get; set; }
         public virtual IEnumerable<Product> Products { get; set; }
+        public virtual IEnumerable<ProductViewModel> ProductViewModels { get; set; }
     }
 }

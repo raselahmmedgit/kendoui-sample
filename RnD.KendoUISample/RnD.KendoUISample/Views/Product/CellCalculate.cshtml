@@ -1,0 +1,220 @@
+﻿@model RnD.KendoUISample.ViewModels.CategoryViewModel
+@{
+    ViewBag.Title = "Cell Calculate";
+}
+<h2>
+    Product List: Cell Calculate Mode</h2>
+<div id="proGridZone" style="padding-bottom: 30px;">
+    @Html.HiddenFor(x => x.CategoryId)
+    @Html.HiddenFor(x => x.Name)
+    @(Html.Kendo().Grid<RnD.KendoUISample.ViewModels.ProductViewModel>().Name("proGrid").BindTo(Model.ProductViewModels).Columns(columns =>
+                                                                                                                                     {
+                                                                                                                                         columns.Bound(c => c.CategoryId);
+                                                                                                                                         columns.Bound(c => c.ProductId);
+                                                                                                                                         columns.Bound(c => c.Name).Width("150px");
+                                                                                                                                         columns.Bound(c => c.Price).Width("150px");
+                                                                                                                                         columns.Bound(c => c.Quantity).Width("150px");
+                                                                                                                                         columns.Bound(c => c.Total).Width("150px");
+
+                                                                                                                                     }).Events(events => events.Save("save")).Editable(editable => editable.Mode(GridEditMode.InCell)).Groupable(group => group.Enabled(false)).Pageable(pager => pager.Enabled(false)).Sortable(sort => sort.Enabled(false)).Scrollable(scroll => scroll.Height("auto")).Resizable(resize => resize.Columns(true)).Filterable(filter => filter.Enabled(false)).DataSource(dataSource => dataSource.Ajax().Batch(true).ServerOperation(false).Model(model =>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            model.Id(e => e.ProductId);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            model.Field(e => e.CategoryId).Editable(false);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            model.Field(e => e.ProductId).Editable(false);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        })))
+</div>
+<div id="formButton">
+    <button id="proFormSave" class="button">
+        Save
+    </button>
+</div>
+<script type="text/javascript">
+
+    function on_change(e) {
+
+        console.log("on change");
+
+        console.log(e);
+
+    }
+
+    function save_changes(e) {
+
+        console.log("save changes");
+
+        console.log(e);
+
+    }
+
+    function edit(e) {
+
+        console.log("edit");
+
+        console.log(e);
+
+    }
+
+    function save(e) {
+
+        //        var rowModel = e.model;
+
+        var modelPrice = e.model.Price;
+        var modelQuantity = e.model.Quantity;
+        var modelTotal = e.model.Total;
+
+        //        console.log("model Price: " + modelPrice);
+        //        console.log("model Quantity: " + modelQuantity);
+
+        var newPriceValue;
+        var newQuantityValue;
+        var newTotalValue;
+
+        var newPrice = e.values.Price;
+        var newQuantity = e.values.Quantity;
+
+        //        console.log("newPrice: " + newPrice);
+        //        console.log("newQuantity: " + newQuantity);
+
+        if (newPrice === undefined) {
+
+            //            console.log("if Price");
+
+            newPriceValue = modelPrice;
+
+        } else {
+
+            //            console.log("else Price");
+
+            newPriceValue = newPrice;
+        }
+
+        if (newQuantity === undefined) {
+
+            //            console.log("if Quantity");
+
+            newQuantityValue = modelQuantity;
+
+        } else {
+
+            //            console.log("else Quantity");
+
+            newQuantityValue = newQuantity;
+
+        }
+
+        if (newPriceValue != '' && newQuantityValue != '') {
+
+            //            console.log("if ok");
+            //            console.log("newPriceValue: " + newPriceValue);
+            //            console.log("newQuantityValue: " + newQuantityValue);
+
+            newTotalValue = newQuantityValue * newPriceValue;
+
+        } else {
+
+            //            console.log("else ok");
+
+            newTotalValue = modelTotal;
+
+        }
+
+        //e.model.Total = 0;
+        e.model.set("Total", newTotalValue);
+
+        //        console.log("newTotalValue: " + newTotalValue);
+        //        console.log("model Id: " + e.model.ProductId);
+
+        //        //Get proGrid Details Grid
+        //        var proGrid = $('#proGrid').data('kendoGrid');
+
+        //        //Get proGrid Details Grid by model id
+        //        var dataItem = proGrid.dataSource.get(e.model.ProductId);
+
+        //        dataItem.set("Total", newTotalValue);
+
+        //        console.log(dataItem.Price);
+        //        console.log(dataItem.Quantity);
+        //        console.log(dataItem.Total);
+
+        //        console.log("ok!");
+    }
+
+    $(function () {
+
+        $('#proFormSave').click(function () {
+
+            //Product Model List
+            var productModelList = [];
+
+            //Get proGrid Details Grid
+            var proGrid = $('#proGrid').data('kendoGrid');
+
+            //Get All Data from PurchaseRequisitionDetailsApproval Grid
+            var allData = proGrid.dataSource.data();
+            var totalNumber = allData.length;
+
+            for (var i = 0; i < totalNumber; i++) {
+
+                var currentDataItem = allData[i];
+
+                var productId = currentDataItem.ProductId;
+                var name = currentDataItem.Name;
+                var price = currentDataItem.Price;
+                var quantity = currentDataItem.Quantity;
+                var total = currentDataItem.Total;
+                var categoryId = currentDataItem.CategoryId;
+
+                var product = {};
+
+                product.ProductId = productId;
+                product.Name = name;
+                product.Price = parseFloat(price);
+                product.Quantity = parseFloat(quantity);
+                product.Total = parseFloat(total);
+                product.CategoryId = categoryId;
+
+                //                console.log("Price: " + product.Price);
+                //                console.log("Quantity: " + product.Quantity);
+                //                console.log("Total: " + product.Total);
+
+                // Push Data to product Array
+                productModelList.push(product);
+            }
+
+            var postUrl = '/Product/CellCalculate';
+
+            var paramValue = JSON.stringify({ productViewModelList: productModelList });
+
+            $.ajax({
+
+                url: postUrl,
+                type: 'POST',
+                dataType: 'json',
+                data: paramValue,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    //JQDialogAlert mass, status, ok click
+                    JQDialogAlert(data.msg, data.status, function () {
+                        if (data.status == "success")
+                            window.location = "/Product/CellCalculate/1";
+                    });
+
+                },
+                error: function (objAjaxRequest, strError) {
+
+                    var respText = objAjaxRequest.responseText;
+                    //JQDialogAlert mass, status
+                    JQDialogAlert(respText, 'info');
+
+                }
+
+            });
+
+            return false;
+
+        });
+
+    });
+
+</script>

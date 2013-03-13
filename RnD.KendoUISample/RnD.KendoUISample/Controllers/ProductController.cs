@@ -304,6 +304,50 @@ namespace RnD.KendoUISample.Controllers
 
         }
 
+        //CellCalculate
+        [HttpGet]
+        public ActionResult CellCalculate(int id)
+        {
+            var category = _db.Categories.SingleOrDefault(x => x.CategoryId == id);
+            var productViewModels = _db.Products.Where(x => x.CategoryId == id).Select(x => new ProductViewModel { ProductId = x.ProductId, Name = x.Name, Price = x.Price, Quantity = 1, Total = x.Price * 1, CategoryId = x.CategoryId });
+
+            var categoryViewModel = new CategoryViewModel { CategoryId = category != null ? category.CategoryId : 0, Name = category != null ? category.Name : "", ProductViewModels = productViewModels };
+
+            return View(categoryViewModel);
+        }
+
+        [HttpPost]
+        public JsonResult CellCalculate(List<ProductViewModel> productViewModelList)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (productViewModelList.Any())
+                    {
+                        //Save MasterDetails Data
+
+                        return Json(new { msg = "Master details saved successfully.", status = MessageType.success.ToString() }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        //Details Data Null Message
+                        return Json(new { msg = "Details data could not found.", status = MessageType.success.ToString() }, JsonRequestBehavior.AllowGet);
+                    }
+
+
+                }
+
+                //ModelState Validation
+                return Json(new { msg = ExceptionHelper.ModelStateErrorFormat(ModelState), status = MessageType.info.ToString() }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { msg = ExceptionHelper.ExceptionMessageFormat(ex, log: false), status = MessageType.error.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpPost]
         public JsonResult MasterDetailsSave(Category model, List<Product> modelList)
         {

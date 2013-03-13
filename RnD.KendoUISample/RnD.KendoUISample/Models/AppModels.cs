@@ -49,7 +49,7 @@ namespace RnD.KendoUISample.Models
         public string Name { get; set; }
         [DisplayName("Product Price")]
         [Required(ErrorMessage = "Product Price is required.")]
-        public decimal Price { get; set; }
+        public float Price { get; set; }
 
         [Required(ErrorMessage = "Select one category.")]
         public int CategoryId { get; set; }
