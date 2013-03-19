@@ -30,6 +30,12 @@ namespace RnD.KendoUISample.Controllers
             return View();
         }
 
+        //AddToGrid
+        public ViewResult AddToGrid()
+        {
+            return View();
+        }
+
         public ActionResult ProductsRead([DataSourceRequest] DataSourceRequest request)
         {
             return Json(GetProducts().ToDataSourceResult(request));
