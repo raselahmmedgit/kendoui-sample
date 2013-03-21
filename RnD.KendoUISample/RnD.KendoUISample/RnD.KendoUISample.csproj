@@ -78,6 +78,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -681,6 +682,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -728,7 +730,7 @@
     <Content Include="Views\Shared\_JQDialogPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Category\SelectItems.cshtml" />
+    <Content Include="Views\Category\SelectMultiItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Category\_SelectList.cshtml" />
@@ -771,6 +773,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Product\AddToGrid.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Category\SelectSingleItems.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Category\_SelectSingleList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Upload\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Upload\Basic.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Upload\Async.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Upload\AsyncShow.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

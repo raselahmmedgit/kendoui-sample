@@ -63,4 +63,12 @@ namespace RnD.KendoUISample.ViewModels
         public virtual IEnumerable<Product> Products { get; set; }
         public virtual IEnumerable<ProductViewModel> ProductViewModels { get; set; }
     }
+
+    public class PictureViewModel
+    {
+        public int PictureId { get; set; }
+        public string PictureName { get; set; }
+        public string PictureUrl { get; set; }
+        public bool Status { get; set; }
+    }
 }

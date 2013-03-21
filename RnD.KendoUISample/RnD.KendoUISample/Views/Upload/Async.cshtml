@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Asynchronous Upload";
+}
+<h2>
+    Upload: Asynchronous Mode</h2>
+<div id="asyncUploadZone">
+    <div id="asyncUploadForm">
+        <div id="asyncUploadControl">
+            @(Html.Kendo().Upload()
+                          .Name("files").Async(a => a
+                                .Save("AsyncSave", "Upload")
+                                .Remove("AsyncRemove", "Upload")
+                        .AutoUpload(true)
+                    ))
+        </div>
+        <div id="asyncUploadDisplay">
+        </div>
+    </div>
+</div>

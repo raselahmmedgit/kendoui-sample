@@ -73,9 +73,17 @@ namespace RnD.KendoUISample.Controllers
             return View();
         }
 
+        //SelectSingleRow
+        [HttpGet]
+        public ViewResult SelectSingleItems()
+        {
+            //return View(GetCategorys());
+            return View();
+        }
+
         //SelectMultiRow
         [HttpGet]
-        public ViewResult SelectItems()
+        public ViewResult SelectMultiItems()
         {
             //return View(GetCategorys());
             return View();
@@ -89,9 +97,17 @@ namespace RnD.KendoUISample.Controllers
         }
 
         //Get
+        [HttpGet]
         public ActionResult SelectList()
         {
             return PartialView("_SelectList");
+        }
+
+        //Get
+        [HttpGet]
+        public ActionResult SelectSingleList()
+        {
+            return PartialView("_SelectSingleList");
         }
 
         //Get

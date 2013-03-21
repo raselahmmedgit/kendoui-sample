@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "Select Single Row From Kendo Grid";
+}
+<div id="selectMultiRowPage">
+    <h2>
+        Category List: Add by Selected Single Row From Kendo Grid</h2>
+    <p>
+        <a href="/Category/SelectSingleList" id="lnkSelectCategory" class="button">Select Categories</a>
+    </p>
+    <div id="catGrid">
+        @(Html.Kendo().Grid<RnD.KendoUISample.Models.Category>().Name("catGrid").Columns(columns =>
+                                                                                             {
+                                                                                                 columns.Bound(c => c.CategoryId);
+                                                                                                 columns.Bound(c => c.Name);
+                                                                                                 columns.Bound(c => c.ActionLink).ClientTemplate("<button id='catItem_#= CategoryId #' onclick='CategoryRemoveRow(#= CategoryId #)' class='button'>Remove</button>").HeaderTemplate("Remove");
+                                                                                             }).Groupable(group => group.Enabled(false)).Pageable(pager => pager.Enabled(false)).Sortable(sort => sort.Enabled(false)).Scrollable().Filterable(filter => filter.Enabled(false)).DataSource(dataSource => dataSource.Ajax().ServerOperation(false).Model(model => model.Id(e => e.CategoryId)))
+              )
+    </div>
+    <p>
+        <a href="javascript:;" id="lnkCategoryItems" class="button">Add Category Items</a>
+    </p>
+    <div id="selectCategoryDailog" title="Select Categories">
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(function () {
+        //For select Category
+        $("#selectCategoryDailog").dialog({
+            autoOpen: false,
+            width: 700,
+            resizable: false,
+            modal: true,
+            buttons: {
+                "Cancel": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $('#lnkSelectCategory').live('click', function () {
+            var linkObj = $(this);
+            var dialogDiv = $('#selectCategoryDailog');
+            var viewUrl = linkObj.attr('href');
+            $.get(viewUrl, function (data) {
+                dialogDiv.html(data);
+                dialogDiv.dialog('open');
+            });
+            return false;
+
+        });
+
+        $("#catSelectListGrid .chkCategoryId").live('click', function () {
+
+
+            if ($(this).is(":checked")) {
+
+                var thisValue = $(this).val();
+                var thisId = $(this).attr('id');
+
+                console.log(thisValue);
+                console.log(thisId);
+
+                $('#selectCategoryDailog').dialog("close");
+
+            }
+        });
+
+        $('#lnkCategoryItems').live('click', function () {
+
+            var categoryList = [];
+
+            //Get Category Grid
+            var catGrid = $('#catGrid').data('kendoGrid');
+
+            //Get All Data from Category Grid
+            var allData = catGrid.dataSource.data();
+            var totalNumber = allData.length;
+
+            for (var i = 0; i < totalNumber; i++) {
+
+                var currentDataItem = allData[i];
+
+                var categoryId = currentDataItem.CategoryId;
+                var categoryName = currentDataItem.Name;
+
+                var category = {};
+                category.CategoryId = categoryId;
+                category.Name = categoryName;
+
+                // Push Data to categoryList Array
+                categoryList.push(category);
+            }
+
+            var paramValue = JSON.stringify({ categoryList: categoryList });
+
+            $.ajax({
+                url: '/Category/AddList',
+                type: 'POST',
+                dataType: 'json',
+                data: paramValue,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    var resultData = data;
+                    alert(resultData);
+                },
+                error: function (objAjaxRequest, strError) {
+                    var respText = objAjaxRequest.responseText;
+                    alert(respText);
+                }
+
+            });
+
+            return false;
+
+        });
+
+    });
+
+    function CategoryRemoveRow(id) {
+        //Get Category Grid
+        var catGrid = $('#catGrid').data('kendoGrid');
+        //Get Selected Category Item from Select Category Grid by model id
+        var dataItem = catGrid.dataSource.get(id);
+        //Remove Category Item from Category Grid
+        catGrid.dataSource.remove(dataItem);
+    }
+
+</script>

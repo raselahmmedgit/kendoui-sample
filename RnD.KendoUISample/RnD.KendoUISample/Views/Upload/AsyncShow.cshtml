@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "Asynchronous Show Upload";
+}
+<h2>
+    Upload: Basic Mode</h2>
+<div id="asyncUploadZone">
+    <div id="asyncUploadForm" style="display: inline-block; padding-bottom: 30px; width: 700px;">
+        <div id="asyncUploadControl" style="width: 50%; float: left;">
+            @(Html.Kendo().Upload()
+                  .Name("files").Async(a => a
+                                                .Save("Save", "Upload")
+                                                .Remove("Remove", "Upload")
+                                                .AutoUpload(true)).Events(events => events.Cancel("onCancel")
+                                                                                        .Complete("onComplete")
+                                                                                        .Error("onError")
+                                                                                        .Progress("onProgress")
+                                                                                        .Remove("onRemove")
+                                                                                        .Select("onSelect")
+                                                                                        .Success("onSuccess")
+                                                                                        .Upload("onUpload")))
+        </div>
+        <div id="asyncUploadDisplay" style="width: 45%; float: right;">
+            <div id="asyncUploadImage" style="display: none;">
+                <img id="imgUploaded" style="width: 60px; height: 60px;" src="../../Content/Images/App/loading.gif"
+                    alt="loading" />
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function onSelect(e) {
+        console.log("Select :: " + getFileInfo(e));
+        $("#asyncUploadImage").show();
+    }
+
+    function onUpload(e) {
+        console.log("Upload :: " + getFileInfo(e));
+    }
+
+    function onSuccess(e) {
+
+        console.log("Success (" + e.operation + ") :: " + getFileInfo(e));
+
+        var responseTxt = jQuery.parseJSON(e.XMLHttpRequest.responseText);
+
+        console.log(responseTxt.PictureId);
+        console.log(responseTxt.PictureName);
+        console.log(responseTxt.PictureUrl);
+
+        var status = responseTxt.Status;
+        var srcValue = responseTxt.PictureUrl;
+
+        if (status == true) {
+            $("#imgUploaded").attr('src', srcValue);
+        } else {
+            $("#imgUploaded").attr('src', srcValue);
+            $("#asyncUploadImage").hide();
+        }
+
+    }
+
+    function onError(e) {
+        console.log("Error (" + e.operation + ") :: " + getFileInfo(e));
+    }
+
+    function onComplete(e) {
+        console.log("Complete");
+    }
+
+    function onCancel(e) {
+        console.log("Cancel :: " + getFileInfo(e));
+    }
+
+    function onRemove(e) {
+        console.log("Remove :: " + getFileInfo(e));
+    }
+
+    function onProgress(e) {
+        console.log("Upload progress :: " + e.percentComplete + "% :: " + getFileInfo(e));
+    }
+
+    function getFileInfo(e) {
+        return $.map(e.files, function (file) {
+            var info = file.name;
+
+            // File size is not available in all browsers
+            if (file.size > 0) {
+                info += " (" + Math.ceil(file.size / 1024) + " KB)";
+            }
+            return info;
+        }).join(", ");
+    }
+    
+</script>
