@@ -48,7 +48,15 @@ namespace RnD.KendoUISample.Controllers
         [HttpGet]
         public ActionResult AsyncShow()
         {
-            return View();
+            var pictureViewModel = new PictureViewModel();
+            return View(pictureViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult AsyncShowSingle()
+        {
+            var pictureViewModel = new PictureViewModel();
+            return View(pictureViewModel);
         }
 
         public ActionResult Save(IEnumerable<HttpPostedFileBase> files)

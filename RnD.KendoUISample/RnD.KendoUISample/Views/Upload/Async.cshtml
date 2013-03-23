@@ -3,9 +3,9 @@
 }
 <h2>
     Upload: Asynchronous Mode</h2>
-<div id="asyncUploadZone">
-    <div id="asyncUploadForm">
-        <div id="asyncUploadControl">
+<div id="kendoUploadZone">
+    <div id="kendoUploadForm">
+        <div id="kendoUploadControl">
             @(Html.Kendo().Upload()
                           .Name("files").Async(a => a
                                 .Save("AsyncSave", "Upload")
@@ -13,7 +13,7 @@
                         .AutoUpload(true)
                     ))
         </div>
-        <div id="asyncUploadDisplay">
+        <div id="kendoUploadDisplay">
         </div>
     </div>
 </div>

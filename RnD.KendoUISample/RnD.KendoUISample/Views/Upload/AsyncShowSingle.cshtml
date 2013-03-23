@@ -1,34 +1,34 @@
 ﻿@model RnD.KendoUISample.ViewModels.PictureViewModel
 @{
-    ViewBag.Title = "Asynchronous Show Multiple Upload";
+    ViewBag.Title = "Asynchronous Show Single Upload";
 }
 <h2>
-    Upload: Asynchronous Multiple Mode</h2>
+    Upload: Asynchronous Single Mode</h2>
 <div id="kendoUploadZone">
     <div id="kendoUploadForm" style="display: inline-block; padding-bottom: 30px; width: 700px;">
-        <!-- Kendo UI Upload Control for uploading image -->
+        <!-- Kendo UI Upload Control for uploading image and instant preview -->
         <div id="kendoUploadControl" style="width: 50%; float: left;">
             @(Html.Kendo().Upload()
-                  .Name("files").Async(a => a
-                                                .Save("Save", "Upload")
-                                                .Remove("Remove", "Upload")
-                                                        .AutoUpload(true)).Events(events => events.Cancel("onCancel")
-                                                                                                                .Complete("onComplete")
-                                                                                                                .Error("onError")
-                                                                                                                .Progress("onProgress")
-                                                                                                                .Remove("onRemove")
-                                                                                                                .Select("onSelect")
-                                                                                                                .Success("onSuccess")
-                                                                                                                .Upload("onUpload")))
+                  .Name("files").Multiple(false).Async(a => a
+                                                                .Save("Save", "Upload")
+                                                                .Remove("Remove", "Upload")
+                                                                .AutoUpload(true)).Events(events => events.Cancel("onCancel")
+                                                                                                        .Complete("onComplete")
+                                                                                                        .Error("onError")
+                                                                                                        .Progress("onProgress")
+                                                                                                        .Remove("onRemove")
+                                                                                                        .Select("onSelect")
+                                                                                                        .Success("onSuccess")
+                                                                                                        .Upload("onUpload")))
         </div>
-        <!-- Instant preview uploaded image by Kendo UI Upload Control -->
+        <!-- Kendo UI Upload Control for uploading image and instant preview -->
         <div id="kendoUploadDisplay" style="width: 45%; float: right;">
             @Html.HiddenFor(x => x.PictureId)
             @Html.HiddenFor(x => x.PictureName)
             @Html.HiddenFor(x => x.PictureUrl)
             @Html.HiddenFor(x => x.Status)
             <div id="kendoUploadImage" style="display: none;">
-                <img id="imgUploaded" style="width: 60px; height: 60px;" src="../../Content/Images/App/loading.gif"
+                <img id="imgUploaded" style="width: 90px; height: 70px;" src="../../Content/Images/App/loading.gif"
                     alt="loading" />
             </div>
         </div>
@@ -60,9 +60,24 @@
 
         if (status == true) {
             $("#imgUploaded").attr('src', srcValue);
+            //value null
+            $("#PictureId").val('');
+            $("#PictureName").val('');
+            $("#PictureUrl").val('');
+            $("#Status").val('');
+            //set value
+            $("#PictureId").val(responseTxt.PictureId);
+            $("#PictureName").val(responseTxt.PictureName);
+            $("#PictureUrl").val(responseTxt.PictureUrl);
+            $("#Status").val(responseTxt.Status);
         } else {
             $("#imgUploaded").attr('src', srcValue);
             $("#kendoUploadImage").hide();
+            //value null
+            $("#PictureId").val('');
+            $("#PictureName").val('');
+            $("#PictureUrl").val('');
+            $("#Status").val('');
         }
 
     }
