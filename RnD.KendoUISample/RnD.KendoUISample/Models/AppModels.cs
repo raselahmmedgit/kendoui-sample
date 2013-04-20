@@ -54,6 +54,7 @@ namespace RnD.KendoUISample.Models
         [Required(ErrorMessage = "Select one category.")]
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
+
         public virtual Category Category { get; set; }
     }
 
@@ -87,4 +88,6 @@ namespace RnD.KendoUISample.Models
         [MaxLength(200)]
         public string LoggerTypeName { get; set; }
     }
+
+
 }

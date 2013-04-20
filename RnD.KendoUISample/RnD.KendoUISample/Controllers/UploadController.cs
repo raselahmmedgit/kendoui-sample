@@ -59,6 +59,14 @@ namespace RnD.KendoUISample.Controllers
             return View(pictureViewModel);
         }
 
+        [HttpGet]
+        public ActionResult OtherFile()
+        {
+            var pictureViewModel = new PictureViewModel();
+            return View(pictureViewModel);
+        }
+
+
         public ActionResult Save(IEnumerable<HttpPostedFileBase> files)
         {
             var pictureViewModel = new PictureViewModel();

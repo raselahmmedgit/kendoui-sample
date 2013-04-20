@@ -1,5 +1,11 @@
-2013/03/21-09:35:56.430 d88 Recovering log #181
-2013/03/21-09:35:56.462 d88 Level-0 table #184: started
-2013/03/21-09:35:56.520 d88 Level-0 table #184: 39680 bytes OK
-2013/03/21-09:35:56.550 d88 Delete type=0 #181
-2013/03/21-09:35:56.551 d88 Delete type=3 #179
+2013/04/20-09:30:42.023 b04 Recovering log #207
+2013/04/20-09:30:42.059 b04 Level-0 table #210: started
+2013/04/20-09:30:42.185 b04 Level-0 table #210: 117250 bytes OK
+2013/04/20-09:30:42.243 b04 Delete type=0 #207
+2013/04/20-09:30:42.244 b04 Delete type=3 #205
+2013/04/20-09:30:58.053 17ac Compacting 1@0 + 1@1 files
+2013/04/20-09:30:58.231 17ac Generated table #212: 2334 keys, 545764 bytes
+2013/04/20-09:30:58.232 17ac Compacted 1@0 + 1@1 files => 545764 bytes
+2013/04/20-09:30:58.263 17ac Delete type=2 #208
+2013/04/20-09:30:58.264 17ac Delete type=2 #210
+2013/04/20-09:30:58.264 17ac compacted to: files[ 0 1 0 0 0 0 0 ]

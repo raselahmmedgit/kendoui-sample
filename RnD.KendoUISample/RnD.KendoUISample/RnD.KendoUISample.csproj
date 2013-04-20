@@ -231,6 +231,7 @@
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\Kendo\console.min.js" />
     <Content Include="Scripts\Kendo\cultures\kendo.culture.af-ZA.min.js" />
     <Content Include="Scripts\Kendo\cultures\kendo.culture.af.min.js" />
     <Content Include="Scripts\Kendo\cultures\kendo.culture.am-ET.min.js" />
@@ -654,6 +655,7 @@
     <Content Include="Scripts\Kendo\kendo.validator.min.js" />
     <Content Include="Scripts\Kendo\kendo.web.min.js" />
     <Content Include="Scripts\Kendo\kendo.window.min.js" />
+    <Content Include="Scripts\Kendo\prettify.min.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
     <Content Include="Web.config" />
@@ -682,7 +684,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -794,6 +795,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Upload\AsyncShowSingle.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Product\RowCustom.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_CategoryList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Upload\OtherFile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Rasel Ahmmed.pdf" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

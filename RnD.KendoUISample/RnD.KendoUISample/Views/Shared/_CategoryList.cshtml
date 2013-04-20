@@ -1,0 +1,6 @@
+﻿@(Html.Kendo().DropDownList()
+            .Name("Category")
+            .DataValueField("CategoryId")
+            .DataTextField("Name")
+                .BindTo((System.Collections.IEnumerable)ViewData["categories"])
+)

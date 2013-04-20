@@ -26,6 +26,7 @@ namespace RnD.KendoUISample.ViewModels
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
 
+        public IEnumerable<Category> Categories { get; set; }
         public IEnumerable<SelectListItem> ddlCategories { get; set; }
         public IEnumerable<Product> Products { get; set; }
     }
@@ -63,12 +64,36 @@ namespace RnD.KendoUISample.ViewModels
         public virtual IEnumerable<Product> Products { get; set; }
         public virtual IEnumerable<ProductViewModel> ProductViewModels { get; set; }
     }
-
+    public class CategoryViewModelNew
+    {
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
+    }
     public class PictureViewModel
     {
         public int PictureId { get; set; }
         public string PictureName { get; set; }
         public string PictureUrl { get; set; }
         public bool Status { get; set; }
+    }
+
+    public class ClientProductViewModel : BaseModel
+    {
+        public int ProductId { get; set; }
+        public string Name { get; set; }
+        public float Price { get; set; }
+        public float Quantity { get; set; }
+        public float Total { get; set; }
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
+
+        [UIHint("CategoryList"), Required]
+        public ClientCategoryViewModel Category { get; set; }
+    }
+
+    public class ClientCategoryViewModel
+    {
+        public int CategoryId { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -41,11 +41,57 @@ namespace RnD.KendoUISample.Controllers
             return Json(GetProducts().ToDataSourceResult(request));
         }
 
+        public ActionResult ProductViewModelsRead([DataSourceRequest] DataSourceRequest request)
+        {
+            return Json(GetProductViewModels().ToDataSourceResult(request));
+        }
+
+        public ActionResult ClientProductViewModelsRead([DataSourceRequest] DataSourceRequest request)
+        {
+            return Json(GetClientProductViewModels().ToDataSourceResult(request));
+        }
+
         private IEnumerable<Product> GetProducts()
         {
             var products = _db.Products.ToList();
 
-            return products;
+            var models =
+                products.Select(
+                    x =>
+                    new Product
+                        {
+                            ProductId = x.ProductId,
+                            Name = x.Name,
+                            Price = x.Price,
+                            CategoryId = x.CategoryId,
+                            Category = new Category { CategoryId = x.Category.CategoryId, Name = x.Category.Name }
+                        }).ToList();
+
+            return models;
+        }
+
+        private IEnumerable<ProductViewModel> GetProductViewModels()
+        {
+            //var categories = SelectListItemExtension.PopulateDropdownList(_db.Categories.ToList<Category>(), "CategoryId", "Name").ToList();
+            //var categories = _db.Categories.ToList().Select(x => new Category { CategoryId = x.CategoryId, Name = x.Name }).ToList();
+            var productViewModels = _db.Products.Select(x => new ProductViewModel
+                                                                 {
+                                                                     ProductId = x.ProductId,
+                                                                     Name = x.Name,
+                                                                     Price = x.Price,
+                                                                     CategoryId = x.CategoryId,
+                                                                     CategoryName = x.Category != null ? x.Category.Name : null,
+                                                                     //Categories = categories
+                                                                 }).ToList();
+
+            return productViewModels;
+        }
+
+        private IEnumerable<ClientProductViewModel> GetClientProductViewModels()
+        {
+            var clientProductViewModels = _db.Products.Select(x => new ClientProductViewModel { ProductId = x.ProductId, Name = x.Name, Price = x.Price, CategoryId = x.CategoryId, CategoryName = x.Category != null ? x.Category.Name : null, Category = new ClientCategoryViewModel { CategoryId = x.Category != null ? x.Category.CategoryId : 0, Name = x.Category != null ? x.Category.Name : null } }).ToList();
+
+            return clientProductViewModels;
         }
 
         //MasterDetails
@@ -200,7 +246,6 @@ namespace RnD.KendoUISample.Controllers
 
         }
 
-
         //DataImport
         [HttpGet]
         public ActionResult DataImport()
@@ -354,6 +399,20 @@ namespace RnD.KendoUISample.Controllers
             }
         }
 
+        //RowCustom
+        [HttpGet]
+        public ActionResult RowCustom()
+        {
+            //var categories = SelectListItemExtension.PopulateDropdownList(_db.Categories.ToList<Category>(), "CategoryId", "Name").ToList();
+            //var categories = _db.Categories.ToList().Select(x => new Category { CategoryId = x.CategoryId, Name = x.Name }).ToList();
+            //var categories = _db.Categories.ToList().Select(x => new Category { CategoryId = x.CategoryId, Name = x.Name });
+            var categories = _db.Categories.Select(x => new CategoryViewModelNew { CategoryId = x.CategoryId, CategoryName = x.Name });
+            //var categories = _db.Categories.ToList().Select(x => new ClientCategoryViewModel { CategoryId = x.CategoryId, Name = x.Name }).ToList();
+            ViewData["categories"] = categories;
+            //ViewBag.Categories = categories;
+            return View();
+        }
+
         [HttpPost]
         public JsonResult MasterDetailsSave(Category model, List<Product> modelList)
         {
@@ -428,8 +487,8 @@ namespace RnD.KendoUISample.Controllers
 
         public ActionResult Create()
         {
-            var categories = _db.Categories.ToList<Category>().PopulateDropdownList("CategoryId", "Name").ToList();
-            //var categories = SelectListItemExtension.PopulateDropdownList(_db.Categories.ToList<Category>(), "CategoryId", "Name").ToList();
+            //var categories = _db.Categories.ToList<Category>().PopulateDropdownList("CategoryId", "Name").ToList();
+            var categories = SelectListItemExtension.PopulateDropdownList(_db.Categories.ToList<Category>(), "CategoryId", "Name").ToList();
             //ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
 
             var model = new ProductViewModel()

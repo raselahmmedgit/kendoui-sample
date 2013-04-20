@@ -1,0 +1,117 @@
+﻿@model RnD.KendoUISample.ViewModels.PictureViewModel
+@{
+    ViewBag.Title = "PDF, Doc file and View in Web Browser";
+}
+<h2>
+    Upload: PDF, Doc file and View in Web Browser Single Mode</h2>
+<div id="kendoUploadZone">
+    <div id="kendoUploadForm" style="display: inline-block; padding-bottom: 30px; width: 700px;">
+        <!-- Kendo UI Upload Control for uploading image and instant preview -->
+        <div id="kendoUploadControl" style="width: 50%; float: left;">
+            @(Html.Kendo().Upload()
+                  .Name("files").Multiple(false).Async(a => a
+                                                                .Save("Save", "Upload")
+                                                                .Remove("Remove", "Upload")
+                                                                .AutoUpload(true)).Events(events => events.Cancel("onCancel")
+                                                                                                        .Complete("onComplete")
+                                                                                                        .Error("onError")
+                                                                                                        .Progress("onProgress")
+                                                                                                        .Remove("onRemove")
+                                                                                                        .Select("onSelect")
+                                                                                                        .Success("onSuccess")
+                                                                                                        .Upload("onUpload")))
+        </div>
+        <!-- Kendo UI Upload Control for uploading image and instant preview -->
+        <div id="kendoUploadDisplay" style="width: 45%; float: right;">
+            @Html.HiddenFor(x => x.PictureId)
+            @Html.HiddenFor(x => x.PictureName)
+            @Html.HiddenFor(x => x.PictureUrl)
+            @Html.HiddenFor(x => x.Status)
+            <div id="kendoUploadImage" style="display: none;">
+                <a id="imgUploaded" target="_black" style="width: 90px; height: 70px;" href="../../Content/Images/App/loading.gif">
+                    View File</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function onSelect(e) {
+        console.log("Select :: " + getFileInfo(e));
+        $("#kendoUploadImage").show();
+    }
+
+    function onUpload(e) {
+        console.log("Upload :: " + getFileInfo(e));
+    }
+
+    function onSuccess(e) {
+
+        console.log("Success (" + e.operation + ") :: " + getFileInfo(e));
+
+        var responseTxt = jQuery.parseJSON(e.XMLHttpRequest.responseText);
+
+        console.log(responseTxt.PictureId);
+        console.log(responseTxt.PictureName);
+        console.log(responseTxt.PictureUrl);
+
+        var status = responseTxt.Status;
+        var srcValue = responseTxt.PictureUrl;
+
+        if (status == true) {
+            $("#imgUploaded").attr('href', srcValue);
+            //value null
+            $("#PictureId").val('');
+            $("#PictureName").val('');
+            $("#PictureUrl").val('');
+            $("#Status").val('');
+            //set value
+            $("#PictureId").val(responseTxt.PictureId);
+            $("#PictureName").val(responseTxt.PictureName);
+            $("#PictureUrl").val(responseTxt.PictureUrl);
+            $("#Status").val(responseTxt.Status);
+        } else {
+            $("#imgUploaded").attr('href', srcValue);
+            $("#kendoUploadImage").hide();
+            //value null
+            $("#PictureId").val('');
+            $("#PictureName").val('');
+            $("#PictureUrl").val('');
+            $("#Status").val('');
+        }
+
+    }
+
+    function onError(e) {
+        console.log("Error (" + e.operation + ") :: " + getFileInfo(e));
+    }
+
+    function onComplete(e) {
+        console.log("Complete");
+    }
+
+    function onCancel(e) {
+        console.log("Cancel :: " + getFileInfo(e));
+    }
+
+    function onRemove(e) {
+        console.log("Remove :: " + getFileInfo(e));
+    }
+
+    function onProgress(e) {
+        console.log("Upload progress :: " + e.percentComplete + "% :: " + getFileInfo(e));
+    }
+
+    function getFileInfo(e) {
+        return $.map(e.files, function (file) {
+            var info = file.name;
+
+            // File size is not available in all browsers
+            if (file.size > 0) {
+                info += " (" + Math.ceil(file.size / 1024) + " KB)";
+            }
+            return info;
+        }).join(", ");
+    }
+    
+</script>
