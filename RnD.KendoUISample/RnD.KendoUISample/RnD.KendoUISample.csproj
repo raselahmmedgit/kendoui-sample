@@ -800,13 +800,17 @@
     <Content Include="Views\Product\RowCustom.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_CategoryList.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Upload\OtherFile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\Rasel Ahmmed.pdf" />
+    <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GridForeignKey.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Integer.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Number.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

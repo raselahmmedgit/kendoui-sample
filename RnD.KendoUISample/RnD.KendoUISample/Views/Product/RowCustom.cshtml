@@ -4,65 +4,6 @@
 <h2>
     Product List: Row Custom Dropdown List Mode</h2>
 <br />
-@*@Html.Partial("_CategoryList")*@
-<br />
-<br />
-@*<div id="proVMGridZone">
-    @(Html.Kendo().Grid<RnD.KendoUISample.ViewModels.ProductViewModel>().Name("productViewModelGrid").Columns(columns =>
-                                                                                                         {
-                                                                                                             columns.Bound(c => c.ProductId).Visible(false);
-                                                                                                             columns.Bound(c => c.Name);
-                                                                                                             columns.Bound(c => c.Price);
-                                                                                                             columns.Bound(c => c.CategoryId).Visible(false);
-                                                                                                             columns.Bound(c => c.CategoryName);
-                                                                                                         }).Editable(editable => editable.Mode(GridEditMode.InCell)).Groupable(group => group.Enabled(false)).Pageable(pager => pager.Enabled(true)).Sortable(sort => sort.Enabled(false)).Scrollable(scroll => scroll.Height("auto")).Resizable(resize => resize.Columns(true)).Filterable(filter => filter.Enabled(false)).DataSource(dataSource => dataSource.Ajax().Batch(true).Events(events => events.Error("error_handler")).ServerOperation(false).Model(model =>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          model.Id(e => e.ProductId);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          model.Field(e => e.ProductId).Editable(false);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          model.Field(e => e.Name).Editable(false);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          model.Field(e => e.Price).Editable(false);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          model.Field(e => e.CategoryId).Editable(false);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          model.Field(e => e.CategoryName);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      }).Read(read => read.Action("ProductViewModelsRead", "Product")))
-          )
-</div>*@
-<br />
-<br />
-@*<div id="proGridZone">
-    @(Html.Kendo().Grid<RnD.KendoUISample.Models.Product>().Name("productGrid").Columns(columns =>
-                                                                                            {
-                                                                                                columns.Bound(c => c.ProductId).Visible(false);
-                                                                                                columns.Bound(c => c.Name);
-                                                                                                columns.Bound(c => c.Price);
-                                                                                                columns.Bound(c => c.CategoryId).Visible(false);
-                                                                                                columns.Bound(c => c.Category.Name);
-                                                                                                columns.ForeignKey(p => p.CategoryId, (System.Collections.IEnumerable)ViewData["categories"], "CategoryId", "Name");
-                                                                                            }).Editable(editable => editable.Mode(GridEditMode.InCell))
-                                                                                            //.Groupable(group => group.Enabled(false))
-                                                                                            //.Pageable(pager => pager.Enabled(true))
-                                                                                                    .Pageable()
-                                                                                            //.Sortable(sort => sort.Enabled(false))
-                                                                                                    .Sortable()
-                                                                                            //.Scrollable(scroll => scroll.Height("auto"))
-                                                                                                    .Scrollable()
-                                                                                            //.Resizable(resize => resize.Columns(true))
-                                                                                            //.Filterable(filter => filter.Enabled(false))
-                                                                                                    .Filterable()
-                                                                                            .DataSource(dataSource => dataSource
-                                                                                                .Ajax().Batch(true)
-                                                                                                .Events(events => events.Error("error_handler"))
-                                                                                                .ServerOperation(false)
-                                                                                                .Model(model =>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            model.Id(e => e.ProductId);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            model.Field(e => e.ProductId).Editable(false);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            model.Field(e => e.Name).Editable(false);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            model.Field(e => e.Price).Editable(false);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }).Read(read => read.Action("ProductsRead", "Product")))
-          )
-</div>*@
-<br />
-<br />
 <div id="proClientGridZone">
     @(Html.Kendo().Grid<RnD.KendoUISample.ViewModels.ClientProductViewModel>()
     .Name("clientProductViewModelGrid").Columns(columns =>
@@ -70,16 +11,14 @@
         columns.Bound(c => c.ProductId).Visible(false);
         columns.Bound(c => c.Name);
         columns.Bound(c => c.Price);
-        //columns.Bound(c => c.CategoryId).Visible(false);
+        columns.Bound(c => c.CategoryId).Visible(false);
         columns.ForeignKey(p => p.CategoryId, (System.Collections.IEnumerable)ViewData["categories"], "CategoryId", "CategoryName");
-        //columns.Bound(c => c.Category).ClientTemplate("#= Category.Name #");
+        columns.Bound(c => c.Category).ClientTemplate("#= Category.Name #");
     })
     .Editable(editable => editable.Mode(GridEditMode.InCell))
-    //.Groupable(group => group.Enabled(false))
     .Pageable()
     .Sortable()
     .Scrollable()
-    //.Resizable(resize => resize.Columns(true))
     .Filterable()
     .DataSource(dataSource => dataSource
         .Ajax()
@@ -91,38 +30,11 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                     model.Field(e => e.ProductId).Editable(false);
                                                                                                                                                                                                                                                                                                                                                                                                                                                                     model.Field(e => e.Name).Editable(false);
                                                                                                                                                                                                                                                                                                                                                                                                                                                                     model.Field(e => e.Price).Editable(false);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
+
                                                                                                                                                                                                                                                                                                                                                                                                                                                                 }).Read(read => read.Action("ClientProductViewModelsRead", "Product")))
           )
 </div>
-<br />
-<br />
-@*@(Html.Kendo().Grid<RnD.KendoUISample.Models.Product>()
-    .Name("Grid")
-    .Columns(columns =>
-    {
-        columns.Bound(p => p.ProductId).Hidden();
-        columns.Bound(p => p.Name);
-        columns.ForeignKey(p => p.CategoryId, (System.Collections.IEnumerable)ViewData["categories"], "CategoryId", "Name");
-    })
-    .ToolBar(toolBar => toolBar.Save())
-    .Editable(editable => editable.Mode(GridEditMode.InCell))
-    .Pageable()
-    .Sortable()
-    .Scrollable()
-    .Filterable()
-    .DataSource(dataSource => dataSource
-        .Ajax()
-        .Batch(true)
-        .ServerOperation(false)
-            .Events(events => events.Error("error_handler"))
-        .Model(model =>
-        {
-            model.Id(p => p.ProductId);
-            model.Field(p => p.ProductId).Editable(false);
-        })
-                    .Read(read => read.Action("ProductsRead", "Product")).Update(update => update.Action("Product_Update", "Product"))))*@
 <script type="text/javascript">
 
     function error_handler(e) {
