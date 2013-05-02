@@ -147,3 +147,19 @@
     display: list-item;
     line-height: 1.2em;
 }
+
+.menu
+{
+    margin: 0px 0px 0px 0px !important;
+    padding: 0px 0px 0px 0px !important;
+    width: 12px !important;
+    height: 12px !important;
+}
+
+.sub-menu
+{
+    margin: 0px 0px 0px 0px !important;
+    padding: 0px 0px 0px 0px !important;
+    width: 12px !important;
+    height: 12px !important;
+}

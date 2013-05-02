@@ -1,0 +1,33 @@
+﻿@model IEnumerable<RnD.KendoUISample.ViewModels.MenuItemViewModel>
+@{
+    ViewBag.Title = "XML Menu";
+}
+<h2>
+    Menu: XML Mode</h2>
+<div id="basicXmlMenuZone">
+    <div id="basicXmlMenuForm">
+        <div>
+            @(Html.Kendo().Menu()
+      .Name("XmlMenu")
+      .BindTo(Model, mappings =>
+      {
+          mappings.For<RnD.KendoUISample.ViewModels.MenuItemViewModel>(binding => binding
+                    .ItemDataBound((item, menu) =>
+                    {
+                        item.Text = menu.MenuText;
+                        item.ImageUrl = menu.MenuImageUrl;
+                        item.Url = menu.MenuUrl;
+                    })
+                    .Children(menu => menu.SubMenuItemViewModels));
+          mappings.For<RnD.KendoUISample.ViewModels.SubMenuItemViewModel>(binding => binding
+                    .ItemDataBound((item, subMenu) =>
+                    {
+                        item.Text = subMenu.SubMenuText;
+                        item.ImageUrl = subMenu.SubMenuImageUrl;
+                        item.Url = subMenu.SubMenuUrl;
+                    }));
+      })
+)
+        </div>
+    </div>
+</div>

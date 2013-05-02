@@ -1,0 +1,35 @@
+﻿@model IEnumerable<RnD.KendoUISample.ViewModels.MainMenuViewModel>
+@{
+    ViewBag.Title = "Main Menu";
+}
+<h2>
+    Menu: Main Mode</h2>
+<div id="basicMainMenuZone">
+    <div id="basicMainMenuForm">
+        <div>
+            @(Html.Kendo().Menu()
+      .Name("ObjMenu")
+      .BindTo(Model, mappings =>
+      {
+          mappings.For<RnD.KendoUISample.ViewModels.MainMenuViewModel>(binding => binding
+                    .ItemDataBound((item, menu) =>
+                    {
+                        item.Text = menu.MenuText;
+                        item.ImageUrl = menu.MenuImageUrl;
+                        item.Url = menu.MenuUrl;
+                        item.SpriteCssClasses = menu.MenuSpriteCssClass;
+                    })
+                    .Children(menu => menu.SubMenuViewModels));
+          mappings.For<RnD.KendoUISample.ViewModels.MainMenuViewModel>(binding => binding
+                    .ItemDataBound((item, subMenu) =>
+                    {
+                        item.Text = subMenu.MenuText;
+                        item.ImageUrl = subMenu.MenuImageUrl;
+                        item.Url = subMenu.MenuUrl;
+                        item.SpriteCssClasses = subMenu.MenuSpriteCssClass;
+                    }));
+      })
+)
+        </div>
+    </div>
+</div>

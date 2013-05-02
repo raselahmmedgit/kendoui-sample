@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations.Schema;
+using RnD.KendoUISample.Helpers;
 
 namespace RnD.KendoUISample.Models
 {
@@ -89,5 +90,88 @@ namespace RnD.KendoUISample.Models
         public string LoggerTypeName { get; set; }
     }
 
+    public class MenuItem : BaseModel
+    {
+        public int MenuId { get; set; }
+        public string MenuName { get; set; }
+        public string MenuText { get; set; }
+        public string MenuImageUrl { get; set; }
+        public string MenuUrl { get; set; }
+        public string MenuSpriteCssClass { get; set; }
+        public string MenuUrlTarget { get; set; }
+    }
 
+    public class SubMenuItem : BaseModel
+    {
+        public int SubMenuId { get; set; }
+        public string SubMenuName { get; set; }
+        public string SubMenuText { get; set; }
+        public string SubMenuImageUrl { get; set; }
+        public string SubMenuUrl { get; set; }
+        public string SubMenuSpriteCssClass { get; set; }
+        public string SubMenuUrlTarget { get; set; }
+
+        public int MenuId { get; set; }
+        [ForeignKey("MenuId")]
+        public virtual MenuItem MenuItem { get; set; }
+    }
+
+    public class Menu : BaseModel
+    {
+        public int MenuId { get; set; }
+        public string MenuName { get; set; }
+        public string MenuText { get; set; }
+        public string MenuImageUrl { get; set; }
+        public string MenuUrl { get; set; }
+        public string MenuSpriteCssClass { get; set; }
+        public string MenuUrlTarget { get; set; }
+        public int MenuSortOrder { get; set; }
+        public bool IsSelected { get; set; }
+
+        public int ParentMenuId { get; set; }
+        //[ForeignKey("ParentMenuId")]
+        public virtual Menu ParentMenu { get; set; }
+
+    }
+
+    public class CustomMenu : BaseModel
+    {
+        [Key]
+        public int MenuId { get; set; }
+        public string MenuName { get; set; }
+        public string MenuText { get; set; }
+        public string MenuImageUrl { get; set; }
+        public string MenuUrl { get; set; }
+        public string MenuSpriteCssClass { get; set; }
+        public string MenuUrlTarget { get; set; }
+        public int MenuSortOrder { get; set; }
+        public bool IsSelected { get; set; }
+
+        public int ParentMenuId { get; set; }
+        //[ForeignKey("ParentMenuId")]
+        public virtual CustomMenu ParentMenu { get; set; }
+
+        public virtual IEnumerable<CustomMenu> CustomMenus { get; set; }
+
+    }
+
+    public class ApplicationEntity
+    {
+        public int ApplicationId { get; set; }
+        public string ApplicationName { get; set; }
+        public string Description { get; set; }
+        public DateTime StartDate { get; set; }
+
+        [DateEnd(DateStartProperty = "StartDate", ErrorMessage = "End Date must be greater than Start Date")]
+        public DateTime EndDate { get; set; }
+
+        [BirthDate(ErrorMessage = "Birth date must be less then today")]
+        public DateTime DateOfBirth { get; set; }
+
+        [LessDate(ErrorMessage = "Date must be less then today")]
+        public DateTime PreviousDate { get; set; }
+
+        [GraterDate(ErrorMessage = "Date must be grater then today")]
+        public DateTime NextDate { get; set; }
+    }
 }

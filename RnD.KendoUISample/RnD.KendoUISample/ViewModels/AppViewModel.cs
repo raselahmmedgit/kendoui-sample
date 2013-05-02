@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -64,11 +65,13 @@ namespace RnD.KendoUISample.ViewModels
         public virtual IEnumerable<Product> Products { get; set; }
         public virtual IEnumerable<ProductViewModel> ProductViewModels { get; set; }
     }
+
     public class CategoryViewModelNew
     {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
     }
+
     public class PictureViewModel
     {
         public int PictureId { get; set; }
@@ -95,5 +98,73 @@ namespace RnD.KendoUISample.ViewModels
     {
         public int CategoryId { get; set; }
         public string Name { get; set; }
+    }
+
+    public class MenuItemViewModel : BaseModel
+    {
+        public int MenuId { get; set; }
+        public string MenuName { get; set; }
+        public string MenuText { get; set; }
+        public string MenuImageUrl { get; set; }
+        public string MenuUrl { get; set; }
+        public string MenuSpriteCssClass { get; set; }
+        public string MenuActionName { get; set; }
+        public string MenuUrlTarget { get; set; }
+
+        public IEnumerable<SubMenuItemViewModel> SubMenuItemViewModels { get; set; }
+    }
+
+    public class SubMenuItemViewModel : BaseModel
+    {
+        public int SubMenuId { get; set; }
+        public string SubMenuName { get; set; }
+        public string SubMenuText { get; set; }
+        public string SubMenuImageUrl { get; set; }
+        public string SubMenuUrl { get; set; }
+        public string SubMenuSpriteCssClass { get; set; }
+        public string SubMenuActionName { get; set; }
+        public string SubMenuUrlTarget { get; set; }
+
+        public int MenuId { get; set; }
+        public MenuItem MenuItem { get; set; }
+    }
+
+    public class MainMenuViewModel : BaseModel
+    {
+        public int MenuId { get; set; }
+        public string MenuName { get; set; }
+        public string MenuText { get; set; }
+        public string MenuImageUrl { get; set; }
+        public string MenuUrl { get; set; }
+        public string MenuSpriteCssClass { get; set; }
+        public string MenuActionName { get; set; }
+        public string MenuUrlTarget { get; set; }
+
+        public IEnumerable<MainMenuViewModel> SubMenuViewModels { get; set; }
+    }
+
+    public class MenuViewModel : BaseModel
+    {
+        public MenuViewModel()
+        {
+            SubMenuViewModels = new List<MenuViewModel>();
+        }
+
+        public int MenuId { get; set; }
+        public string MenuName { get; set; }
+        public string MenuText { get; set; }
+        public string MenuImageUrl { get; set; }
+        public string MenuUrl { get; set; }
+        public string MenuSpriteCssClass { get; set; }
+        public string MenuUrlTarget { get; set; }
+        public int MenuSortOrder { get; set; }
+        public bool IsSelected { get; set; }
+
+        public int ParentMenuId { get; set; }
+        public virtual MenuViewModel ParentMenuViewModel { get; set; }
+
+        //public IEnumerable<MenuViewModel> SubMenuViewModels { get; set; }
+        public List<MenuViewModel> SubMenuViewModels { get; set; }
+
     }
 }

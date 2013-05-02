@@ -10,6 +10,8 @@ namespace RnD.KendoUISample.Models
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Menu> Menus { get; set; }
+        public DbSet<CustomMenu> CustomMenus { get; set; }
 
         //For Logger
         public DbSet<Logger> Loggers { get; set; }
@@ -30,7 +32,7 @@ namespace RnD.KendoUISample.Models
     {
         protected override void Seed(AppDbContext context)
         {
-            // Create default catrgories.
+            // Create default categories.
             var categories = new List<Category>
                             {
                                 new Category { CategoryId=1, Name = "Fruit"},
@@ -87,6 +89,101 @@ namespace RnD.KendoUISample.Models
                         };
 
             products.ForEach(p => context.Products.Add(p));
+
+            context.SaveChanges();
+
+            // Create some Menus.
+            var menus = new List<Menu> 
+                        {
+                            new Menu {MenuId=1, MenuName="Home", MenuText="Home", MenuImageUrl="/Content/Images/menu.png" , MenuUrl="/Home/Index", MenuSpriteCssClass="menu-sprite", MenuUrlTarget="_black", MenuSortOrder = 1},
+                            new Menu {MenuId=2, MenuName="Admin", MenuText="Admin", MenuImageUrl="/Content/Images/menu.png" , MenuUrl="/Home/Index", MenuSpriteCssClass="menu-sprite", MenuUrlTarget="_black", MenuSortOrder = 2}, //Admin
+                            new Menu {MenuId=3, MenuName="Account", MenuText="Account", MenuImageUrl="/Content/Images/menu.png" , MenuUrl="/Home/Index", MenuSpriteCssClass="menu-sprite", MenuUrlTarget="_black", MenuSortOrder = 3}, //Account
+                            new Menu {MenuId=4, MenuName="Sales", MenuText="Sales", MenuImageUrl="/Content/Images/menu.png" , MenuUrl="/Home/Index", MenuSpriteCssClass="menu-sprite", MenuUrlTarget="_black", MenuSortOrder = 4}, //Sales
+                            new Menu {MenuId=5, MenuName="Settings", MenuText="Settings", MenuImageUrl="/Content/Images/menu.png" , MenuUrl="/Home/Index", MenuSpriteCssClass="menu-sprite", MenuUrlTarget="_black", MenuSortOrder = 5, ParentMenuId = 3}, //Settings
+                            new Menu {MenuId=6, MenuName="Add Settings", MenuText="Add Settings", MenuImageUrl="/Content/Images/menu.png" , MenuUrl="/Home/Index", MenuSpriteCssClass="menu-sprite", MenuUrlTarget="_black", MenuSortOrder = 6, ParentMenuId = 5}, //Add Settings
+                            new Menu {MenuId=7, MenuName="Edit Settings", MenuText="Edit Settings", MenuImageUrl="/Content/Images/menu.png" , MenuUrl="/Home/Index", MenuSpriteCssClass="menu-sprite", MenuUrlTarget="_black", MenuSortOrder = 7, ParentMenuId = 5}, //Edit Settings
+                            new Menu {MenuId=8, MenuName="Product", MenuText="Product", MenuImageUrl="/Content/Images/menu.png" , MenuUrl="/Home/Index", MenuSpriteCssClass="menu-sprite", MenuUrlTarget="_black", MenuSortOrder = 8, ParentMenuId = 4}, //Product
+                            new Menu {MenuId=9, MenuName="Add Product", MenuText="Add Product", MenuImageUrl="/Content/Images/menu.png" , MenuUrl="/Home/Index", MenuSpriteCssClass="menu-sprite", MenuUrlTarget="_black", MenuSortOrder = 9, ParentMenuId = 8}, //Add Product
+                            new Menu {MenuId=10, MenuName="Edit Product", MenuText="Edit Product", MenuImageUrl="/Content/Images/menu.png" , MenuUrl="/Home/Index", MenuSpriteCssClass="menu-sprite", MenuUrlTarget="_black", MenuSortOrder = 10, ParentMenuId = 8}, //Edit Product
+                            new Menu {MenuId=11, MenuName="Order", MenuText="Order", MenuImageUrl="/Content/Images/menu.png" , MenuUrl="/Home/Index", MenuSpriteCssClass="menu-sprite", MenuUrlTarget="_black", MenuSortOrder = 11, ParentMenuId = 4}, //Order
+                            new Menu {MenuId=12, MenuName="Add Order", MenuText="Add Order", MenuImageUrl="/Content/Images/menu.png" , MenuUrl="/Home/Index", MenuSpriteCssClass="menu-sprite", MenuUrlTarget="_black", MenuSortOrder = 12, ParentMenuId = 11}, //Add Order
+                            new Menu {MenuId=13, MenuName="Edit Order", MenuText="Edit Order", MenuImageUrl="/Content/Images/menu.png" , MenuUrl="/Home/Index", MenuSpriteCssClass="menu-sprite", MenuUrlTarget="_black", MenuSortOrder = 13, ParentMenuId = 11}, //Edit Order
+                            new Menu {MenuId=14, MenuName="Task", MenuText="Task", MenuImageUrl="/Content/Images/menu.png" , MenuUrl="/Home/Index", MenuSpriteCssClass="menu-sprite", MenuUrlTarget="_black", MenuSortOrder = 14, ParentMenuId = 2}, //task
+                            new Menu {MenuId=15, MenuName="Schedule", MenuText="Schedule", MenuImageUrl="/Content/Images/menu.png" , MenuUrl="/Home/Index", MenuSpriteCssClass="menu-sprite", MenuUrlTarget="_black", MenuSortOrder = 15, ParentMenuId = 14} //Schedule
+                        };
+
+            menus.ForEach(m => context.Menus.Add(m));
+
+            context.SaveChanges();
+
+            List<CustomMenu> _customMenuList = new List<CustomMenu>();
+
+            CustomMenu a = new CustomMenu();
+            a.MenuId = 1;
+            a.MenuName = "A";
+            a.ParentMenuId = 0;
+            _customMenuList.Add(a);
+
+            CustomMenu b = new CustomMenu();
+            b.MenuId = 2;
+            b.MenuName = "B";
+            b.ParentMenuId = 0;
+            _customMenuList.Add(b);
+
+            CustomMenu cc = new CustomMenu();
+            cc.MenuId = 3;
+            cc.MenuName = "C";
+            cc.ParentMenuId = 0;
+            _customMenuList.Add(cc);
+            //End of main menus
+
+            #region Child menu for A
+
+            List<CustomMenu> lstA = new List<CustomMenu>();
+
+            CustomMenu a1 = new CustomMenu();
+            a1.MenuId = 4;
+            a1.MenuName = "A 1";
+            a1.ParentMenuId = 1;
+            a1.ParentMenu = a;
+            lstA.Add(a1);
+
+            CustomMenu a2 = new CustomMenu();
+            a2.MenuId = 5;
+            a2.MenuName = "A 2";
+            a2.ParentMenuId = 1;
+            a2.ParentMenu = a;
+            lstA.Add(a2);
+            a.CustomMenus = lstA;
+
+            #endregion Child menu for A
+
+            #region Child menu for B
+
+            List<CustomMenu> lstB = new List<CustomMenu>();
+            CustomMenu b1 = new CustomMenu();
+            b1.MenuId = 6;
+            b1.MenuName = "B 1";
+            b1.ParentMenuId = 1;
+            lstB.Add(b1);
+            b.CustomMenus = lstB;
+
+            #region Child for B under B
+
+            List<CustomMenu> lstB_B = new List<CustomMenu>();
+            CustomMenu bb1 = new CustomMenu();
+            bb1.MenuId = 7;
+            bb1.MenuName = "BB 1";
+            bb1.ParentMenuId = 6;
+            lstB_B.Add(bb1);
+
+            b1.CustomMenus = lstB_B;
+
+            #endregion Child for B under B
+
+            #endregion Child menu for B
+
+            _customMenuList.ForEach(cm => context.CustomMenus.Add(cm));
 
             context.SaveChanges();
 

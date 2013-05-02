@@ -43,13 +43,21 @@ namespace RnD.KendoUISample
 
         private static void InitializeAndSeedDb()
         {
-            // Initializes and seeds the database.
-            Database.SetInitializer(new DBInitializer());
-
-            using (var context = new AppDbContext())
+            try
             {
-                context.Database.Initialize(force: true);
+                // Initializes and seeds the database.
+                Database.SetInitializer(new DBInitializer());
+
+                using (var context = new AppDbContext())
+                {
+                    context.Database.Initialize(force: true);
+                }
             }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
         }
     }
 }
