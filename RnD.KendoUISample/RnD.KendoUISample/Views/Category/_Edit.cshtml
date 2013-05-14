@@ -18,6 +18,7 @@
             <strong>@Html.LabelFor(model => model.Name): </strong>
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
+            @(Html.Kendo().NumericTextBoxFor(x => x.CategoryId).Min(0).HtmlAttributes(new { style = "width:220px; text-align:right" }))
         </div>
     </fieldset>
 }

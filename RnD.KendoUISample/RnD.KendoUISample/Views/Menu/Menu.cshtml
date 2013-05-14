@@ -1,12 +1,13 @@
-﻿@model IEnumerable<RnD.KendoUISample.ViewModels.MenuViewModel>
+﻿@*@model IEnumerable<RnD.KendoUISample.ViewModels.MenuViewModel>*@
 @{
     ViewBag.Title = "Menu";
+    List<RnD.KendoUISample.ViewModels.MenuViewModel> Model = ViewBag.Menu;
 }
 <h2>
     Menu: Main Mode</h2>
 <div id="basicMainMenuZone">
     <div id="basicMainMenuForm">
-        <div>
+        <div id="ObjMenuDiv">
             @(Html.Kendo().Menu()
       .Name("ObjMenu")
       .BindTo(Model, mappings =>

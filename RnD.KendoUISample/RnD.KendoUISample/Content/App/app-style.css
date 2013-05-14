@@ -163,3 +163,40 @@
     width: 12px !important;
     height: 12px !important;
 }
+
+ul#ObjMenuDiv.k-menu, .k-header
+{
+    background-color: green !important;
+    border: 1px solid red !important;
+}
+
+#ObjMenu .k-menu > ul, li
+{
+    height: 50px;
+}
+
+#ObjMenu .k-menu > .k-item > .k-link
+{
+    padding: 1em 1em 1em 1em;
+    color: white;
+}
+
+#ObjMenu .k-menu > .k-header, .k-state-default
+{
+    background-color: green;
+}
+
+#ObjMenu .k-menu > .k-state-hover
+{
+    background-color: green;
+}
+
+#ObjMenu .k-menu > .k-state-active
+{
+    background-color: green;
+}
+
+#ObjMenu .k-menu > .k-state-border-down
+{
+    background-color: green;
+}

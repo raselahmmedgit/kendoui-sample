@@ -8,7 +8,7 @@ using RnD.KendoUISample.ViewModels;
 
 namespace RnD.KendoUISample.Controllers
 {
-    public class MenuController : Controller
+    public class MenuController : BaseController
     {
         private AppDbContext _db = new AppDbContext();
 
@@ -210,8 +210,15 @@ namespace RnD.KendoUISample.Controllers
             //var menuViewModels = viewModelList;
             var menuViewModels = finalList;
 
-            return View(menuViewModels);
+            ViewBag.Menu = menuViewModels;
+
+            //return View(menuViewModels);
+            return View();
         }
 
+        public ActionResult BaseMenu()
+        {
+            return View();
+        }
     }
 }

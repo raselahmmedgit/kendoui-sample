@@ -176,10 +176,10 @@ namespace RnD.KendoUISample.Controllers
                 writer.Write(product.Price);
                 writer.Write("\"");
                 writer.Write(",");
-                writer.Write(product.Category != null ? 0 : product.CategoryId);
+                writer.Write(product.Category != null ? product.CategoryId : 0);
                 writer.Write(",");
                 writer.Write("\"");
-                if (product.Category != null) writer.Write(product.Category != null ? string.Empty : product.Category.Name);
+                if (product.Category != null) writer.Write(product.Category != null ? product.Category.Name : string.Empty);
                 writer.Write("\"");
                 writer.WriteLine();
             }
@@ -205,15 +205,17 @@ namespace RnD.KendoUISample.Controllers
             sheet.SetColumnWidth(1, 50 * 256);
             sheet.SetColumnWidth(2, 50 * 256);
             sheet.SetColumnWidth(3, 50 * 256);
+            sheet.SetColumnWidth(4, 50 * 256);
 
             //Create a header row
             var headerRow = sheet.CreateRow(0);
 
             //Set the column names in the header row
             headerRow.CreateCell(0).SetCellValue("ProductId");
-            headerRow.CreateCell(1).SetCellValue("Name");
-            headerRow.CreateCell(2).SetCellValue("Price");
-            headerRow.CreateCell(3).SetCellValue("CategoryName");
+            headerRow.CreateCell(1).SetCellValue("ProductName");
+            headerRow.CreateCell(2).SetCellValue("ProductPrice");
+            headerRow.CreateCell(3).SetCellValue("CategoryId");
+            headerRow.CreateCell(4).SetCellValue("CategoryName");
 
             //(Optional) freeze the header row so it is not scrolled
             sheet.CreateFreezePane(0, 1, 0, 1);
@@ -231,7 +233,9 @@ namespace RnD.KendoUISample.Controllers
                 row.CreateCell(1).SetCellValue(product.Name);
                 row.CreateCell(2).SetCellValue(product.Price.ToString());
                 if (product.Category != null)
-                    row.CreateCell(3).SetCellValue(product.Category != null ? "" : product.Category.Name);
+                    row.CreateCell(3).SetCellValue(product.Category != null ? product.CategoryId : 0);
+                if (product.Category != null)
+                    row.CreateCell(4).SetCellValue(product.Category != null ? product.Category.Name : string.Empty);
             }
 
             //Write the workbook to a memory stream
@@ -315,7 +319,8 @@ namespace RnD.KendoUISample.Controllers
                 {
                     //File Uploaded
                     HSSFWorkbook hssfWorkbook;
-                    string filefullpath = Path.GetFullPath(model.ImportFile.FileName);
+                    //string filefullpath = Path.GetFullPath(model.ImportFile.FileName);
+                    string filefullpath = Path.Combine(Request.Path, model.ImportFile.FileName);
                     StreamReader streamReader = new StreamReader(model.ImportFile.InputStream);
 
                     using (FileStream fileStream = new FileStream(filefullpath, FileMode.Open, FileAccess.Read))
