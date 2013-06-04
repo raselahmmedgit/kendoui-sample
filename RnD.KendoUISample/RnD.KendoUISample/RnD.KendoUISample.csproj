@@ -224,6 +224,7 @@
     <Content Include="README.jQuery.vsdoc.txt" />
     <Content Include="Scripts\App\app-jq.js" />
     <Content Include="Scripts\App\category-jq.js" />
+    <Content Include="Scripts\App\groundtotal.child-jq.js" />
     <Content Include="Scripts\App\master.child-jq.js" />
     <Content Include="Scripts\JQDialog\jqdialog.custom.js" />
     <Content Include="Scripts\JQDialog\jqdialog.js" />
@@ -689,6 +690,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Files\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -822,6 +824,9 @@
     <Content Include="Views\Menu\MainMenu.cshtml" />
     <Content Include="Views\Menu\Menu.cshtml" />
     <Content Include="Views\Menu\BaseMenu.cshtml" />
+    <Content Include="Views\Product\GroundTotal.cshtml" />
+    <Content Include="Views\Product\DuplicateDetails.cshtml" />
+    <Content Include="Views\Category\CascadingDropdownlist.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

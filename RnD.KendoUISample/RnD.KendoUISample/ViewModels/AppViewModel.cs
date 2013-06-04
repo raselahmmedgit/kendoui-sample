@@ -32,6 +32,59 @@ namespace RnD.KendoUISample.ViewModels
         public IEnumerable<Product> Products { get; set; }
     }
 
+    public class Product2ViewModel : BaseModel
+    {
+        [Key]
+        public int ProductId { get; set; }
+        [DisplayName("Product Name")]
+        [Required(ErrorMessage = "Product Name is required.")]
+        [MaxLength(200)]
+        public string Name { get; set; }
+        [DisplayName("Product Price")]
+        [Required(ErrorMessage = "Product Price is required.")]
+        public float Price { get; set; }
+        public float Quantity { get; set; }
+        public float Total { get; set; }
+        [Required(ErrorMessage = "Select one category.")]
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
+
+        public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<SelectListItem> ddlCategories { get; set; }
+        public IEnumerable<ProductViewModel> ProductViewModels { get; set; }
+    }
+
+    public class ProductOrderViewModel : BaseModel
+    {
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public float AITRate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public float VATRate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public float AITRateTotal { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public float VATRateTotal { get; set; }
+
+        [Key]
+        public int ProductId { get; set; }
+        [DisplayName("Product Name")]
+        [Required(ErrorMessage = "Product Name is required.")]
+        [MaxLength(200)]
+        public string Name { get; set; }
+        [DisplayName("Product Price")]
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "Product Price is required.")]
+        public float Price { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public float Quantity { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public float Total { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public float GrossTotal { get; set; }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
+        public float GroundTotal { get; set; }
+    }
+
     public class ProductCsvModel
     {
         public int ProductId { get; set; }
@@ -46,6 +99,7 @@ namespace RnD.KendoUISample.ViewModels
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public decimal ProductPrice { get; set; }
+        public int CategoryId { get; set; }
         public string CategoryName { get; set; }
     }
 

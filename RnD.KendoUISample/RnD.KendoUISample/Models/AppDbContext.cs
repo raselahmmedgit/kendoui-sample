@@ -40,7 +40,7 @@ namespace RnD.KendoUISample.Models
                                 new Category {CategoryId=3, Name = "Car"},
                                 new Category {CategoryId=4, Name = "Book"},
                                 new Category {CategoryId=5, Name = "Shoe"},
-                                new Category {CategoryId=6, Name = "Wipper"},
+                                new Category {CategoryId=6, Name = "Wiper"},
                                 new Category {CategoryId=7, Name = "Laptop"},
                                 new Category {CategoryId=8, Name = "Desktop"},
                                 new Category {CategoryId=9, Name = "Notebook"},

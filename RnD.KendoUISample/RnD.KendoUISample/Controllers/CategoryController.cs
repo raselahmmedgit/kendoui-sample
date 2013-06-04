@@ -96,6 +96,14 @@ namespace RnD.KendoUISample.Controllers
             return View();
         }
 
+        //CascadingDropdownlist
+        public ViewResult CascadingDropdownlist()
+        {
+            //return View(GetCategorys());
+            return View();
+        }
+
+
         //Get
         [HttpGet]
         public ActionResult SelectList()
@@ -205,6 +213,25 @@ namespace RnD.KendoUISample.Controllers
             var categories = _db.Categories.ToList();
 
             return categories;
+        }
+
+        public JsonResult GetCascadeCategories()
+        {
+            var categories = _db.Categories.ToList();
+
+            return Json(categories.Select(c => new { CategoryId = c.CategoryId, CategoryName = c.Name }), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCascadeProducts(string categories)
+        {
+            var products = _db.Products.ToList();
+
+            if (!string.IsNullOrEmpty(categories))
+            {
+                products = products.Where(p => p.CategoryId.ToString() == categories).ToList();
+            }
+
+            return Json(products.Select(p => new { ProductID = p.ProductId, ProductName = p.Name }), JsonRequestBehavior.AllowGet);
         }
 
         #region CRUD Action For InCell By List

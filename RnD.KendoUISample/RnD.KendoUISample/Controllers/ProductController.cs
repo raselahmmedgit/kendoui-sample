@@ -94,6 +94,15 @@ namespace RnD.KendoUISample.Controllers
             return clientProductViewModels;
         }
 
+        //GroundTotal
+        [HttpGet]
+        public ActionResult GroundTotal()
+        {
+            var productOrderViewModel = new ProductOrderViewModel();
+
+            return View(productOrderViewModel);
+        }
+
         //MasterDetails
         [HttpGet]
         public ActionResult MasterDetails()
@@ -108,7 +117,7 @@ namespace RnD.KendoUISample.Controllers
             return View(productViewModel);
         }
 
-        //MasterDetails
+        //EditMasterDetails
         [HttpGet]
         public ActionResult EditMasterDetails(int id)
         {
@@ -136,6 +145,19 @@ namespace RnD.KendoUISample.Controllers
             }
         }
 
+        //DuplicateDetails
+        [HttpGet]
+        public ActionResult DuplicateDetails()
+        {
+            var categories = SelectListItemExtension.PopulateDropdownList(_db.Categories.ToList<Category>(), "CategoryId", "Name").ToList();
+
+            var productViewModel = new Product2ViewModel()
+            {
+                ddlCategories = categories
+            };
+
+            return View(productViewModel);
+        }
 
         //[HttpPost]
         //public ActionResult MasterDetails(int id)
@@ -271,20 +293,46 @@ namespace RnD.KendoUISample.Controllers
             {
                 if (model.ImportFile != null)
                 {
-                    //File Uploaded
-                    //using (var reader = new StreamReader(ImportCsv.InputStream))
-                    using (var reader = new StreamReader(model.ImportFile.InputStream))
-                    using (var csvReader = new CsvReader(reader))
+                    var file = model.ImportFile;
+
+                    if (file != null && file.ContentLength > 0)
                     {
-                        csvReader.Read();
-                        //Read CSV File
-                        var products = csvReader.GetRecords<ProductCsvModel>().ToList();
+                        var fileBytes = new byte[file.ContentLength];
+                        file.InputStream.Read(fileBytes, 0, file.ContentLength);
+                        //do stuff with the bytes
+                        string fileName = file.FileName;
+                        string filePath = Path.Combine(Request.PhysicalApplicationPath, "Files\\", fileName);
+
+                        System.IO.File.WriteAllBytes(filePath, fileBytes);
+
+                        //File Uploaded
+                        //using (var reader = new StreamReader(ImportCsv.InputStream))
+                        //using (var reader = new StreamReader(model.ImportFile.InputStream))
+                        using (var reader = new StreamReader(filePath))
+                        using (var csvReader = new CsvReader(reader))
+                        {
+                            csvReader.Read();
+                            //Read CSV File
+                            var products = csvReader.GetRecords<ProductCsvModel>().ToList();
+
+                        }
+
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            System.IO.File.Delete(filePath);
+                        }
+
+                        return RedirectToAction("DataImport", "Product");
+                        //return Content(Boolean.TrueString);
+                        //return Json(new { msg = "Product data uploaded successfully.", status = MessageType.success.ToString() }, JsonRequestBehavior.AllowGet);
 
                     }
+                    else
+                    {
+                        //return Content("Sorry! Could not found this file.");
+                        return RedirectToAction("DataImport", "Product");
+                    }
 
-                    return RedirectToAction("DataImport", "Product");
-                    //return Content(Boolean.TrueString);
-                    //return Json(new { msg = "Product data uploaded successfully.", status = MessageType.success.ToString() }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
@@ -317,30 +365,71 @@ namespace RnD.KendoUISample.Controllers
             {
                 if (model.ImportFile != null)
                 {
-                    //File Uploaded
-                    HSSFWorkbook hssfWorkbook;
-                    //string filefullpath = Path.GetFullPath(model.ImportFile.FileName);
-                    string filefullpath = Path.Combine(Request.Path, model.ImportFile.FileName);
-                    StreamReader streamReader = new StreamReader(model.ImportFile.InputStream);
+                    var file = model.ImportFile;
 
-                    using (FileStream fileStream = new FileStream(filefullpath, FileMode.Open, FileAccess.Read))
+                    if (file != null && file.ContentLength > 0)
                     {
-                        //hssfWorkbook = new HSSFWorkbook(fileStream);
-                        hssfWorkbook = new HSSFWorkbook();
-                    }
+                        var fileBytes = new byte[file.ContentLength];
+                        file.InputStream.Read(fileBytes, 0, file.ContentLength);
+                        //do stuff with the bytes
+                        string fileName = file.FileName;
+                        string filePath = Path.Combine(Request.PhysicalApplicationPath, "Files\\", fileName);
 
-                    ISheet sheet = hssfWorkbook.GetSheet("Products");
-                    for (int row = 0; row <= sheet.LastRowNum; row++)
-                    {
-                        if (sheet.GetRow(row) != null) //null is when the row only contains empty cells 
+                        System.IO.File.WriteAllBytes(filePath, fileBytes);
+
+                        //File Uploaded
+                        HSSFWorkbook hssfWorkbook;
+
+                        string filefullpath = filePath;
+
+                        //StreamReader streamReader = new StreamReader(model.ImportFile.InputStream);
+
+                        using (FileStream fileStream = new FileStream(filefullpath, FileMode.Open, FileAccess.Read))
                         {
-                            var aa = sheet.GetRow(row).GetCell(0).StringCellValue;
+                            hssfWorkbook = new HSSFWorkbook(fileStream);
+                            //hssfWorkbook = new HSSFWorkbook();
                         }
+
+                        var products = new List<ProductXlsModel>();
+
+                        //the columns
+                        var properties = new string[] { "ProductId", "ProductName", "ProductPrice", "CategoryId", "CategoryName" };
+
+                        ISheet sheet = hssfWorkbook.GetSheet("Products");
+                        for (int row = 1; row <= sheet.LastRowNum; row++)
+                        {
+                            if (sheet.GetRow(row) != null) //null is when the row only contains empty cells 
+                            {
+
+                                int productId = Convert.ToInt32(sheet.GetRow(row).GetCell(GetColumnIndex(properties, "ProductId")).NumericCellValue);
+
+                                string productName = sheet.GetRow(row).GetCell(GetColumnIndex(properties, "ProductName")).StringCellValue;
+                                decimal productPrice = Convert.ToDecimal(sheet.GetRow(row).GetCell(GetColumnIndex(properties, "ProductPrice")).StringCellValue);
+                                int categoryId = Convert.ToInt32(sheet.GetRow(row).GetCell(GetColumnIndex(properties, "CategoryId")).NumericCellValue);
+                                string categoryName = sheet.GetRow(row).GetCell(GetColumnIndex(properties, "CategoryName")).StringCellValue;
+
+                                var product = new ProductXlsModel { ProductId = productId, ProductName = productName, ProductPrice = productPrice, CategoryId = categoryId, CategoryName = categoryName };
+
+                                products.Add(product);
+
+                            }
+                        }
+
+                        if (System.IO.File.Exists(filefullpath))
+                        {
+                            System.IO.File.Delete(filefullpath);
+                        }
+
+                        return RedirectToAction("DataImport", "Product");
+                        //return Content(Boolean.TrueString);
+                        //return Json(new { msg = "Product data uploaded successfully.", status = MessageType.success.ToString() }, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        //return Content("Sorry! Could not found this file.");
+                        return RedirectToAction("DataImport", "Product");
                     }
 
-                    return RedirectToAction("DataImport", "Product");
-                    //return Content(Boolean.TrueString);
-                    //return Json(new { msg = "Product data uploaded successfully.", status = MessageType.success.ToString() }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
@@ -358,6 +447,21 @@ namespace RnD.KendoUISample.Controllers
                 //return Json(new { msg = ExceptionHelper.ExceptionMessageFormat(ex, log: false), status = MessageType.error.ToString() }, JsonRequestBehavior.AllowGet);
             }
 
+        }
+
+        protected virtual int GetColumnIndex(string[] properties, string columnName)
+        {
+            if (properties == null)
+                throw new ArgumentNullException("properties");
+
+            if (columnName == null)
+                throw new ArgumentNullException("columnName");
+
+            for (int i = 0; i < properties.Length; i++)
+                if (properties[i].Equals(columnName, StringComparison.InvariantCultureIgnoreCase))
+                    //return i + 1; //excel indexes start from 1
+                    return i; //excel indexes start from 0
+            return 0;
         }
 
         //CellCalculate

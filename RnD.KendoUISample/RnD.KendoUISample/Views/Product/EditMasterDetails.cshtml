@@ -1,9 +1,9 @@
 ﻿@model RnD.KendoUISample.ViewModels.ProductViewModel
 @{
-    ViewBag.Title = "Master Details";
+    ViewBag.Title = "Edit Master Details";
 }
 <h2>
-    Product : Master Details Create</h2>
+    Product : Edit Master Details Create</h2>
 <div>
     @Html.ValidationSummary(true)
     <div id="masterFormZone" style="padding-bottom: 30px;">
@@ -48,8 +48,8 @@
                                                                                                  columns.Bound(c => c.Name);
                                                                                                  columns.Bound(c => c.Price);
                                                                                                  columns.Bound(c => c.CategoryId).Visible(false);
-                                                                                                 
-                                                                                                 columns.Bound(c => c.ActionLink).ClientTemplate("<button id='productItem_#= TempId #' onclick='ProductRemoveRow(#= TempId #)' class='button'>Remove</button>").HeaderTemplate("Remove");
+
+                                                                                                 columns.Bound(c => c.ActionLink).ClientTemplate("<button id='productItemEdit_#= TempId #' onclick='ProductEditRow(#= TempId #)' class='button'>Edit</button>&nbsp;&nbsp;&nbsp;<button id='productItemRemove_#= TempId #' onclick='ProductRemoveRow(#= TempId #)' class='button'>Remove</button>").HeaderTemplate("Remove");
                                                                                              }).BindTo(Model.Products).Groupable(group => group.Enabled(false)).Pageable(pager => pager.Enabled(false)).Sortable(sort => sort.Enabled(false)).Scrollable().Filterable(filter => filter.Enabled(false)).DataSource(dataSource => dataSource.Ajax().Batch(true).ServerOperation(false).Events(events => events.Error("error_handler")).Model(model => model.Id(e => e.TempId)))
               )
                 </div>
