@@ -32,3 +32,4 @@ E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\Kendo.Mvc.xml
 E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\bin\NPOI.xml
 E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.dll
 E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.pdb
+E:\Work\RnD Project\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.csprojResolveAssemblyReference.cache
