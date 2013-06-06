@@ -92,7 +92,7 @@
     <Compile Include="Models\AppDbContext.cs" />
     <Compile Include="Models\AppModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\AppViewModel.cs" />
+    <Compile Include="ViewModels\AppViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\App\app-style.css" />
