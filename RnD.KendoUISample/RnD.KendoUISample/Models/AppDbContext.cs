@@ -8,6 +8,11 @@ namespace RnD.KendoUISample.Models
 {
     public class AppDbContext : DbContext
     {
+        public class AppDbContext : DbContext
+        {
+            public AppDbContext() : base("AppDbContext")
+        }
+        
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Menu> Menus { get; set; }
