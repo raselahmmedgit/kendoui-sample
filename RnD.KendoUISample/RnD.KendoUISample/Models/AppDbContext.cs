@@ -27,9 +27,9 @@ namespace RnD.KendoUISample.Models
     #region Initial data
 
     // Change the base class as follows if you want to drop and create the database during development:
-    //public class DBInitializer : DropCreateDatabaseAlways<AppDbContext>
+    public class DBInitializer : DropCreateDatabaseAlways<AppDbContext>
     //public class DBInitializer : CreateDatabaseIfNotExists<AppDbContext>
-    public class DBInitializer : DropCreateDatabaseIfModelChanges<AppDbContext>
+    //public class DBInitializer : DropCreateDatabaseIfModelChanges<AppDbContext>
     {
         protected override void Seed(AppDbContext context)
         {
