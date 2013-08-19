@@ -1,0 +1,29 @@
+﻿@model RnD.KendoUISample.Models.Category
+@using (Ajax.BeginForm("Delete", "Demo", null,
+        new AjaxOptions
+        {
+            UpdateTargetId = "deleteCategoryMess",
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST",
+            OnSuccess = "AjaxSuccess('deleteCategoryMess', 'deleteCategoryDialog', 'commonMessage', 'Category Deleted.')",
+        }, new { @id = "deleteCategoryForm" }))
+{  
+    
+    <fieldset>
+        <legend>Category:</legend>
+        <div id="deleteCategoryMess" class="error invisible">
+        </div>
+        @Html.HiddenFor(model => model.CategoryId)
+        <div class="display-field">
+            <strong>Category Name: </strong>@Html.DisplayFor(model => model.Name)
+        </div>
+        <div class="display-field">
+            Do you want delete this category?
+        </div>
+        <div id="editCategoryButtonZone">
+            <input type="submit" class="button" id="btnSubmit" name="btnSubmit" value="Yes" />
+            <input type="button" class="button" id="btnCancel" name="btnCancel" value="Cancel"
+                onclick=" $($('#deleteCategoryDialog').dialog('close'));" />
+        </div>
+    </fieldset>
+}

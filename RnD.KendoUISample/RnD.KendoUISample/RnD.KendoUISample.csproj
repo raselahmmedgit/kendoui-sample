@@ -77,6 +77,7 @@
   <ItemGroup>
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\DemoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -224,6 +225,7 @@
     <Content Include="README.jQuery.vsdoc.txt" />
     <Content Include="Scripts\App\app-jq.js" />
     <Content Include="Scripts\App\category-jq.js" />
+    <Content Include="Scripts\App\demo-jq.js" />
     <Content Include="Scripts\App\groundtotal.child-jq.js" />
     <Content Include="Scripts\App\master.child-jq.js" />
     <Content Include="Scripts\JQDialog\jqdialog.custom.js" />
@@ -827,6 +829,12 @@
     <Content Include="Views\Product\GroundTotal.cshtml" />
     <Content Include="Views\Product\DuplicateDetails.cshtml" />
     <Content Include="Views\Category\CascadingDropdownlist.cshtml" />
+    <Content Include="Views\Demo\Index.cshtml" />
+    <Content Include="Views\Demo\_Add.cshtml" />
+    <Content Include="Views\Demo\_Delete.cshtml" />
+    <Content Include="Views\Demo\_Details.cshtml" />
+    <Content Include="Views\Demo\_Edit.cshtml" />
+    <Content Include="Views\Shared\_Error.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
