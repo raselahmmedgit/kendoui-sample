@@ -174,7 +174,11 @@ namespace RnD.KendoUISample.Controllers
 
         public ActionResult CategorysRead([DataSourceRequest] DataSourceRequest request)
         {
-            return Json(GetCategorys().ToDataSourceResult(request));
+            var dataList = GetCategorys();
+
+            var models = GetCategorys().ToDataSourceResult(request);
+
+            return Json(models);
         }
 
         #region Add Multipule Category List
