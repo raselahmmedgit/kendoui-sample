@@ -272,6 +272,112 @@ namespace RnD.KendoUISample.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult ExportToCsvOnClick([DataSourceRequest]DataSourceRequest request)
+        {
+            var products = _db.Products.ToDataSourceResult(request).Data;
+
+            //Export To CSV 
+            MemoryStream output = new MemoryStream();
+            StreamWriter writer = new StreamWriter(output, Encoding.UTF8);
+
+            writer.Write("ProductId,");
+            writer.Write("ProductName,");
+            writer.Write("ProductPrice,");
+            writer.Write("CategoryId,");
+            writer.Write("CategoryName");
+            writer.WriteLine();
+            foreach (Product product in products)
+            {
+                writer.Write(product.ProductId);
+                writer.Write(",");
+                writer.Write("\"");
+                writer.Write(product.Name);
+                writer.Write("\"");
+                writer.Write(",");
+                writer.Write("\"");
+                writer.Write(product.Price);
+                writer.Write("\"");
+                writer.Write(",");
+                writer.Write(product.Category != null ? product.CategoryId : 0);
+                writer.Write(",");
+                writer.Write("\"");
+                if (product.Category != null) writer.Write(product.Category != null ? product.Category.Name : string.Empty);
+                writer.Write("\"");
+                writer.WriteLine();
+            }
+            writer.Flush();
+            output.Position = 0;
+
+            File(output, "text/comma-separated-values", "Products.csv");
+
+            return Json(new { msg = "Export to CSV successfully.", status = MessageType.success.ToString() }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult ExportToXlsOnClick([DataSourceRequest]DataSourceRequest request)
+        {
+            //Get the data representing the current grid state - page, sort and filter
+            IEnumerable products = _db.Products.ToDataSourceResult(request).Data;
+
+            //Create new Excel workbook
+            var workbook = new HSSFWorkbook();
+
+            //Create new Excel sheet
+            var sheet = workbook.CreateSheet();
+
+            //(Optional) set the width of the columns
+            sheet.SetColumnWidth(0, 10 * 256);
+            sheet.SetColumnWidth(1, 50 * 256);
+            sheet.SetColumnWidth(2, 50 * 256);
+            sheet.SetColumnWidth(3, 50 * 256);
+            sheet.SetColumnWidth(4, 50 * 256);
+
+            //Create a header row
+            var headerRow = sheet.CreateRow(0);
+
+            //Set the column names in the header row
+            headerRow.CreateCell(0).SetCellValue("ProductId");
+            headerRow.CreateCell(1).SetCellValue("ProductName");
+            headerRow.CreateCell(2).SetCellValue("ProductPrice");
+            headerRow.CreateCell(3).SetCellValue("CategoryId");
+            headerRow.CreateCell(4).SetCellValue("CategoryName");
+
+            //(Optional) freeze the header row so it is not scrolled
+            sheet.CreateFreezePane(0, 1, 0, 1);
+
+            int rowNumber = 1;
+
+            //Populate the sheet with values from the grid data
+            foreach (Product product in products)
+            {
+                //Create a new row
+                var row = sheet.CreateRow(rowNumber++);
+
+                //Set values for the cells
+                row.CreateCell(0).SetCellValue(product.ProductId);
+                row.CreateCell(1).SetCellValue(product.Name);
+                row.CreateCell(2).SetCellValue(product.Price.ToString());
+                if (product.Category != null)
+                    row.CreateCell(3).SetCellValue(product.Category != null ? product.CategoryId : 0);
+                if (product.Category != null)
+                    row.CreateCell(4).SetCellValue(product.Category != null ? product.Category.Name : string.Empty);
+            }
+
+            //Write the workbook to a memory stream
+            MemoryStream output = new MemoryStream();
+            workbook.Write(output);
+
+            //Return the result to the end user
+
+            File(output.ToArray(),   //The binary data of the XLS file
+                "application/vnd.ms-excel", //MIME type of Excel files
+                "Products.xls");     //Suggested file name in the "Save as" dialog which will be displayed to the end user
+
+            return Json(new { msg = "Export to EXCEL successfully.", status = MessageType.success.ToString() }, JsonRequestBehavior.AllowGet);
+
+        }
+
         //DataImport
         [HttpGet]
         public ActionResult DataImport()
