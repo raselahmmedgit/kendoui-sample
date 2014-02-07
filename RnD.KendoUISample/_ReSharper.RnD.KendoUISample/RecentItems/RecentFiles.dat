@@ -1,9 +1,5 @@
 ﻿<RecentFiles>
   <RecentFiles>
-    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Product/f:MasterDetails.cshtml" caret="831" fromTop="15" />
-    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Upload/f:Basic.cshtml" caret="0" fromTop="0" />
-    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Category/f:_Add.cshtml" caret="0" fromTop="0" />
-    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Upload/f:Async.cshtml" caret="530" fromTop="15" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Upload/f:AsyncShow.cshtml" caret="1723" fromTop="21" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/f:Global.asax.cs" caret="1450" fromTop="10" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Shared/f:_SocialLinkPartial.cshtml" caret="419" fromTop="6" />
@@ -14,12 +10,9 @@
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Product/f:Index.cshtml" caret="1706" fromTop="7" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Product/f:CellCalculate.cshtml" caret="1943" fromTop="6" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Category/f:SelectSingleItems.cshtml" caret="0" fromTop="0" />
-    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Shared/f:_CategoryList.cshtml" caret="0" fromTop="0" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/f:_ViewStart.cshtml" caret="8" fromTop="1" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Shared/f:_KendoPartial.cshtml" caret="173" fromTop="1" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Shared/f:_Layout.cshtml" caret="0" fromTop="0" />
-    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:ViewModels/f:AppViewModel.cs" caret="2375" fromTop="16" />
-    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Models/f:AppModels.cs" caret="2400" fromTop="17" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Controllers/f:ProductController.cs" caret="17262" fromTop="41" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/f:Web.config" caret="1201" fromTop="18" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Category/f:_Delete.cshtml" caret="886" fromTop="22" />
@@ -30,6 +23,13 @@
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Upload/f:OtherFile.cshtml" caret="2397" fromTop="21" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Controllers/f:UploadController.cs" caret="1623" fromTop="21" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Upload/f:Index.cshtml" caret="785" fromTop="12" />
+    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Models/f:AppModels.cs" caret="336" fromTop="3" />
+    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:ViewModels/f:AppViewModels.cs" caret="361" fromTop="12" />
+    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Category/f:_Add.cshtml" caret="425" fromTop="0" />
+    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Category/f:_Create.cshtml" caret="355" fromTop="4" />
+    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Helpers/f:ExceptionHelper.cs" caret="1791" fromTop="9" />
+    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Controllers/f:DemoController.cs" caret="333" fromTop="0" />
+    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Demo/f:_Add.cshtml" caret="1151" fromTop="20" />
   </RecentFiles>
   <RecentEdits>
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Category/f:Basic.cshtml" caret="258" fromTop="8" />
@@ -53,9 +53,7 @@
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Upload/f:AsyncShowSingle.cshtml" caret="1837" fromTop="21" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Upload/f:AsyncShow.cshtml" caret="1722" fromTop="21" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Product/f:Index.cshtml" caret="1706" fromTop="10" />
-    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Shared/f:_CategoryList.cshtml" caret="137" fromTop="3" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Models/f:AppModels.cs" caret="2400" fromTop="17" />
-    <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:ViewModels/f:AppViewModel.cs" caret="2375" fromTop="16" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Controllers/f:ProductController.cs" caret="17185" fromTop="13" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Product/f:RowCustom.cshtml" caret="13218" fromTop="6" />
     <File id="D210E374-EE23-4F15-955B-336EB5C75615/d:Views/d:Shared/f:_KendoPartial.cshtml" caret="173" fromTop="1" />
