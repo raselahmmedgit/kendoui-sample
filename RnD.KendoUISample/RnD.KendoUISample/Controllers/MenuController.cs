@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using NPOI.SS.Formula.Functions;
 using RnD.KendoUISample.Models;
 using RnD.KendoUISample.ViewModels;
 
@@ -219,6 +220,56 @@ namespace RnD.KendoUISample.Controllers
         public ActionResult BaseMenu()
         {
             return View();
+        }
+
+        public ActionResult SelectMenu()
+        {
+            var categories = _db.Categories.ToList();
+
+            var products = _db.Products.ToList();
+
+            var menus =
+                categories.Select(
+                    x =>
+                    new JsMenuViewModel()
+                    {
+                        Value = Convert.ToString(x.CategoryId),
+                        Text = x.Name,
+                        JsMenuItemViewModels = products.Where(pro => pro.CategoryId == x.CategoryId).Select(p => new JsMenuItemViewModel
+                        {
+                            Value = Convert.ToString(p.ProductId),
+                            Text = p.Name
+                        })
+                    });
+
+            return View(menus);
+        }
+
+        public JsonResult SelectMenuRead()
+        {
+            var categories = _db.Categories.ToList();
+
+            var products = _db.Products.ToList();
+
+            var models = categories.Select(
+                    x =>
+                    new dsMenuViewModel()
+                    {
+                        value = Convert.ToString(x.CategoryId),
+                        text = x.Name,
+                        items = products.Where(pro => pro.CategoryId == x.CategoryId).Select(p => new dsMenuViewModel
+                        {
+                            value = Convert.ToString(p.ProductId),
+                            text = p.Name
+                        })
+                    });
+
+            var menuSelect = new List<dsMenuViewModel>
+                            {
+                                new dsMenuViewModel { value = "0", text = "-- Select --", items = models}
+                            };
+
+            return Json(menuSelect, JsonRequestBehavior.AllowGet);
         }
     }
 }

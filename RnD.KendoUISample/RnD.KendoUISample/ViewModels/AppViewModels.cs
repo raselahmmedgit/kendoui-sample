@@ -221,4 +221,27 @@ namespace RnD.KendoUISample.ViewModels
         public List<MenuViewModel> SubMenuViewModels { get; set; }
 
     }
+
+    public class JsMenuViewModel
+    {
+        public string Text { get; set; }
+        public string Value { get; set; }
+
+        public IEnumerable<JsMenuItemViewModel> JsMenuItemViewModels { get; set; }
+    }
+
+    public class JsMenuItemViewModel
+    {
+        public string Text { get; set; }
+        public string Value { get; set; }
+    }
+
+    public class dsMenuViewModel
+    {
+        public string text { get; set; }
+        public string value { get; set; }
+
+        public IEnumerable<dsMenuViewModel> items { get; set; }
+    }
+
 }

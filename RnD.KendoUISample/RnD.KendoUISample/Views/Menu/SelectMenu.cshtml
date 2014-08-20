@@ -1,0 +1,157 @@
+﻿@model IEnumerable<RnD.KendoUISample.ViewModels.JsMenuViewModel>
+@{
+    ViewBag.Title = "Select Menu";
+}
+<h2>
+    Menu: Object Mode</h2>
+<div id="basicSelectMenuZone">
+    <div id="basicSelectMenuForm">
+        <div>
+            @(Html.Kendo().Menu()
+                  .Name("SelectMenu")
+                  .BindTo(Model, mappings =>
+                                 {
+                                     mappings.For<RnD.KendoUISample.ViewModels.JsMenuViewModel>(binding => binding
+                                         .ItemDataBound((item, menu) =>
+                                                        {
+                                                            item.Text = menu.Text;
+                                                            //item.Value = menu.Value;
+                                                        })
+                                         .Children(menu => menu.JsMenuItemViewModels));
+                                     mappings.For<RnD.KendoUISample.ViewModels.JsMenuItemViewModel>(binding => binding
+                                         .ItemDataBound((item, subMenu) =>
+                                                        {
+                                                            item.Text = subMenu.Text;
+                                                            //item.Value = subMenu.Value;
+                                                        }));
+                                 })
+                  )
+        </div>
+    </div>
+    <br />
+    <hr />
+    <br />
+    <div id="basicSelectMenuForm">
+        <input type="hidden" name="hdJobId" id="hdJobId" />
+        <div>
+            <ul id="menu" style="width: 200px !important;">
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function onSelect(e) {
+
+        var item = $(e.item),
+            menuElement = item.closest(".k-menu"),
+            dataItem = this.options.dataSource,
+            index = item.parentsUntil(menuElement, ".k-item").map(function () {
+                return $(this).index();
+            }).get().reverse();
+
+            console.log(dataItem);
+
+        index.push(item.index());
+
+        for (var i = -1, len = index.length; ++i < len; ) {
+            dataItem = dataItem[index[i]];
+            dataItem = i < len - 1 ? dataItem.items : dataItem;
+
+            console.log(dataItem);
+        }
+
+        console.log(dataItem);
+
+        alert(dataItem.value);
+
+        var selectId = dataItem.value;
+
+        $("#hdJobId").val('');
+        $("#hdJobId").val(selectId);
+
+    }
+
+    function LoadKendoUIMenuData(dataList) {
+
+        $("#menu").kendoMenu({
+            dataSource: dataList,
+            select: onSelect
+        });
+
+    }
+
+    $(document).ready(function () {
+
+        //        $("#menu").kendoMenu({
+        //            dataSource: [
+        //                {
+        //                    text: "-- Select --",
+        //                    value: "0",
+        //                    items: [
+        //                        {
+        //                            text: "Sub Item 1",
+        //                            value: "Sub Item 1 Value",
+        //                            items: [
+        //                                {
+        //                                    text: "Sub Sub Item 1",
+        //                                    value: "Sub Sub Item 1 Value"
+        //                                },
+        //                                {
+        //                                    text: "Sub Sub Item 2",
+        //                                    value: "Sub Sub Item 2 Value"
+        //                                }
+        //                            ]
+        //                        },
+        //                        {
+        //                            text: "Sub Item 2",
+        //                            value: "Sub Item 2 Value",
+        //                            items: [
+        //                                {
+        //                                    text: "Sub Sub Item 1",
+        //                                    value: "Sub Sub Item 1 Value"
+        //                                },
+        //                                {
+        //                                    text: "Sub Sub Item 2",
+        //                                    value: "Sub Sub Item 2 Value"
+        //                                }
+        //                            ]
+        //                        }
+        //                    ]
+        //                }
+        //            ],
+        //            select: onSelect
+        //        });
+
+        var kdMenuDataSource = [];
+
+        $.ajax({
+            url: '/Menu/SelectMenuRead',
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            beforeSend: function () {
+                console.log('beforeSend');
+            },
+            success: function (result) {
+                console.log('success');
+                console.log(result);
+                kdMenuDataSource = result;
+
+                LoadKendoUIMenuData(kdMenuDataSource);
+
+            },
+            error: function (objAjaxRequest, strError) {
+                var respText = objAjaxRequest.responseText;
+                var messageText = respText;
+                console.log('error');
+            }
+
+        });
+
+        console.log(kdMenuDataSource);
+
+
+
+    });
+</script>
