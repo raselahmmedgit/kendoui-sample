@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "Grid Inner ListView Details";
+}
+<h2>
+    Category List: Grid Inner ListView Details</h2>
+<div id="catGridZone">
+    @(Html.Kendo().Grid().Name("Grid").EnableCustomBinding(true).BindTo(Model).DataSource(dataSource => dataSource.)
+)
+</div>

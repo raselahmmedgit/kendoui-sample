@@ -103,6 +103,23 @@ namespace RnD.KendoUISample.Controllers
             return View();
         }
 
+        //GridInnerDetailsListView
+        public ViewResult GridInnerDetailsListView()
+        {
+            var result = new DataSourceResult();
+            result = GetDataSourceResultCategorys();
+            //return View(GetCategorys());
+            return View(result.Data);
+        }
+
+        //ListViewInnerDetailsListView
+        public ViewResult ListViewInnerDetailsListView()
+        {
+            var result = new DataSourceResult();
+            result = GetDataSourceResultCategorys();
+            //return View(GetCategorys());
+            return View(result.Data);
+        }
 
         //Get
         [HttpGet]
@@ -171,7 +188,6 @@ namespace RnD.KendoUISample.Controllers
             }
         }
 
-
         public ActionResult CategorysRead([DataSourceRequest] DataSourceRequest request)
         {
             var dataList = GetCategorys();
@@ -179,6 +195,24 @@ namespace RnD.KendoUISample.Controllers
             var models = GetCategorys().ToDataSourceResult(request);
 
             return Json(models);
+        }
+
+        public ActionResult CategoryWithProductsRead([DataSourceRequest] DataSourceRequest request)
+        {
+            var dataList = GetCategoryWithProducts();
+
+            DataSourceResult result = GetCategoryWithProducts().ToDataSourceResult(request);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ProductRead([DataSourceRequest] DataSourceRequest request, int categoryId)
+        {
+            var dataList = GetProductsByCategoryId(categoryId);
+
+            var models = GetProductsByCategoryId(categoryId).ToDataSourceResult(request);
+
+            return Json(models, JsonRequestBehavior.AllowGet);
         }
 
         #region Add Multipule Category List
@@ -217,6 +251,31 @@ namespace RnD.KendoUISample.Controllers
             var categories = _db.Categories.ToList();
 
             return categories;
+        }
+
+        private IEnumerable<LvCategoryViewModel> GetCategoryWithProducts()
+        {
+            var categories = _db.Categories.ToList().Select(c => new LvCategoryViewModel { CategoryId = c.CategoryId, CategoryName = c.Name, ProductViewModels = _db.Products.ToList().Where(x => x.CategoryId == c.CategoryId).Select(p => new LvProductViewModel { ProductId = p.ProductId, ProductName = p.Name, ProductPrice = p.Price, CategoryId = p.CategoryId, CategoryName = p.Category != null ? p.Category.Name : "" }) });
+
+            return categories;
+        }
+
+        private IEnumerable<Product> GetProductsByCategoryId(int categoryId)
+        {
+            var products = _db.Products.ToList().Where(x => x.CategoryId == categoryId);
+
+            return products;
+        }
+
+        private DataSourceResult GetDataSourceResultCategorys()
+        {
+            DataSourceResult result = new DataSourceResult();
+
+            var categories = _db.Categories.ToList();
+
+            result.Data = categories;
+
+            return result;
         }
 
         public JsonResult GetCascadeCategories()

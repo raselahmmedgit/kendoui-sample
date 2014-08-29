@@ -110,6 +110,24 @@ namespace RnD.KendoUISample.ViewModels
         public HttpPostedFileBase ImportFile { get; set; }
     }
 
+    public class LvCategoryViewModel
+    {
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
+
+        public virtual IEnumerable<LvProductViewModel> ProductViewModels { get; set; }
+    }
+
+    public class LvProductViewModel
+    {
+        public int ProductId { get; set; }
+        public string ProductName { get; set; }
+        public float ProductPrice { get; set; }
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
+
+    }
+
     public class CategoryViewModel
     {
         public int CategoryId { get; set; }

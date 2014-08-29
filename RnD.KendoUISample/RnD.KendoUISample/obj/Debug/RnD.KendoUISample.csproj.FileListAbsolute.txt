@@ -63,3 +63,18 @@ C:\Users\raselbappi\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoU
 C:\Users\raselbappi\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.csprojResolveAssemblyReference.cache
 C:\Users\raselbappi\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.dll
 C:\Users\raselbappi\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.pdb
+E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\bin\RnD.KendoUISample.dll
+E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\bin\RnD.KendoUISample.pdb
+E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\bin\CsvHelper.dll
+E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\bin\EntityFramework.dll
+E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\bin\Ionic.Zip.dll
+E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\bin\Kendo.Mvc.dll
+E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\bin\NPOI.dll
+E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\bin\CsvHelper.pdb
+E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\bin\CsvHelper.xml
+E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\bin\EntityFramework.xml
+E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\bin\Kendo.Mvc.xml
+E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\bin\NPOI.xml
+E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.csprojResolveAssemblyReference.cache
+E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.dll
+E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.pdb
