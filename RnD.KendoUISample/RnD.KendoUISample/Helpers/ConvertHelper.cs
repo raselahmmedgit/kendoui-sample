@@ -18,7 +18,7 @@ namespace RnD.KendoUISample.Helpers
 
             foreach (PropertyDescriptor prop in properties)
             {
-                if (!prop.Name.Contains("Id"))
+                if (!prop.Name.Contains("Id") || !prop.Name.Contains("ID"))
                 {
                     contentBuilder.Append(prop.Name);
                     contentBuilder.Append(seperator);
@@ -33,7 +33,7 @@ namespace RnD.KendoUISample.Helpers
             {
                 foreach (var prop in item.GetType().GetProperties())
                 {
-                    if (!prop.Name.Contains("Id"))
+                    if (!prop.Name.Contains("Id") || !prop.Name.Contains("ID"))
                     {
                         contentBuilder.Append(prop.GetValue(item) ?? DBNull.Value);
                         contentBuilder.Append(seperator);
