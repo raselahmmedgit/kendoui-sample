@@ -18,14 +18,12 @@ namespace RnD.KendoUISample.Helpers
 
             foreach (PropertyDescriptor prop in properties)
             {
-                var aa = prop.DisplayName;
-                var qq = prop.Name;
-                if (!prop.Name.Contains("Id") && !prop.Name.Contains("BaseModel"))
+                if (!prop.Name.Contains("Id"))
                 {
                     contentBuilder.Append(prop.Name);
-                    contentBuilder.Append(seperator); 
+                    contentBuilder.Append(seperator);
                 }
-                
+
             }
 
             contentBuilder.Append(Environment.NewLine);
@@ -33,10 +31,13 @@ namespace RnD.KendoUISample.Helpers
 
             foreach (T item in data)
             {
-                foreach (PropertyDescriptor prop in properties)
+                foreach (var prop in item.GetType().GetProperties())
                 {
-                    contentBuilder.Append(prop.GetValue(item) ?? DBNull.Value);
-                    contentBuilder.Append(seperator);
+                    if (!prop.Name.Contains("Id"))
+                    {
+                        contentBuilder.Append(prop.GetValue(item) ?? DBNull.Value);
+                        contentBuilder.Append(seperator);
+                    }
                 }
                 contentBuilder.Length = contentBuilder.Length - 1;
                 contentBuilder.Append(Environment.NewLine);
