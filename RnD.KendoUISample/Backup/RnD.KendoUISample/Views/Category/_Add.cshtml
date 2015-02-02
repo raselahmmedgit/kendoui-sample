@@ -1,0 +1,24 @@
+﻿@model RnD.KendoUISample.Models.Category
+@using (Ajax.BeginForm("Add", "Category", null,
+        new AjaxOptions
+        {
+            UpdateTargetId = "addCategoryMess",
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST",
+            OnSuccess = "AjaxSuccess('addCategoryMess', 'addCategoryDialog', 'commonMessage', 'Category Saved.')",
+        }, new { @id = "addCategoryForm" }))
+{
+    
+    <fieldset>
+        <legend>Category:</legend>
+        @Html.ValidationSummary(true)
+        <div id="addCategoryMess" class="error invisible">
+        </div>
+        <div class="editor-field">
+            <strong>@Html.LabelFor(model => model.Name): </strong>
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+            @(Html.Kendo().NumericTextBoxFor(x => x.CategoryId).Min(0).HtmlAttributes(new { style = "width:220px; text-align:right" }))
+        </div>
+    </fieldset>
+}

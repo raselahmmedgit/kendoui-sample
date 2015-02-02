@@ -1,0 +1,142 @@
+﻿@model RnD.KendoUISample.ViewModels.ProductOrderViewModel
+@{
+    ViewBag.Title = "Ground Total";
+}
+<h2>
+    Product : Ground Total Calculate</h2>
+<div>
+    @Html.ValidationSummary(true)
+    <div id="masterFormZone" style="padding-bottom: 30px;">
+        <div id="categoryFormZone">
+            <div id="categoryForm">
+                <div style="float: left; width: 350px;">
+                    <div class="editor-field">
+                        <div>
+                            <strong>AIT Rate % :</strong></div>
+                        <div>@(Html.Kendo().NumericTextBoxFor(x => x.AITRate).Events(evt =>
+                         {
+                             evt.Change("aitrate_change_event");
+                             evt.Spin("aitrate_spin_event");
+                         }).Min(0).Max(100).Format("{0:n2}").HtmlAttributes(new { style = "width:150px; height: 16px; text-align:right" }))</div>
+                    </div>
+                </div>
+                <div style="float: left; width: 350px;">
+                    <div class="editor-field">
+                        <div>
+                            <strong>VAT Rate % :</strong></div>
+                        <div>@(Html.Kendo().NumericTextBoxFor(x => x.VATRate).Events(evt =>
+                         {
+                             evt.Change("vatrate_change_event");
+                             evt.Spin("vatrate_spin_event");
+                         }).Min(0).Max(100).Format("{0:n2}").HtmlAttributes(new { style = "width:150px; height: 16px; text-align:right" }))</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="childFormZone" style="padding-bottom: 30px;">
+        <div id="productFormZone">
+            <div id="productForm" style="display: inline-block;">
+                <div style="float: left; width: 300px;">
+                    <strong>@Html.LabelFor(model => model.Name): </strong>
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+                <div style="float: left; width: 300px;">
+                    <strong>@Html.LabelFor(model => model.Price): </strong>
+                    @Html.EditorFor(model => model.Price)
+                    @Html.ValidationMessageFor(model => model.Price)
+                </div>
+                <div style="float: left; width: 150px; padding-top: 12px;">
+                    <button id="proAdd" class="button">
+                        Add
+                    </button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button id="proReset" class="button">
+                        Reset
+                    </button>
+                </div>
+            </div>
+            <div id="productFormData" style="width: 750px;">
+                <div id="productGridZone">
+                    @(Html.Kendo().Grid<RnD.KendoUISample.ViewModels.ProductOrderViewModel>().Name("productDetailsGrid").Columns(columns =>
+                                                                                                                                     {
+                                                                                                                                         columns.Bound(c => c.TempId).Visible(false);
+                                                                                                                                         columns.Bound(c => c.Name);
+                                                                                                                                         //columns.Bound(c => c.Price).FooterTemplate(f => f.Sum);
+                                                                                                                                         columns.Bound(c => c.Price);
+                                                                                                                                         columns.Bound(c => c.ActionLink).ClientTemplate("<button id='productItem_#= TempId #' onclick='ProductRemoveRow(#= TempId #)' class='button'>Remove</button>").HeaderTemplate("Remove");
+                                                                                                                                     }).Groupable(group => group.Enabled(false)).Pageable(pager => pager.Enabled(false)).Sortable(sort => sort.Enabled(false)).Scrollable().Filterable(filter => filter.Enabled(false)).DataSource(dataSource => dataSource.Ajax().Batch(true).ServerOperation(false).Events(events => events.Error("error_handler")).Model(model => model.Id(e => e.TempId)))
+                          )
+                </div>
+            </div>
+            <div id="groundTotalZone" style="display: inline-block;">
+                <div style="float: left; width: 300px;">
+                    <div style="text-align: right; color: black; padding-right: 25px;">
+                        <b>Sub Total : </b>
+                    </div>
+                    <div style="text-align: right; color: black; padding-right: 25px;">
+                        <b>AIT Total : </b>
+                    </div>
+                    <div style="text-align: right; color: black; padding-right: 25px;">
+                        <b>VAT Total : </b>
+                    </div>
+                    <div style="text-align: right; color: black; padding-right: 25px;">
+                        <b>Grand Total : </b>
+                    </div>
+                </div>
+                <div style="float: left; width: 300px;">
+                    <div id="GrossTotal" style="text-align: right; color: black; padding-right: 25px;
+                        font-weight: bold;">
+                        @Html.DisplayFor(x => x.GrossTotal)
+                    </div>
+                    <div id="AITRateTotal" style="text-align: right; color: black; padding-right: 25px;
+                        font-weight: bold;">
+                        @Html.DisplayFor(x => x.AITRateTotal)
+                    </div>
+                    <div id="VATRateTotal" style="text-align: right; color: black; padding-right: 25px;
+                        font-weight: bold;">
+                        @Html.DisplayFor(x => x.VATRateTotal)
+                    </div>
+                    <div id="GroundTotal" style="text-align: right; color: black; padding-right: 25px;
+                        font-weight: bold;">
+                        @Html.DisplayFor(x => x.GroundTotal)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="formButton">
+        <button id="proFormSave" class="button">
+            Save
+        </button>
+        &nbsp;&nbsp;&nbsp;
+        <button id="proFormPrint" class="button">
+            Print
+        </button>
+        &nbsp;&nbsp;&nbsp;
+        <button id="proFormReset" class="button">
+            Reset
+        </button>
+        &nbsp;&nbsp;&nbsp;
+        <button id="proFormCancel" class="button">
+            Cancel
+        </button>
+    </div>
+</div>
+<script src="@Url.Content("~/Scripts/App/groundtotal.child-jq.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>

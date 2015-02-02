@@ -1,0 +1,16 @@
+﻿@model RnD.KendoUISample.ViewModels.ImportFileViewModel
+@using (Html.BeginForm("ImportFromCsv", "Product", null, FormMethod.Post, new { enctype = "multipart/form-data", id = "importFromCsvForm" }))
+{
+    <fieldset>
+        <legend>Product:</legend>
+        <div id="importFromCsvMess" class="error invisible">
+        </div>
+        <div class="editor-field">
+            <strong>@Html.LabelFor(model => model.ImportFile): </strong>
+            @Html.TextBoxFor(model => model.ImportFile, new { type = "file" })
+            @*<input type="file" id="ImportFile" name="ImportFile" data-val-required="File is required."
+                data-val="true" />*@
+            @Html.ValidationMessageFor(model => model.ImportFile)
+        </div>
+    </fieldset>
+}

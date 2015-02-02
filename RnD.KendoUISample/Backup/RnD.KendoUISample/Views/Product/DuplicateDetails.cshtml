@@ -1,0 +1,254 @@
+﻿@model RnD.KendoUISample.ViewModels.Product2ViewModel
+@{
+    ViewBag.Title = "Duplicate Details Item";
+}
+<h2>
+    Product : Stop Duplicate Details Item</h2>
+<div>
+    @Html.ValidationSummary(true)
+    <div id="childFormZone" style="padding-bottom: 30px;">
+        <div id="productFormZone">
+            <div id="productForm" style="display: inline-block;">
+                <div style="float: left; width: 150px;">
+                    <strong>@Html.LabelFor(model => model.CategoryId, "Category"): </strong>
+                    @Html.DropDownList("CategoryId", Model.ddlCategories)
+                    @Html.ValidationMessageFor(model => model.CategoryId)
+                </div>
+                <div style="float: left; width: 300px;">
+                    <strong>@Html.LabelFor(model => model.Name): </strong>
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+                <div style="float: left; width: 300px;">
+                    <strong>@Html.LabelFor(model => model.Price): </strong>
+                    @Html.EditorFor(model => model.Price)
+                    @Html.ValidationMessageFor(model => model.Price)
+                </div>
+                <div style="float: left; width: 150px; padding-top: 12px;">
+                    <button id="proAdd" class="button">
+                        Add
+                    </button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button id="proReset" class="button">
+                        Reset
+                    </button>
+                </div>
+            </div>
+            <div id="productFormData" style="width: 750px;">
+                <div id="productGridZone">
+                    @(Html.Kendo().Grid<RnD.KendoUISample.ViewModels.ProductViewModel>().Name("productDetailsGrid").Columns(columns =>
+                                                                                             {
+                                                                                                 columns.Bound(c => c.TempId).Hidden();
+                                                                                                 columns.Bound(c => c.CategoryName);
+                                                                                                 columns.Bound(c => c.Name);
+                                                                                                 columns.Bound(c => c.Price);
+                                                                                                 columns.Bound(c => c.CategoryId).Hidden();
+
+                                                                                                 columns.Bound(c => c.ActionLink).ClientTemplate("<button id='productItemEdit_#= TempId #' onclick='ProductEditRow(#= TempId #)' class='button'>Edit</button>&nbsp;&nbsp;&nbsp;<button id='productItemRemove_#= TempId #' onclick='ProductRemoveRow(#= TempId #)' class='button'>Remove</button>").HeaderTemplate("Remove");
+                                                                                             }).BindTo(Model.ProductViewModels).Groupable(group => group.Enabled(false)).Pageable(pager => pager.Enabled(false)).Sortable(sort => sort.Enabled(false)).Scrollable().Filterable(filter => filter.Enabled(false)).DataSource(dataSource => dataSource.Ajax().Batch(true).ServerOperation(false).Events(events => events.Error("error_handler")).Model(model => model.Id(e => e.TempId)))
+              )
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="formButton">
+        <button id="proFormSave" class="button">
+            Save
+        </button>
+        &nbsp;&nbsp;&nbsp;
+        <button id="proFormPrint" class="button">
+            Print
+        </button>
+        &nbsp;&nbsp;&nbsp;
+        <button id="proFormReset" class="button">
+            Reset
+        </button>
+        &nbsp;&nbsp;&nbsp;
+        <button id="proFormCancel" class="button">
+            Cancel
+        </button>
+    </div>
+</div>
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+
+    // this function is used to remove details item to list grid
+    function ProductRemoveRow(id) {
+
+        //Get Product Grid
+        var productDetailsGrid = $('#productDetailsGrid').data('kendoGrid');
+        //Get Product Details Grid by model id
+        var dataItem = productDetailsGrid.dataSource.get(id);
+        //Remove Product Item from Product Details Grid
+        productDetailsGrid.dataSource.remove(dataItem);
+    }
+
+    // this function is used to edit details item to list grid
+    function ProductEditRow(detailsModel) {
+
+        //Get Product Grid
+        var productDetailsGrid = $('#productDetailsGrid').data('kendoGrid');
+        //Get Product Details Grid by model id
+        var dataItem = productDetailsGrid.dataSource.get(id);
+
+        dataItem.set("CategoryId", detailsModel.ProductId);
+        dataItem.set("CategoryName", detailsModel.ProductName);
+        dataItem.set("Name", detailsModel.Uom);
+        dataItem.set("Price", detailsModel.Price);
+    }
+
+    // this function is used to add details item to list grid
+    function AddDetails(model) {
+
+        //Get Product Details Grid
+        var productDetailsGrid = $('#productDetailsGrid').data('kendoGrid');
+
+        // Add Product Object to productDetailsGrid
+        productDetailsGrid.dataSource.add(model);
+    }
+
+    // this function is used to get details grid last added item
+    function GetDetailsGridLastAddedItemId() {
+
+        //Get Product Details Grid
+        var productDetailsGrid = $('#productDetailsGrid').data('kendoGrid');
+
+        //Get All Data from Product Details Grid
+        var allData = productDetailsGrid.dataSource.data();
+        var totalNumber = allData.length;
+
+        var tempId = totalNumber + 1;
+
+        return tempId;
+    }
+
+    // this function is used to reset details item to list grid
+    function ResetDetails() {
+
+        $("#CategoryId").val("0");
+        $('#Name').val('');
+        $('#Price').val('');
+
+    }
+
+    // this function is used to check duplicate item
+    function CheckDuplicateItem() {
+
+        var isDuplicated = false;
+
+        var categoryId = $("#CategoryId option:selected").val();
+        var categoryName = $("#CategoryId option:selected").text();
+
+        //Get Product Details Grid
+        var productDetailsGrid = $('#productDetailsGrid').data('kendoGrid');
+
+        //Get All Data from Product Details Grid
+        var allData = productDetailsGrid.dataSource.data();
+        var totalNumber = allData.length;
+
+        for (var i = 0; i < totalNumber; i++) {
+
+            var currentDataItem = allData[i];
+
+            var tempId = currentDataItem.TempId;
+            var gridCategoryId = currentDataItem.CategoryId;
+            var gridCategoryName = currentDataItem.CategoryName;
+
+            if ((gridCategoryId == categoryId) && (gridCategoryName == categoryName)) {
+
+                isDuplicated = true;
+
+                break;
+
+            }
+
+        }
+
+        return isDuplicated;
+    }
+
+    $(function () {
+
+        //add Product
+        $('#proAdd').click(function () {
+
+            var tempId = GetDetailsGridLastAddedItemId();
+            var name = $('#Name').val();
+            var price = $('#Price').val();
+            var categoryId = $("#CategoryId option:selected").val();
+            var categoryName = $("#CategoryId option:selected").text();
+            var actionLink = "<button id='productItemEdit_" + tempId + "' onclick='ProductEditRow(" + tempId + ")' class='button'>Edit</button>&nbsp;&nbsp;&nbsp;<button id='productItemRemove_" + tempId + "' onclick='ProductRemoveRow(" + tempId + ")' class='button'>Remove</button>";
+
+            var productViewModel = {};
+            productViewModel.TempId = tempId;
+            productViewModel.Name = name;
+            productViewModel.Price = price;
+            productViewModel.CategoryId = categoryId;
+            productViewModel.CategoryName = categoryName;
+            productViewModel.ActionLink = actionLink;
+
+            var isCheck = CheckDuplicateItem();
+
+            if (!isCheck) {
+
+                var paramValue = JSON.stringify({ productViewModel: productViewModel });
+
+                $.ajax({
+                    url: '/Product/Add',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: paramValue,
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        if (data == "True") {
+                            //Add new product to grid
+                            AddDetails(productViewModel);
+                        } else {
+                            //JQDialogAlert mass, status
+                            JQDialogAlert(data.msg, data.status);
+                        }
+                    },
+                    error: function (objAjaxRequest, strError) {
+                        var respText = objAjaxRequest.responseText;
+                        //JQDialogAlert mass, status
+                        JQDialogAlert(respText, 'info');
+                    }
+
+                });
+
+
+            } else {
+
+                //JQDialogAlert mass, status
+                JQDialogAlert('Could not insert duplicate item.', 'info');
+
+            }
+
+
+            return false;
+
+        });
+
+        //reset Product
+        $('#proReset').click(function () {
+
+            ResetDetails();
+            return false;
+
+        });
+
+    });
+
+</script>

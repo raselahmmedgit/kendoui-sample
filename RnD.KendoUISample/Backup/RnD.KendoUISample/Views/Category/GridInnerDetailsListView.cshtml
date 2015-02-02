@@ -1,0 +1,143 @@
+﻿@model IEnumerable<RnD.KendoUISample.Models.Category>
+@using RnD.KendoUISample.Models
+@{
+    ViewBag.Title = "Grid Inner ListView Details";
+}
+<h2>
+    Category List: Grid Inner ListView Details</h2>
+<div id="catGridZone">
+    @(Html.Kendo().Grid<Category>()
+                                                .Name("CategoryListView").EnableCustomBinding(true).BindTo(Model).Columns(columns =>
+        {
+            columns.Bound(c => c.CategoryId).Title("");
+        }).RowTemplate(grid => @<text>
+    <div class="row">
+        <div class="row-col-50">
+            @item.CategoryId
+        </div>
+        <div class="row-col-50">
+            @item.Name
+        </div>
+    </div>
+    <div id="divProduct-@item.CategoryId" class="row-child">
+            @(Html.Kendo().ListView<Product>().Name("CategoryProduct-" + @item.CategoryId)
+                                                          .TagName("div").HtmlAttributes(new { @class = "" })
+                                                          .ClientTemplateId("CategoryProduct")
+                                                          .DataSource(dataSource => dataSource
+                                                                                              .Read(read => read.Action("ProductRead", "Category", new { categoryId = @item.CategoryId }))
+                                                          ))
+    </div>
+    </text>).DataSource(dataSource => dataSource.Server().Model(model => { model.Id(p => p.CategoryId); })
+                                    .Total(1)
+                                    .PageSize(100))
+                                    .Pageable(paging => paging.Enabled(true).PageSizes(new int[5] { 5, 10, 20, 40, 50 }))
+
+        )
+</div>
+<script type="text/x-kendo-tmpl" id="CategoryTemplate">
+        
+    <div class="row">
+        <div class="row-col-50">
+            ${ (CategoryId == null) ? ' ' : CategoryId}
+        </div>
+        <div class="row-col-50">
+            ${ (Name == null) ? ' ' : Name}
+        </div>
+    </div>
+    
+</script>
+<script type="text/x-kendo-tmpl" id="CategoryProduct">
+
+    <div class="row">
+        <div class="row-col-25">
+            ${ (ProductId == null) ? ' ' : ProductId}
+        </div>
+        <div class="row-col-25">
+            ${ (Name == null) ? ' ' : Name}
+        </div>
+        <div class="row-col-25">
+            ${ (Price == null) ? ' ' : Price}
+        </div>
+        <div class="row-col-25">
+            ${ (CategoryId == null) ? ' ' : CategoryId}
+        </div>
+    </div>
+
+</script>
+<style>
+    .row
+    {
+        padding: 0px;
+        margin: 0px;
+        display: inline-table;
+        width: 100%;
+    }
+    .row-col
+    {
+        width: 30%;
+        float: left;
+    }
+    .row-col-10
+    {
+        width: 10%;
+        float: left;
+    }
+    .row-col-20
+    {
+        width: 20%;
+        float: left;
+    }
+    .row-col-25
+    {
+        width: 25%;
+        float: left;
+    }
+    .row-col-30
+    {
+        width: 30%;
+        float: left;
+    }
+    .row-col-40
+    {
+        width: 40%;
+        float: left;
+    }
+    .row-col-50
+    {
+        width: 50%;
+        float: left;
+    }
+    .row-col-60
+    {
+        width: 60%;
+        float: left;
+    }
+    .row-col-70
+    {
+        width: 70%;
+        float: left;
+    }
+    .row-col-80
+    {
+        width: 80%;
+        float: left;
+    }
+    .row-col-90
+    {
+        width: 90%;
+        float: left;
+    }
+    .row-col-100
+    {
+        width: 100%;
+        float: left;
+    }
+    .row-child
+    {
+        padding: 0px;
+        margin: 0px;
+        display: inline-table;
+        width: 100%;
+        border: 1px solid red;
+    }
+</style>

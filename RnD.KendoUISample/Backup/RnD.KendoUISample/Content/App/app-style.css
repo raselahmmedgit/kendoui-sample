@@ -1,0 +1,204 @@
+﻿/* JQDialog CSS   
+----------------------------------------------------------*/
+
+#jqDialog_box
+{
+    position: absolute;
+    width: 500px;
+}
+
+#jqDialog_content
+{
+    margin: 15px 10px 10px 10px;
+    font-weight: bold;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+#jqDialog_options
+{
+    margin: 10px 10px 2px 10px;
+    text-align: center;
+}
+
+#jqDialog_options button
+{
+    position: relative !important;
+    margin: 0px !important;
+    padding: 0px 8px !important;
+    background: none repeat scroll 0 0 #CCCCCC !important;
+    border: 1px solid #AAAAAA !important;
+    color: #222222 !important;
+    font-size: 12px !important;
+    letter-spacing: 1px !important;
+    border-radius: 2px !important;
+    -webkit-border-radius: 2px !important;
+    -moz-border-radius: 2px !important;
+    text-decoration: none !important;
+}
+
+#jqDialog_input
+{
+    padding: 4px;
+    width: 250px;
+}
+
+#jqDialog_close
+{
+    background: none;
+    border: none;
+    float: right;
+    font-weight: bold;
+    font-size: 10px;
+    color: #ff0000;
+    cursor: pointer;
+}
+
+.tb-space
+{
+    padding-left: 5px !important;
+}
+
+.button
+{
+    position: relative !important;
+    margin: 0px !important;
+    padding: 5px 10px !important;
+    background: none repeat scroll 0 0 #CCCCCC !important;
+    border: 1px solid #AAAAAA !important;
+    color: #222222 !important;
+    font-size: 14px !important;
+    letter-spacing: 1px !important;
+    border-radius: 2px !important;
+    -webkit-border-radius: 2px !important;
+    -moz-border-radius: 2px !important;
+    text-decoration: none !important;
+}
+
+.button:hover
+{
+    background: none repeat scroll 0 0 #E8EEF4 !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+}
+
+.button:active
+{
+    background: none repeat scroll 0 0 #E8EEF4 !important;
+    text-decoration: none !important;
+}
+
+/* Message Box CSS   
+----------------------------------------------------------*/
+
+.info, .success, .warn, .error
+{
+    border: 1px solid;
+    margin: 0px;
+    padding: 0px 0px 8px 65px;
+    width: auto;
+    font-size: 12px;
+    -moz-box-shadow: 0 0 5px #888;
+    -webkit-box-shadow: 0 0 5px#888;
+    box-shadow: 0 0 5px #888;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.info
+{
+    color: #00529B;
+    background: #BDE5F8 url('/Content/Images/App/icon-info.png') no-repeat;
+    background-position: 20px 10px, top;
+}
+
+.success
+{
+    color: #4F8A10;
+    background: #DFF2BF url('/Content/Images/App/icon-tick.png') no-repeat;
+    background-position: 20px 10px, top;
+}
+
+.warn
+{
+    color: #9F6000;
+    background: #FEEFB3 url('/Content/Images/App/icon-warning.png') no-repeat;
+    background-position: 20px 10px, top;
+}
+
+.error
+{
+    color: #D8000C;
+    background: #FFBABA url('/Content/Images/App/icon-cross.png') no-repeat;
+    background-position: 20px 10px, top;
+}
+
+.mess
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+.mess p
+{
+    margin: 0px 0px 0px 0px;
+    padding: 0px;
+    display: list-item;
+    line-height: 1.2em;
+}
+
+.menu
+{
+    margin: 0px 0px 0px 0px !important;
+    padding: 0px 0px 0px 0px !important;
+    width: 12px !important;
+    height: 12px !important;
+}
+
+.sub-menu
+{
+    margin: 0px 0px 0px 0px !important;
+    padding: 0px 0px 0px 0px !important;
+    width: 12px !important;
+    height: 12px !important;
+}
+
+/*
+ul#ObjMenuDiv.k-menu, .k-header
+{
+    background-color: green !important;
+    border: 1px solid red !important;
+}
+
+#ObjMenu.k-menu > ul, li
+{
+    height: 50px;
+}
+
+#ObjMenu.k-menu > .k-item > .k-link
+{
+    padding: 1em 1em 1em 1em;
+    color: white;
+}
+
+#ObjMenu.k-menu > .k-header, .k-state-default
+{
+    background-color: green;
+}
+
+#ObjMenu.k-menu > .k-state-hover
+{
+    background-color: green;
+}
+
+#ObjMenu.k-menu > .k-state-active
+{
+    background-color: green;
+}
+
+#ObjMenu.k-menu > .k-state-border-down
+{
+    background-color: green;
+}
+*/

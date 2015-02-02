@@ -1,0 +1,12 @@
+﻿<div id="catSelectList">
+    @(Html.Kendo().Grid<RnD.KendoUISample.Models.Category>().Name("catSelectListGrid").Columns(columns =>
+                                                                                                                           {
+                                                                                                                               columns.Bound(c => c.CategoryId).Width("150px");
+                                                                                                                               columns.Bound(c => c.Name).Width("150px");
+                                                                                                                               columns.Bound(c => c.CategoryId).ClientTemplate("<input id='CategoryId_#=CategoryId#' class='chkCategoryId' type='checkbox' name='CategoryId' value='#=CategoryId#' />").HeaderTemplate("Select").Width("50px");
+                                                                                                                           }).Editable(editable => editable.Mode(GridEditMode.InCell)).Groupable(group => group.Enabled(false)).Pageable(pager => pager.Enabled(false)).Sortable(sort => sort.Enabled(false)).Scrollable().Resizable(resize => resize.Columns(true)).Filterable(filter => filter.Enabled(false)).DataSource(dataSource => dataSource.Ajax().ServerOperation(false).Model(model =>
+                                                                                                                           {
+                                                                                                                               model.Id(e => e.CategoryId);
+                                                                                                                               model.Field(e => e.CategoryId).Editable(false);
+                                                                                                                           }).Read(read => read.Action("CategorysRead", "Category"))))
+</div>

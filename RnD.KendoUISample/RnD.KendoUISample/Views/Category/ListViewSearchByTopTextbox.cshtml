@@ -1,0 +1,262 @@
+﻿@model IEnumerable<RnD.KendoUISample.Models.Category>
+@using RnD.KendoUISample.ViewModels
+@{
+    ViewBag.Title = "ListView Search By Top Textbox";
+}
+<h2>Category List: ListView Search By Top Textbox</h2>
+
+<div id="catListSearchZone">
+    <label>Search: </label>
+    <input type="text" id="txtSearch" name="txtSearch" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label>Reload: </label>
+    <input type="button" id="btnReload" name="btnReload" value="Reload" />
+</div>
+<br />
+<div id="catListViewZone">
+    <input type="hidden" id="hdId" name="hdId" value="1" />
+    @(Html.Kendo().ListView<LvCategoryViewModel>().Name("CategoryProduct")
+           .TagName("div").HtmlAttributes(new { @class = "" })
+                   .ClientTemplateId("CategoryProductTmpl")
+           .DataSource(dataSource => dataSource
+                                         .Read(read => read.Action("CategoryWithProductsByKeywordRead", "Category", new { id = 0, keyword = "" }))
+           ).Pageable(pager => pager.Enabled(true).Info(false)))
+</div>
+<br />
+
+<script type="text/x-kendo-tmpl" id="CategoryProductTmpl">
+    <div class="row">
+        <div class="row-col-20">
+                <strong>Category: </strong>
+        </div>
+        <div class="row-col-40">
+            ${ (CategoryId == null) ? ' ' : CategoryId}
+        </div>
+        <div class="row-col-40">
+            ${ (CategoryName == null) ? ' ' : CategoryName}
+        </div>
+    </div>
+    <div id="divProduct-${ (CategoryId == null) ? ' ' : CategoryId}" class="row-child">
+        <div class="row">
+            <div class="row-col-100">
+                <strong>Product List: </strong>
+            </div>
+        </div>
+        #for (var i=0, l = ProductViewModels.length; i < l; i++){#
+            <div class="row">
+                <div class="row-col-20">
+                    ${ (ProductViewModels[i].ProductId == null) ? ' ' : ProductViewModels[i].ProductId}
+                </div>
+                <div class="row-col-20">
+                    ${ (ProductViewModels[i].ProductName == null) ? ' ' : ProductViewModels[i].ProductName}
+                </div>
+                <div class="row-col-20">
+                    ${ (ProductViewModels[i].ProductPrice == null) ? ' ' : ProductViewModels[i].ProductPrice}
+                </div>
+                <div class="row-col-20">
+                    ${ (ProductViewModels[i].CategoryId == null) ? ' ' : ProductViewModels[i].CategoryId}
+                </div>
+                <div class="row-col-20">
+                    ${ (ProductViewModels[i].CategoryName == null) ? ' ' : ProductViewModels[i].CategoryName}
+                </div>
+            </div>
+        # } #
+
+    </div>
+
+</script>
+<script type="text/javascript">
+
+    function PassSearchParameter() {
+
+    }
+
+    function onCategoryDataBound(arg) {
+
+    }
+
+    $(function () {
+
+        $("#txtSearch").keyup(function () {
+            console.log("keyup");
+            var _id = $("#hdId").val();
+            var _keyword = $(this).val();
+            console.log(_id);
+            console.log(_keyword);
+            $("#CategoryProduct").data("kendoListView").dataSource.read({ id: _id, keyword: _keyword });
+        });
+
+        //$("#txtSearch").keydown(function () {
+        //    console.log("keydown");
+        //    var _id = $("#hdId").val();
+        //    var _keyword = $(this).val();
+        //    console.log(_id);
+        //    console.log(_keyword);
+        //    //$("#CategoryProduct").data("kendoListView").dataSource.read({ id: _id, keyword: _keyword });
+        //});
+
+        //$("#txtSearch").keypress(function () {
+        //    console.log("keypress");
+        //    var _id = $("#hdId").val();
+        //    var _keyword = $(this).val();
+        //    console.log(_id);
+        //    console.log(_keyword);
+        //    //$("#CategoryProduct").data("kendoListView").dataSource.read({ id: _id, keyword: _keyword });
+        //});
+
+        //$("#txtSearch").change(function () {
+        //    console.log("change");
+        //    var _id = $("#hdId").val();
+        //    var _keyword = $(this).val();
+        //    console.log(_id);
+        //    console.log(_keyword);
+        //    //$("#CategoryProduct").data("kendoListView").dataSource.read({ id: _id, keyword: _keyword });
+        //});
+
+        $('#btnReload').live('click', function () {
+
+            console.log("btnReload");
+
+            var _id = $("#hdId").val();
+            var _keyword = $("#txtSearch").val();
+
+            $("#CategoryProduct").data("kendoListView").dataSource.read({ id: _id, keyword: _keyword });
+
+            return false;
+
+        });
+
+    });
+
+</script>
+<style>
+    /*
+        .pagination a {
+            float: left;
+            padding: 0 14px;
+            line-height: 34px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            border-left-width: 0;
+        }
+        .pagination a:hover,
+        .pagination .active a {
+            background-color: #f5f5f5;
+        }
+        .pagination .active a {
+            color: #999999;
+            cursor: default;
+        }
+        .pagination .disabled span,
+        .pagination .disabled a,
+        .pagination .disabled a:hover {
+            color: #999999;
+            background-color: transparent;
+            cursor: default;
+        }
+        .pagination li:first-child a {
+            border-left-width: 1px;
+            -webkit-border-radius: 3px 0 0 3px;
+            -moz-border-radius: 3px 0 0 3px;
+            border-radius: 3px 0 0 3px;
+        }
+        .pagination li:last-child a {
+            -webkit-border-radius: 0 3px 3px 0;
+            -moz-border-radius: 0 3px 3px 0;
+            border-radius: 0 3px 3px 0;
+        }
+    */
+    .k-grid .k-pager {
+        float: right;
+    }
+
+    .k-pager-wrap {
+        background: none !important;
+        border: none !important;
+        text-align: right !important;
+    }
+
+        .k-pager-wrap > .k-link {
+            border-radius: 0px !important;
+            height: 22px !important;
+        }
+
+        .k-pager-wrap > .k-pager-numbers .k-state-selected {
+            border-radius: 0px !important;
+            height: 22px !important;
+        }
+
+    .row {
+        padding: 0px;
+        margin: 0px;
+        display: inline-table;
+        width: 100%;
+    }
+
+    .row-col {
+        width: 30%;
+        float: left;
+    }
+
+    .row-col-10 {
+        width: 10%;
+        float: left;
+    }
+
+    .row-col-20 {
+        width: 20%;
+        float: left;
+    }
+
+    .row-col-25 {
+        width: 25%;
+        float: left;
+    }
+
+    .row-col-30 {
+        width: 30%;
+        float: left;
+    }
+
+    .row-col-40 {
+        width: 40%;
+        float: left;
+    }
+
+    .row-col-50 {
+        width: 50%;
+        float: left;
+    }
+
+    .row-col-60 {
+        width: 60%;
+        float: left;
+    }
+
+    .row-col-70 {
+        width: 70%;
+        float: left;
+    }
+
+    .row-col-80 {
+        width: 80%;
+        float: left;
+    }
+
+    .row-col-90 {
+        width: 90%;
+        float: left;
+    }
+
+    .row-col-100 {
+        width: 100%;
+        float: left;
+    }
+
+    .row-child {
+        padding: 0px;
+        margin: 0px;
+        display: inline-table;
+        width: 100%;
+        border: 1px solid red;
+    }
+</style>

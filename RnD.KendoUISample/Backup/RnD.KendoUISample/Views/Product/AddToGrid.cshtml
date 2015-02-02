@@ -1,0 +1,219 @@
+﻿@model RnD.KendoUISample.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "Add To Kendo UI Grid";
+}
+<h2>
+    Product : Add To Kendo UI Grid</h2>
+<div id="addToGridPage">
+    <div id="childFormZone" style="padding-bottom: 30px;">
+        <div id="productFormZone">
+            <div id="productForm" style="width: 750px; display: inline-block;">
+                <div style="float: left; width: 300px;">
+                    <strong>@Html.LabelFor(model => model.Name): </strong>
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                    @Html.HiddenFor(x => x.TempId)
+                </div>
+                <div style="float: left; width: 300px;">
+                    <strong>@Html.LabelFor(model => model.Price): </strong>
+                    @Html.EditorFor(model => model.Price)
+                    @Html.ValidationMessageFor(model => model.Price)
+                </div>
+                <div style="float: left; width: 150px; padding-top: 12px;">
+                    <button id="proAdd" class="button">
+                        Add
+                    </button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button id="proReset" class="button">
+                        Reset
+                    </button>
+                </div>
+            </div>
+            <div id="productFormData" style="width: 750px;">
+                <div id="productGridZone">
+                    @(Html.Kendo().Grid<RnD.KendoUISample.ViewModels.ProductViewModel>().Name("productGrid").Columns(columns =>
+                                                                                             {
+                                                                                                 columns.Bound(c => c.TempId).Visible(false);
+                                                                                                 columns.Bound(c => c.Name);
+                                                                                                 columns.Bound(c => c.Price);
+                                                                                                 columns.Bound(c => c.ActionLink).ClientTemplate("<button id='productEditItem_#= TempId #' onclick='ProductEditRow(#= TempId #)' class='button'>Edit</button>&nbsp;&nbsp;<button id='productRemoveItem_#= TempId #' onclick='ProductRemoveRow(#= TempId #)' class='button'>Remove</button>").HeaderTemplate("Remove");
+                                                                                             }).Groupable(group => group.Enabled(false)).Pageable(pager => pager.Enabled(false)).Sortable(sort => sort.Enabled(false)).Scrollable().Filterable(filter => filter.Enabled(false)).DataSource(dataSource => dataSource.Ajax().Batch(true).ServerOperation(false).Events(events => events.Error("error_handler")).Model(model => model.Id(e => e.TempId)))
+              )
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+
+    // this function is used to get grid last added item
+    function GetDetailsGridLastAddedItemId() {
+
+        //Get Product Grid
+        var proGrid = $('#productGrid').data('kendoGrid');
+
+        //Get All Data from Product Grid
+        var allData = proGrid.dataSource.data();
+        var totalNumber = allData.length;
+
+        var tempId = totalNumber + 1;
+
+        return tempId;
+    }
+
+    // this function is used to remove item to list grid
+    function ProductRemoveRow(id) {
+
+        //Get Product Grid
+        var proGrid = $('#productGrid').data('kendoGrid');
+        //Get Product Grid by model id
+        var dataItem = proGrid.dataSource.get(id);
+        //Remove Product Item from Product Grid
+        proGrid.dataSource.remove(dataItem);
+
+    }
+
+    // this function is used to edit item to list grid
+    function ProductEditRow(id) {
+
+        var getAddButtonText = $("#proAdd").text().toUpperCase().trim();
+
+        if (getAddButtonText == 'ADD') {
+
+            $("#proAdd").text("Edit");
+
+            //Get Product Grid
+            var proGrid = $('#productGrid').data('kendoGrid');
+
+            //Get Product Grid by model id
+            var dataItem = proGrid.dataSource.get(id);
+
+            $('#TempId').val('');
+            $('#Name').val('');
+            $('#Price').val('');
+
+            $('#TempId').val(dataItem.TempId);
+            $('#Name').val(dataItem.Name);
+            $('#Price').val(dataItem.Price);
+
+        }
+
+    }
+
+    // this function is used to add item to list grid
+    function AddRow() {
+
+        var tempId = GetDetailsGridLastAddedItemId();
+        var name = $('#Name').val();
+        var price = $('#Price').val();
+        var actionLink = "<button id='productEditItem_" + tempId + "' onclick='ProductEditRow(" + tempId + ")' class='button'>Edit</button>&nbsp;&nbsp;<button id='productRemoveItem_" + tempId + "' onclick='ProductRemoveRow(" + tempId + ")' class='button'>Remove</button>";
+
+        var productViewModel = {};
+        productViewModel.TempId = tempId;
+        productViewModel.Name = name;
+        productViewModel.Price = price;
+        productViewModel.ActionLink = actionLink;
+
+        //Get Product Details Grid
+        var proGrid = $('#productGrid').data('kendoGrid');
+
+        // Add Product Object to productDetailsGrid
+        proGrid.dataSource.add(productViewModel);
+    }
+
+    // this function is used to edit item to list grid
+    function EditRow() {
+
+        var tempId = $('#TempId').val();
+        var name = $('#Name').val();
+        var price = $('#Price').val();
+
+        var productViewModel = {};
+        productViewModel.TempId = tempId;
+        productViewModel.Name = name;
+        productViewModel.Price = price;
+
+        //Get Product Grid
+        var proGrid = $('#productGrid').data('kendoGrid');
+
+        //Get Product Grid by model id
+        var dataItem = proGrid.dataSource.get(productViewModel.TempId);
+
+        dataItem.set("Name", productViewModel.Name);
+        dataItem.set("Price", productViewModel.Price);
+
+        var getAddButtonText = $("#proAdd").text().toUpperCase().trim();
+
+        if (getAddButtonText == 'EDIT') {
+
+            $("#proAdd").text("Add");
+        }
+    }
+
+    $(function () {
+
+        //add Product
+        $('#proAdd').click(function () {
+
+            var getSaveButtonText = $(this).text().toUpperCase().trim();
+
+            if (getSaveButtonText == 'ADD') {
+
+                //when add new product to grid
+                AddRow();
+
+                $('#TempId').val('');
+                $('#Name').val('');
+                $('#Price').val('');
+
+            }
+            else if (getSaveButtonText == 'EDIT') {
+
+                //when added item edit
+                EditRow();
+
+                $('#TempId').val('');
+                $('#Name').val('');
+                $('#Price').val('');
+
+            }
+
+            return false;
+
+        });
+
+        //reset Product
+        $('#proReset').click(function () {
+
+            $('#TempId').val('');
+            $('#Name').val('');
+            $('#Price').val('');
+
+            var getAddButtonText = $("#proAdd").text().toUpperCase().trim();
+
+            if (getAddButtonText == 'EDIT') {
+
+                $("#proAdd").text("Add");
+                
+            }
+
+            return false;
+
+        });
+
+    });
+
+</script>

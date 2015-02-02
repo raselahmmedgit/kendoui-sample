@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Custom Toolbar";
+}
+<h2>
+    Category List: Custom Toolbar</h2>
+<div id="catGridZone">
+    @(Html.Kendo().Grid<RnD.KendoUISample.Models.Category>().Name("catGrid").Columns(columns =>
+{
+    columns.Bound(c => c.CategoryId).Groupable(false);
+    columns.Bound(c => c.Name);
+}).ToolBar(toolbar =>
+{
+    toolbar.Custom().Text("Add Category").Url("javascript:;").HtmlAttributes(new { onclick = "addCategory()" });
+    toolbar.Custom().Text("Filters Clear").Url("javascript:;").HtmlAttributes(new { onclick = "clearFiltersCatGrid()" });
+}).Groupable(group => group.Enabled(true)).Pageable(pager => pager.Input(true).Numeric(true).Info(true).PreviousNext(true).Refresh(true).PageSizes(true)).Sortable(sort => sort.Enabled(true)).Scrollable().Resizable(resize => resize.Columns(true)).Reorderable(reorder => reorder.Columns(true)).Filterable(filter => filter.Enabled(true)).DataSource(dataSource => dataSource.Ajax().Read(read => read.Action("CategorysRead", "Category")))
+)
+</div>
+<script type="text/javascript">
+    $(function () {
+
+    });
+
+    function clearFiltersCatGrid() {
+        //$("#catGrid").data("kendoGrid").dataSource.read();
+        //var catGrid = $("#catGrid").data("kendoGrid");
+        //catGrid.refresh();
+        // Get to Read Action Multipule Time base on column
+        $("form.k-filter-menu button[type='reset']").trigger("click");
+
+    }
+</script>

@@ -1,0 +1,27 @@
+﻿@model RnD.KendoUISample.Models.Category
+@using (Ajax.BeginForm("Edit", "Demo", null,
+        new AjaxOptions
+        {
+            UpdateTargetId = "editCategoryMess",
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST",
+            OnSuccess = "AjaxSuccess('editCategoryMess', 'editCategoryDialog', 'commonMessage', 'Category Edited.')",
+        }, new { @id = "editCategoryForm" }))
+{
+
+    <fieldset>
+        <legend>Category:</legend>@Html.ValidationSummary(true)
+        <div id="editCategoryMess" class="error invisible">
+        </div>
+        @Html.HiddenFor(model => model.CategoryId)
+        <div class="editor-field">
+            <strong>@Html.LabelFor(model => model.Name): </strong>@Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div id="editCategoryButtonZone">
+            <input type="submit" class="button" id="btnSubmit" name="btnSubmit" value="Edit" />
+            <input type="button" class="button" id="btnCancel" name="btnCancel" value="Cancel"
+                onclick=" $($('#editCategoryDialog').dialog('close'));" />
+        </div>
+    </fieldset>
+}

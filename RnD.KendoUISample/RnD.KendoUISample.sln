@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RnD.KendoUISample", "RnD.KendoUISample\RnD.KendoUISample.csproj", "{D210E374-EE23-4F15-955B-336EB5C75615}"
 EndProject
 Global

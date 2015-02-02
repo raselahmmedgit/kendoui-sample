@@ -121,6 +121,15 @@ namespace RnD.KendoUISample.Controllers
             return View(result.Data);
         }
 
+        //ListViewSearchByTopTextbox
+        public ViewResult ListViewSearchByTopTextbox()
+        {
+            var result = new DataSourceResult();
+            result = GetDataSourceResultCategorys();
+            //return View(GetCategorys());
+            return View(result.Data);
+        }
+
         //Get
         [HttpGet]
         public ActionResult SelectList()
@@ -206,6 +215,15 @@ namespace RnD.KendoUISample.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult CategoryWithProductsByKeywordRead([DataSourceRequest] DataSourceRequest request, int id, string keyword)
+        {
+            //var dataList = GetCategoryWithProducts(keyword);
+
+            DataSourceResult result = GetCategoryWithProducts(keyword).ToDataSourceResult(request);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult ProductRead([DataSourceRequest] DataSourceRequest request, int categoryId)
         {
             var dataList = GetProductsByCategoryId(categoryId);
@@ -257,6 +275,17 @@ namespace RnD.KendoUISample.Controllers
         {
             var categories = _db.Categories.ToList().Select(c => new LvCategoryViewModel { CategoryId = c.CategoryId, CategoryName = c.Name, ProductViewModels = _db.Products.ToList().Where(x => x.CategoryId == c.CategoryId).Select(p => new LvProductViewModel { ProductId = p.ProductId, ProductName = p.Name, ProductPrice = p.Price, CategoryId = p.CategoryId, CategoryName = p.Category != null ? p.Category.Name : "" }) });
 
+            return categories;
+        }
+
+        private IEnumerable<LvCategoryViewModel> GetCategoryWithProducts(string keyword)
+        {
+            var categories = _db.Categories.ToList().Select(c => new LvCategoryViewModel { CategoryId = c.CategoryId, CategoryName = c.Name, ProductViewModels = _db.Products.ToList().Where(x => x.CategoryId == c.CategoryId).Select(p => new LvProductViewModel { ProductId = p.ProductId, ProductName = p.Name, ProductPrice = p.Price, CategoryId = p.CategoryId, CategoryName = p.Category != null ? p.Category.Name : "" }) });
+            if (!String.IsNullOrEmpty(keyword))
+            {
+                categories = categories.Where(c => (c.CategoryName ?? "").Contains(keyword)).ToList();
+                //categories = categories.Where(c => c.ProductViewModels.Where(p => p.ProductName.Contains(keyword)).ToList());    
+            }
             return categories;
         }
 

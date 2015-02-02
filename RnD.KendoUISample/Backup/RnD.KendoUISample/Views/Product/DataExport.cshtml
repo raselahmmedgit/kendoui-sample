@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Data Export";
+}
+<h2>
+    Product List: Data Export Mode</h2>
+<div id="proGridZone">
+    @(Html.Kendo().Grid<RnD.KendoUISample.Models.Product>().Name("productGrid").Columns(columns =>
+{
+    columns.Bound(c => c.ProductId).Groupable(false);
+    columns.Bound(c => c.Name);
+    columns.Bound(c => c.Price);
+    columns.Bound(c => c.CategoryId);
+}).ToolBar(toolbar =>
+{
+    toolbar.Custom().Text("Export To CSV").Url(Url.Action("ExportToCsv", "Product")).HtmlAttributes(new { id = "exportToCSV" });
+    toolbar.Custom().Text("Export To Excel").Url(Url.Action("ExportToXls", "Product")).HtmlAttributes(new { id = "exportToExcel" });
+}).Groupable(group => group.Enabled(true)).Pageable(pager => pager.Input(true).Numeric(true).Info(true).PreviousNext(true).Refresh(true).PageSizes(true)).Sortable(sort => sort.Enabled(true)).Scrollable().Resizable(resize => resize.Columns(true)).Reorderable(reorder => reorder.Columns(true)).Filterable(filter => filter.Enabled(true)).DataSource(dataSource => dataSource.Ajax().Read(read => read.Action("ProductsRead", "Product")))
+)
+</div>
+<br />
+<div id="proGridOnClickZone">
+    @(Html.Kendo().Grid<RnD.KendoUISample.Models.Product>().Name("productGridOnClick").Columns(columns =>
+{
+    columns.Bound(c => c.ProductId).Groupable(false);
+    columns.Bound(c => c.Name);
+    columns.Bound(c => c.Price);
+    columns.Bound(c => c.CategoryId);
+}).ToolBar(toolbar =>
+{
+    //toolbar.Custom().Text("Export To CSV OnClick").Url(Url.Action("ExportToCsvOnClick", "Product")).HtmlAttributes(new { id = "lnkExportToCSV" });
+    toolbar.Custom().Text("Export To CSV OnClick").Url(Url.Action("ExportToCsv", "Product")).HtmlAttributes(new { id = "lnkExportToCSV" });
+    toolbar.Custom().Text("Export To Excel OnClick").Url(Url.Action("ExportToXlsOnClick", "Product")).HtmlAttributes(new { id = "lnkExportToExcel" });
+}).Groupable(group => group.Enabled(true)).Pageable(pager => pager.Input(true).Numeric(true).Info(true).PreviousNext(true).Refresh(true).PageSizes(true)).Sortable(sort => sort.Enabled(true)).Scrollable().Resizable(resize => resize.Columns(true)).Reorderable(reorder => reorder.Columns(true)).Filterable(filter => filter.Enabled(true)).DataSource(dataSource => dataSource.Ajax().Read(read => read.Action("ProductsRead", "Product")))
+)
+</div>
+<script type="text/javascript">
+
+    $(function () {
+
+        $('#productGridOnClick .k-toolbar a[id="lnkExportToCSV"]').live('click', function () {
+
+            //change the title of the dialog
+            var linkObj = $(this);
+            var viewUrl = linkObj.attr('href');
+
+            console.log(viewUrl);
+            //            $.ajax({
+            //                url: viewUrl,
+            //                type: 'POST',
+            //                dataType: 'json',
+            //                contentType: 'application/json; charset=utf-8',
+            //                success: function (data) {
+            //                    //JQDialogAlert mass, status
+            //                    JQDialogAlert(data.msg, data.status);
+            //                },
+            //                error: function (objAjaxRequest, strError) {
+            //                    var respText = objAjaxRequest.responseText;
+            //                    //JQDialogAlert mass, status
+            //                    JQDialogAlert(respText, 'info');
+            //                }
+
+            //            });
+
+            $.get(viewUrl, function (data) {
+                console.log(data);
+            });
+
+            return false;
+
+        });
+
+        $('#productGridOnClick .k-toolbar a[id="lnkExportToExcel"]').live('click', function () {
+
+            //change the title of the dialog
+            var linkObj = $(this);
+            var viewUrl = linkObj.attr('href');
+
+            console.log(viewUrl);
+            $.ajax({
+                url: viewUrl,
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    //JQDialogAlert mass, status
+                    JQDialogAlert(data.msg, data.status);
+                },
+                error: function (objAjaxRequest, strError) {
+                    var respText = objAjaxRequest.responseText;
+                    //JQDialogAlert mass, status
+                    JQDialogAlert(respText, 'info');
+                }
+
+            });
+
+            return false;
+
+        });
+
+    });
+
+</script>

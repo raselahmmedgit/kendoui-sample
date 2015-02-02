@@ -1,0 +1,249 @@
+﻿@{
+    ViewBag.Title = "Select Multi Row From Kendo Grid";
+}
+<div id="selectMultiRowPage">
+    <h2>
+        Category List: Add by Selected Row From Kendo Grid</h2>
+    <p>
+        <a href="/Category/SelectList" id="lnkSelectCategory" class="button">Select Categories</a>
+    </p>
+    <p>
+        <a href="/Category/SelectListByModel/1" id="lnkSelectByModelCategory" class="button">
+            Select Categories By Model</a>
+    </p>
+    <div id="catGrid">
+        @(Html.Kendo().Grid<RnD.KendoUISample.Models.Category>().Name("catGrid").Columns(columns =>
+                                                                                             {
+                                                                                                 columns.Bound(c => c.CategoryId);
+                                                                                                 columns.Bound(c => c.Name);
+                                                                                                 columns.Bound(c => c.ActionLink).ClientTemplate("<button id='catItem_#= CategoryId #' onclick='CategoryRemoveRow(#= CategoryId #)' class='button'>Remove</button>").HeaderTemplate("Remove");
+                                                                                             }).Groupable(group => group.Enabled(false)).Pageable(pager => pager.Enabled(false)).Sortable(sort => sort.Enabled(false)).Scrollable().Filterable(filter => filter.Enabled(false)).DataSource(dataSource => dataSource.Ajax().ServerOperation(false).Model(model => model.Id(e => e.CategoryId)))
+              )
+    </div>
+    <p>
+        <a href="javascript:;" id="lnkCategoryItems" class="button">Add Category Items</a>
+    </p>
+    <div id="selectCategoryDailog" title="Select Categories">
+    </div>
+    <div id="selectByModelCategoryDailog" title="Select Categories By Model">
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(function () {
+        //For select Category
+        $("#selectCategoryDailog").dialog({
+            autoOpen: false,
+            width: 700,
+            resizable: false,
+            modal: true,
+            buttons: {
+                "Ok": function () {
+
+                    //Get Selected Category Item Grid
+                    var catSelectListGrid = $('#catSelectListGrid').data('kendoGrid');
+
+                    //Get Category Grid
+                    var catGrid = $('#catGrid').data('kendoGrid');
+
+                    var categoryList = [];
+
+                    $(".chkCategoryId").each(function () {
+                        if ($(this).is(":checked")) {
+
+                            var chkCategoryIdValue = $(this).attr("value");
+                            //Get Selected Category Item from Select Category Grid by model id
+                            var dataItem = catSelectListGrid.dataSource.get(chkCategoryIdValue);
+                            var categoryId = dataItem.CategoryId;
+                            var categoryName = dataItem.Name;
+                            var actionLink = "<button id='catItem_" + chkCategoryIdValue + "' onclick='CategoryRemoveRow(" + chkCategoryIdValue + ")' class='button'>Remove</button>";
+
+                            var category = {};
+                            //category = { CategoryId: categoryId, Name: categoryName, ActionLink: actionLink };
+                            //category = { CategoryId: categoryId, Name: categoryName, ActionLink: "<button id='catItem_" + chkCategoryIdValue + "' onclick='CategoryRemoveRow(" + chkCategoryIdValue + ")' class='button'>Remove</button>" };
+
+                            category.CategoryId = categoryId;
+                            category.Name = categoryName;
+                            category.ActionLink = "<button id='catItem_" + chkCategoryIdValue + "' onclick='CategoryRemoveRow(" + chkCategoryIdValue + ")' class='button'>Remove</button>";
+
+                            // Push Data to categoryList Array
+                            categoryList.push(category);
+
+                            // Add Category Object to catGrid
+                            //catGrid.dataSource.add({ CategoryId: categoryId, Name: categoryName });
+                            catGrid.dataSource.add(category);
+
+                        }
+                    });
+
+                    //catGrid.dataSource.data(categoryList);
+
+                    $(this).dialog("close");
+                },
+                "Cancel": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $('#lnkSelectCategory').live('click', function () {
+            var linkObj = $(this);
+            var dialogDiv = $('#selectCategoryDailog');
+            var viewUrl = linkObj.attr('href');
+            $.get(viewUrl, function (data) {
+                dialogDiv.html(data);
+                dialogDiv.dialog('open');
+            });
+            return false;
+
+        });
+
+        //For select ByModel Category
+        $("#selectByModelCategoryDailog").dialog({
+            autoOpen: false,
+            width: 750,
+            resizable: false,
+            modal: true,
+            buttons: {
+                "Ok": function () {
+
+                    //Master Model
+                    var categoryId = $("#CategoryId").val();
+                    var categoryName = $("#Name").val();
+
+                    var category = {};
+                    category.CategoryId = categoryId;
+                    category.Name = categoryName;
+
+                    //Details Model List
+                    var productList = [];
+
+                    //Get Product Grid
+                    var productDetailsByModelGrid = $('#productDetailsByModelGrid').data('kendoGrid').dataSource;
+
+                    //Get All Data from Product Grid
+                    var allData = productDetailsByModelGrid.data();
+                    var totalNumber = allData.length;
+
+                    for (var i = 0; i < totalNumber; i++) {
+
+                        var currentDataItem = allData[i];
+
+                        var productId = currentDataItem.ProductId;
+                        var productName = currentDataItem.Name;
+                        var productPrice = currentDataItem.Price;
+                        var productCategoryId = currentDataItem.CategoryId;
+
+                        var product = {};
+                        product.ProductId = productId;
+                        product.Name = productName;
+                        product.Price = productPrice;
+                        product.CategoryId = productCategoryId;
+
+                        // Push Data to productList Array
+                        productList.push(product);
+                    }
+
+                    var postUrl = '/Category/MasterDetailsSave';
+
+                    var paramValue = JSON.stringify({ model: category, modelList: productList });
+
+                    $.ajax({
+                        url: postUrl,
+                        type: 'POST',
+                        dataType: 'json',
+                        data: paramValue,
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            //JQDialogAlert mass, status
+                            JQDialogAlert(data.msg, data.status);
+                        },
+                        error: function (objAjaxRequest, strError) {
+                            var respText = objAjaxRequest.responseText;
+                            //JQDialogAlert mass, status
+                            JQDialogAlert(respText, 'info');
+                        }
+
+                    });
+
+                    $(this).dialog("close");
+                },
+                "Cancel": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $('#lnkSelectByModelCategory').live('click', function () {
+            var linkObj = $(this);
+            var dialogDiv = $('#selectByModelCategoryDailog');
+            var viewUrl = linkObj.attr('href');
+            $.get(viewUrl, function (data) {
+                dialogDiv.html(data);
+                dialogDiv.dialog('open');
+            });
+            return false;
+
+        });
+
+        $('#lnkCategoryItems').live('click', function () {
+
+            var categoryList = [];
+
+            //Get Category Grid
+            var catGrid = $('#catGrid').data('kendoGrid');
+
+            //Get All Data from Category Grid
+            var allData = catGrid.dataSource.data();
+            var totalNumber = allData.length;
+
+            for (var i = 0; i < totalNumber; i++) {
+
+                var currentDataItem = allData[i];
+
+                var categoryId = currentDataItem.CategoryId;
+                var categoryName = currentDataItem.Name;
+
+                var category = {};
+                category.CategoryId = categoryId;
+                category.Name = categoryName;
+
+                // Push Data to categoryList Array
+                categoryList.push(category);
+            }
+
+            var paramValue = JSON.stringify({ categoryList: categoryList });
+
+            $.ajax({
+                url: '/Category/AddList',
+                type: 'POST',
+                dataType: 'json',
+                data: paramValue,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    var resultData = data;
+                    alert(resultData);
+                },
+                error: function (objAjaxRequest, strError) {
+                    var respText = objAjaxRequest.responseText;
+                    alert(respText);
+                }
+
+            });
+
+            return false;
+
+        });
+
+    });
+
+    function CategoryRemoveRow(id) {
+        //Get Category Grid
+        var catGrid = $('#catGrid').data('kendoGrid');
+        //Get Selected Category Item from Select Category Grid by model id
+        var dataItem = catGrid.dataSource.get(id);
+        //Remove Category Item from Category Grid
+        catGrid.dataSource.remove(dataItem);
+    }
+
+</script>

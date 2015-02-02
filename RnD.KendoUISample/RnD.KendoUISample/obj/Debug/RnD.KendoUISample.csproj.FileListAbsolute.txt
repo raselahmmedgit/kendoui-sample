@@ -78,3 +78,18 @@ E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample
 E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.csprojResolveAssemblyReference.cache
 E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.dll
 E:\Bappi\RnD Final\kendoui-sample-master\kendoui-sample-master\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.pdb
+C:\Users\IT_CONSOLID1\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\bin\RnD.KendoUISample.dll
+C:\Users\IT_CONSOLID1\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\bin\RnD.KendoUISample.pdb
+C:\Users\IT_CONSOLID1\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\bin\CsvHelper.dll
+C:\Users\IT_CONSOLID1\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\bin\EntityFramework.dll
+C:\Users\IT_CONSOLID1\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\bin\Ionic.Zip.dll
+C:\Users\IT_CONSOLID1\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\bin\Kendo.Mvc.dll
+C:\Users\IT_CONSOLID1\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\bin\NPOI.dll
+C:\Users\IT_CONSOLID1\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\bin\CsvHelper.pdb
+C:\Users\IT_CONSOLID1\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\bin\CsvHelper.xml
+C:\Users\IT_CONSOLID1\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\bin\EntityFramework.xml
+C:\Users\IT_CONSOLID1\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\bin\Kendo.Mvc.xml
+C:\Users\IT_CONSOLID1\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\bin\NPOI.xml
+C:\Users\IT_CONSOLID1\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.csprojResolveAssemblyReference.cache
+C:\Users\IT_CONSOLID1\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.dll
+C:\Users\IT_CONSOLID1\Documents\GitHub\kendoui-sample\RnD.KendoUISample\RnD.KendoUISample\obj\Debug\RnD.KendoUISample.pdb

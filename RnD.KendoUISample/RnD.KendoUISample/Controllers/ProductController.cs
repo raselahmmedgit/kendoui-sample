@@ -173,7 +173,8 @@ namespace RnD.KendoUISample.Controllers
         }
 
         [HttpGet]
-        public ActionResult ExportToCsv()
+        //public ActionResult ExportToCsv()
+        public void ExportToCsv()
         {
             var products = _db.Products.ToList();
 

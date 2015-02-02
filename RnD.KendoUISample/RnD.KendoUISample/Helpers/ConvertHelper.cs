@@ -35,7 +35,7 @@ namespace RnD.KendoUISample.Helpers
                 {
                     if (!prop.Name.Contains("Id") && !prop.Name.Contains("ID"))
                     {
-                        contentBuilder.Append(prop.GetValue(item) ?? DBNull.Value);
+                        //contentBuilder.Append(prop.GetValue(item) ?? DBNull.Value);
                         contentBuilder.Append(seperator);
                     }
                 }

@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Basic Upload";
+}
+<h2>
+    Upload: Basic Mode</h2>
+<div id="basicUploadZone">
+    <form method="post" action='@Url.Action("Basic", "Upload")' style="width:45%">
+    <div id="basicUploadForm">
+        <div>
+            @(Html.Kendo().Upload()
+                  .Name("files"))
+        </div>
+        <div>
+            <p>
+                @ViewBag.UploadedFiles
+            </p>
+        </div>
+        <div>
+            <p>
+                <input type="submit" value="Submit" class="button" />
+            </p>
+        </div>
+    </div>
+    </form>
+</div>

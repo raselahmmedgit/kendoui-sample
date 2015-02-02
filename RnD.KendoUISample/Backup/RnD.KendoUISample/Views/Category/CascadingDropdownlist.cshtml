@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Cascading Dropdownlist";
+}
+<h2>
+    Category: Cascading Dropdownlist</h2>
+<div id="catZone">
+    <div id="categoryDropdwonlist">
+        <strong>Category :</strong><span> @(Html.Kendo().DropDownList()
+          .Name("categories")
+          .OptionLabel("Select category...")
+          .DataTextField("CategoryName")
+          .DataValueField("CategoryId")
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("GetCascadeCategories", "Category");
+              });
+          })
+    )
+        </span>
+    </div>
+    <div id="productDropdwonlist">
+        <strong>Product :</strong><span> @(Html.Kendo().DropDownList()
+          .Name("products")
+          .OptionLabel("Select product...")
+          .DataTextField("ProductName")
+          .DataValueField("ProductID")
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("GetCascadeProducts", "Category")
+                      .Data("filterProducts");
+              })
+              .ServerFiltering(true);
+          })
+          .Enable(false)
+          .AutoBind(false)
+          .CascadeFrom("categories")
+    )
+        </span>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function filterProducts() {
+        return {
+            categories: $("#categories").val()
+        };
+    }
+
+    $(function () {
+
+    });
+    
+</script>

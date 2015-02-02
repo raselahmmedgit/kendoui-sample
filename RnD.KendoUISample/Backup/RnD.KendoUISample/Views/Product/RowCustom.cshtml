@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Row Custom Dropdown";
+}
+<h2>
+    Product List: Row Custom Dropdown List Mode</h2>
+<br />
+<div id="proClientGridZone">
+    @(Html.Kendo().Grid<RnD.KendoUISample.ViewModels.ClientProductViewModel>()
+    .Name("clientProductViewModelGrid").Columns(columns =>
+    {
+        columns.Bound(c => c.ProductId).Visible(false);
+        columns.Bound(c => c.Name);
+        columns.Bound(c => c.Price);
+        columns.Bound(c => c.CategoryId).Visible(false);
+        columns.ForeignKey(p => p.CategoryId, (System.Collections.IEnumerable)ViewData["categories"], "CategoryId", "CategoryName");
+        columns.Bound(c => c.Category).ClientTemplate("#= Category.Name #");
+    })
+    .Editable(editable => editable.Mode(GridEditMode.InCell))
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Filterable()
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Batch(true)
+        .Events(events => events.Error("error_handler"))
+        .ServerOperation(false).Model(model =>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    model.Id(e => e.ProductId);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    model.Field(e => e.ProductId).Editable(false);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    model.Field(e => e.Name).Editable(false);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    model.Field(e => e.Price).Editable(false);
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                }).Read(read => read.Action("ClientProductViewModelsRead", "Product")))
+          )
+</div>
+<script type="text/javascript">
+
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+
+    $(function () {
+
+
+
+    });
+
+</script>
